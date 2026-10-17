@@ -160,6 +160,7 @@ html.fa-nojs .fa-static{display:block}
 .fa-seg button+button{border-left:1px solid var(--color-border-line)}
 .fa-seg button[aria-pressed="true"]{background:var(--color-panel);color:var(--color-fg);font-weight:var(--cds-font-weight-medium)}
 .fa-std tbody tr.fa-off{cursor:default}
+.fa-locked{opacity:.5;cursor:not-allowed}
 .fa-std tbody tr.fa-off td:nth-child(2){color:var(--color-fg-muted)}
 #temporada tbody tr.fa-off[data-team]{cursor:pointer}
 </style>
@@ -199,7 +200,7 @@ html.fa-nojs .fa-static{display:block}
     <div class="fa-analysis" id="fa-an-jug" hidden=""></div>
     <div class="fa-row" style="justify-content:flex-start">
       <input class="fa-select fa-search" type="search" placeholder="Buscar jugadora" aria-label="Buscar jugadora">
-      <label class="fa-check"><input type="checkbox" class="fa-liga"> Toda la liga</label>
+      <label class="fa-check fa-locked" title="Disponible en la versión de pago"><input type="checkbox" class="fa-liga" disabled=""> Toda la liga 🔒</label>
       <button class="fa-link fa-none" type="button">Quitar selección</button>
       <span class="fa-seg" role="group" aria-label="Cómo ver los datos">
         <button type="button" data-mode="pp" aria-pressed="true">Por partido</button>
@@ -865,7 +866,7 @@ dash.calc('clasificacion', {
   const search = document.querySelector('.fa-search');
   search.addEventListener('input', () => { query = search.value.trim().toLowerCase(); drawTable(); });
   const ligaBox = document.querySelector('.fa-liga');
-  ligaBox.addEventListener('change', () => { liga = ligaBox.checked; buildAndDrawTable(); });
+  ligaBox.checked = false; ligaBox.disabled = true;
   const pExpanded = new Set();   // jugadoras desplegadas (equipo|nombre)
   let pFollow = new Set();       // desplegadas cuyas jornadas siguen el orden de la tabla
   const pk = (eq, j) => eq + '|' + j;
