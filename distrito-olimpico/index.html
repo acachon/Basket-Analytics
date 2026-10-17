@@ -1747,6 +1747,7 @@ dash.calc('clasificacion', {
     const val = (r) => (pct ? pctOf(+r[pfx + 'a'] || 0, +r[pfx + 'i'] || 0) : mode === 'pm' ? (+r.min > 0 ? (+r[k] || 0) / +r.min : null) : (+r[k] || 0));
     const totOf = (name) => {
       const rs = rows.filter((r) => r.jugadora === name); if (!rs.length) return null;
+      if (pct && mode === 'pp') { const vs = rs.map(val).filter((v) => v != null); return vs.length ? d3.mean(vs) : null; }
       if (pct) return pctOf(d3.sum(rs, (r) => +r[pfx + 'a'] || 0), d3.sum(rs, (r) => +r[pfx + 'i'] || 0));
       const sm = d3.sum(rs, (r) => +r[k] || 0);
       if (mode === 'tot') return sm;
@@ -1756,8 +1757,9 @@ dash.calc('clasificacion', {
     const fmtV0 = (v) => (pct ? Math.round(v) + '%' : mode === 'pm' ? v.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : fmtN(v));
     const fmtV = (v) => (k === 'mas_menos' && v > 0 ? '+' : '') + fmtV0(v);
     const TOT = '__total';
-    const totLabel = pct || mode === 'tot' ? 'Total' : mode === 'pp' ? 'Media' : 'Global';
-    const totSubL = pct || mode === 'tot' ? realGames.length + (single ? ' partido' : ' jornada') + (realGames.length > 1 ? 's' : '') : mode === 'pp' ? 'por partido' : 'por minuto';
+    const totalish = pct ? mode !== 'pp' : mode === 'tot';
+    const totLabel = totalish ? 'Total' : mode === 'pp' ? 'Media' : 'Global';
+    const totSubL = totalish ? realGames.length + (single ? ' partido' : ' jornada') + (realGames.length > 1 ? 's' : '') : mode === 'pp' ? 'por partido' : 'por minuto';
     const games = [...realGames, { partido_id: TOT, label: totLabel, rival: '', total: true }];
     const totVals = new Map(players.map((n) => [n, totOf(n)]));
     const gameVals = rows.map(val).filter((v) => v != null);
