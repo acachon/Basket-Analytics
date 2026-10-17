@@ -1005,7 +1005,14 @@ dash.calc('clasificacion', {
   const search = document.querySelector('.fa-search');
   search.addEventListener('input', () => { query = search.value.trim().toLowerCase(); drawTable(); });
   const ligaBox = document.querySelector('.fa-liga');
-  ligaBox.addEventListener('change', () => { liga = ligaBox.checked; buildAndDrawTable(); });
+  ligaBox.addEventListener('change', () => {
+    liga = ligaBox.checked;
+    if (!liga) { // al salir de «toda la liga» solo se conservan las jugadoras del equipo mostrado
+      const mineP = topPlayers[team()] || [], keep = selected().filter((p) => mineP.includes(p));
+      if (keep.length !== selected().length) { dash.setParams({ jugadoras: keep }); return; }
+    }
+    buildAndDrawTable();
+  });
   const pExpanded = new Set();   // jugadoras desplegadas (equipo|nombre)
   let pFollow = new Set();       // desplegadas cuyas jornadas siguen el orden de la tabla
   const pk = (eq, j) => eq + '|' + j;
@@ -1013,12 +1020,6 @@ dash.calc('clasificacion', {
     const tr = e.target.closest('tr[data-key]');
     if (!tr) return;
     const name = tr.dataset.key, eqT = tr.dataset.team, key = pk(eqT, name);
-    if (eqT !== team()) {
-      pExpanded.clear(); pExpanded.add(key); pFollow.delete(key);
-      sortK = '_minTot'; sortDir = -1;
-      dash.setParams({ equipo: eqT, partidos: null, jugadoras: [name], vista: 'tot' });
-      return;
-    }
     const sel = selected().includes(name);
     if (e.target.closest('.fa-pchk')) {
       if (sel) { pExpanded.delete(key); toggle(name); }
@@ -1141,7 +1142,7 @@ dash.calc('clasificacion', {
       th.setAttribute('aria-sort', k === sortK ? (sortDir > 0 ? 'ascending' : 'descending') : 'none');
     });
     // Fila de total: seleccionadas visibles o, si no hay, todas las visibles
-    const selRows = view.filter((r) => r.equipo === team() && s.includes(r.jugadora));
+    const selRows = view.filter((r) => (liga || r.equipo === team()) && s.includes(r.jugadora));
     const base = selRows.length ? selRows : view;
     const totalRow = (() => {
       if (!base.length) return null;
@@ -1185,7 +1186,7 @@ dash.calc('clasificacion', {
       const key = pk(r.equipo, r.jugadora);
       const tr = document.createElement('tr');
       tr.dataset.key = r.jugadora; tr.dataset.team = r.equipo;
-      const mine = r.equipo === team() && s.includes(r.jugadora);
+      const mine = (liga || r.equipo === team()) && s.includes(r.jugadora);
       const open = mine && pExpanded.has(key);
       tr.className = mine ? 'fa-on fa-pon' : 'fa-off';
       const td0 = document.createElement('td');
@@ -1678,16 +1679,20 @@ dash.calc('clasificacion', {
   document.querySelectorAll('.fa-pick button').forEach((x) => x.setAttribute('aria-checked', x.getAttribute('aria-pressed')));
   function drawPlayerCharts() {
     const sec = document.getElementById('graficas-jug');
-    const eq = team();
+    const jug = dash.data('jugadoras');
+    const teamOf = new Map((jug.status === 'ok' ? jug.data : []).map((r) => [r.jugadora, r.equipo]));
     const leg = document.getElementById('fa-pl-leg');
-    const names = selected().filter((p) => allPlayers.includes(p));
+    const names = selected().filter((p) => teamOf.has(p) && allPlayers.includes(p));
+    const multi = new Set(names.map((n) => teamOf.get(n))).size > 1 || names.some((n) => teamOf.get(n) !== team());
     leg.replaceChildren(...names.map((name) => {
       const li = document.createElement('span'); li.className = 'fa-li';
       const sw = document.createElement('span'); sw.className = 'fa-sw'; sw.style.background = colorOf(name);
-      const d = dorsalOf.get(eq + '|' + name);
+      const d = dorsalOf.get(teamOf.get(name) + '|' + name);
       const dn = document.createElement('b'); dn.textContent = d && d !== 'X' ? d : '';
       const nm = document.createElement('span'); nm.textContent = name;
-      li.append(sw, dn, nm); return li;
+      li.append(sw, dn, nm);
+      if (multi) { const e2 = document.createElement('span'); e2.className = 'fa-eq'; e2.textContent = short(teamOf.get(name)); li.append(e2); }
+      return li;
     }));
     if (!names.length) leg.textContent = 'Ninguna jugadora seleccionada: tócalas en la tabla de estadísticas de jugadoras.';
     if (sec.classList.contains('fa-folded')) return;
@@ -1697,15 +1702,28 @@ dash.calc('clasificacion', {
     const jug = dash.data('jugadoras');
     if (jug.status !== 'ok') { setState(box, jug.status === 'loading' ? 'loading' : 'error', 'No se pudo cargar'); return; }
     box.classList.remove('dash-skeleton');
-    const eq = team(), ids = gamesSel(), k = plSel[cid];
+    const k = plSel[cid];
     const lbl = { reb_def: 'Rebotes defensivos', reb_of: 'Rebotes ofensivos', fc: 'Faltas cometidas', fr: 'Faltas recibidas', rec: 'Recuperaciones', per: 'Pérdidas', tap: 'Tapones', ast: 'Asistencias', val: 'Valoración', mas_menos: 'Más/menos (+/-)' }[k];
-    const players = selected().filter((p) => allPlayers.includes(p));
-    const realGames = teamGames.filter((g) => ids.includes(g.partido_id));
+    const teamOf = new Map(jug.data.map((r) => [r.jugadora, r.equipo]));
+    const players = selected().filter((p) => teamOf.has(p) && allPlayers.includes(p));
     if (!players.length) { setState(box, 'empty', 'Toca jugadoras en la tabla para verlas aquí'); return; }
-    if (!realGames.length) { setState(box, 'empty', 'Sin partidos elegidos'); return; }
+    // jugadoras de uno o de varios equipos (modo «toda la liga»): el eje X son las jornadas
+    const eqs = new Set(players.map((p) => teamOf.get(p)));
+    const single = eqs.size === 1 ? [...eqs][0] : null;
+    const curIds = gamesSel();
+    const rows = jug.data.filter((r) => players.includes(r.jugadora) && (r.equipo === team() ? curIds.includes(r.partido_id) : true));
+    const jorns = [...new Set(rows.map((r) => Number(r.jornada)))].sort((a, b) => a - b);
+    if (!jorns.length) { setState(box, 'empty', 'Sin partidos elegidos'); return; }
+    const realGames = jorns.map((j) => {
+      const g = { partido_id: 'J' + j, jornada: j, label: 'J' + j };
+      if (single) {
+        const p = [...gameInfo.values()].find((q) => (q.local === single || q.visitante === single) && Number(q.jornada) === j);
+        if (p) { const home = p.local === single; g.rival = home ? p.visitante : p.local; g.pf = Number(home ? p.pts_local : p.pts_visitante); g.pc = Number(home ? p.pts_visitante : p.pts_local); g.ganado = g.pf > g.pc; }
+      }
+      return g;
+    });
     const mode = ['tot', 'pp', 'pm'].includes(dash.params().vista) ? dash.params().vista : 'tot';
-    const rows = jug.data.filter((r) => r.equipo === eq && players.includes(r.jugadora) && ids.includes(r.partido_id));
-    const byPG = new Map(rows.map((r) => [r.jugadora + '|' + r.partido_id, r]));
+    const byPG = new Map(rows.map((r) => [r.jugadora + '|' + Number(r.jornada), r]));
     const val = (r) => (mode === 'pm' ? (+r.min > 0 ? (+r[k] || 0) / +r.min : null) : (+r[k] || 0));
     const totOf = (name) => {
       const rs = rows.filter((r) => r.jugadora === name); if (!rs.length) return null;
@@ -1718,7 +1736,7 @@ dash.calc('clasificacion', {
     const fmtV = (v) => (k === 'mas_menos' && v > 0 ? '+' : '') + fmtV0(v);
     const TOT = '__total';
     const totLabel = mode === 'tot' ? 'Total' : mode === 'pp' ? 'Media' : 'Global';
-    const totSubL = mode === 'tot' ? realGames.length + ' partido' + (realGames.length > 1 ? 's' : '') : mode === 'pp' ? 'por partido' : 'por minuto';
+    const totSubL = mode === 'tot' ? realGames.length + (single ? ' partido' : ' jornada') + (realGames.length > 1 ? 's' : '') : mode === 'pp' ? 'por partido' : 'por minuto';
     const games = [...realGames, { partido_id: TOT, label: totLabel, rival: '', total: true }];
     const totVals = new Map(players.map((n) => [n, totOf(n)]));
     const gameVals = rows.map(val).filter((v) => v != null);
@@ -1753,19 +1771,20 @@ dash.calc('clasificacion', {
     for (const gm of games) {
       const lb = g.append('g').attr('transform', `translate(${cx(gm)},${H - bottom + 18})`);
       cap(lb.append('text').attr('text-anchor', 'middle')).style('fill', 'var(--color-fg)').style('font-weight', gm.total ? 'var(--cds-font-weight-medium)' : null).text(xLab(gm));
-      cap(lb.append('text').attr('text-anchor', 'middle').attr('dy', '1.3em')).style('fill', 'var(--color-fg-muted)').text(gm.total ? totSubL : rivLab(gm.rival, x.step()));
+      const sub = gm.total ? totSubL : (gm.rival ? rivLab(gm.rival, x.step()) : '');
+      if (sub) cap(lb.append('text').attr('text-anchor', 'middle').attr('dy', '1.3em')).style('fill', 'var(--color-fg-muted)').text(sub);
     }
     g.append('line').attr('x1', left).attr('x2', W - right).attr('y1', y(0)).attr('y2', y(0)).style('stroke', 'var(--cds-chart-axis)').style('stroke-width', 1);
     if (y.domain()[0] < 0) g.append('line').attr('x1', left).attr('x2', W - right).attr('y1', H - bottom).attr('y2', H - bottom).style('stroke', 'var(--cds-chart-grid)').style('stroke-width', 1);
     const sepX = x(TOT) - x.step() * x.paddingInner() / 2;
     g.append('line').attr('x1', sepX).attr('x2', sepX).attr('y1', top - 6).attr('y2', H - bottom + 30)
       .style('stroke', 'var(--cds-chart-reference)').style('stroke-dasharray', '4 4').style('stroke-width', 1);
-    // una línea por jugadora (huecos si no jugó ese partido); la última columna son puntos sueltos
+    // una línea por jugadora (huecos si no jugó esa jornada); la última columna son puntos sueltos
     const line = d3.line().defined((d) => d.v != null).x((d) => cx(d.gm)).y((d) => y(d.v));
     const labs = [];
     for (const name of players) {
       const c = colorOf(name);
-      const data = realGames.map((gm) => { const r = byPG.get(name + '|' + gm.partido_id); return { gm, v: r ? val(r) : null }; });
+      const data = realGames.map((gm) => { const r = byPG.get(name + '|' + gm.jornada); return { gm, v: r ? val(r) : null }; });
       g.append('path').datum(data).attr('d', line).style('fill', 'none').style('stroke', c).style('stroke-width', 2);
       g.selectAll(null).data(data.filter((d) => d.v != null)).join('circle').attr('cx', (d) => cx(d.gm)).attr('cy', (d) => y(d.v)).attr('r', 4).style('fill', c);
       const tv = totVals.get(name);
@@ -1787,18 +1806,20 @@ dash.calc('clasificacion', {
     svg.append('g').selectAll('rect').data(games).join('rect')
       .attr('x', (gm) => x(gm.partido_id) - x.step() * x.paddingInner() / 2).attr('width', x.step()).attr('y', 0).attr('height', H).style('fill', 'transparent')
       .on('pointermove pointerdown', function (ev, gm) {
-        const list = players.map((name) => ({ name, v: gm.total ? totVals.get(name) : (byPG.get(name + '|' + gm.partido_id) ? val(byPG.get(name + '|' + gm.partido_id)) : null) }))
+        const rowOf = (name) => byPG.get(name + '|' + gm.jornada);
+        const list = players.map((name) => ({ name, v: gm.total ? totVals.get(name) : (rowOf(name) ? val(rowOf(name)) : null), riv: !gm.total && !single && rowOf(name) ? rowOf(name).rival : null }))
           .sort((a, b) => (b.v ?? -Infinity) - (a.v ?? -Infinity));
         tip.replaceChildren();
         const h = document.createElement('div'); h.className = 'fa-tip-h';
-        h.textContent = gm.total ? (mode === 'tot' ? 'Total · ' : mode === 'pp' ? 'Media por partido · ' : 'Por minuto · ') + realGames.map((g2) => g2.label).join(', ') : gm.label + ' · vs ' + gm.rival + ' (' + gm.pf + '-' + gm.pc + ')'; tip.append(h);
+        h.textContent = gm.total ? (mode === 'tot' ? 'Total · ' : mode === 'pp' ? 'Media por partido · ' : 'Por minuto · ') + realGames.map((g2) => g2.label).join(', ')
+          : gm.label + (gm.rival ? ' · vs ' + gm.rival + ' (' + gm.pf + '-' + gm.pc + ')' : ''); tip.append(h);
         const t0 = document.createElement('div'); t0.className = 'fa-tip-l'; const nm0 = document.createElement('b'); nm0.textContent = lbl; t0.append(nm0); tip.append(t0);
         for (const r of list) {
           const l = document.createElement('div'); l.className = 'fa-tip-l';
           const sw = document.createElement('span'); sw.className = 'fa-sw'; sw.style.background = colorOf(r.name);
-          const dd = dorsalOf.get(eq + '|' + r.name);
+          const dd = dorsalOf.get(teamOf.get(r.name) + '|' + r.name);
           const dn = document.createElement('span'); dn.style.color = 'var(--color-fg-muted)'; dn.style.minWidth = '1.6em'; dn.style.textAlign = 'right'; dn.textContent = dd && dd !== 'X' ? dd : '';
-          const n2 = document.createElement('span'); n2.textContent = r.name;
+          const n2 = document.createElement('span'); n2.textContent = r.name + (r.riv ? ' · vs ' + short(r.riv) : '');
           const v2 = document.createElement('span'); v2.textContent = r.v == null ? 'no jugó' : fmtV(r.v);
           l.append(sw, dn, n2, v2); tip.append(l);
         }
@@ -1982,7 +2003,7 @@ dash.calc('clasificacion', {
     if (jug.status === 'ok') {
       const tot = d3.rollup(jug.data, (v) => d3.sum(v, (r) => Number(r.min)), (r) => r.equipo, (r) => r.jugadora);
       topPlayers = Object.fromEntries([...tot].map(([e, mm]) => [e, [...mm.keys()].sort((a, b) => mm.get(b) - mm.get(a))]));
-      allPlayers = topPlayers[eq] || [];
+      allPlayers = liga ? Object.values(topPlayers).flat() : (topPlayers[eq] || []);
       // Al abrir: Fundal Alcobendas, todas sus jornadas y sus 3 jugadoras con más minutos
       if (!window.__faInit) {
         window.__faInit = true;
