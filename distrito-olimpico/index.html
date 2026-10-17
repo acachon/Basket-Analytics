@@ -225,7 +225,7 @@ html.fa-nojs .fa-static{display:block}
   </section>
 
   <section id="graficas-equipo">
-    <h2 class="fa-gtt" style="font-size:var(--cds-font-size-heading);font-weight:var(--cds-font-weight-medium);margin:0 0 var(--cds-gap-sm)">Evolución del equipo</h2>
+    <h2 class="fa-gtt" style="font-size:var(--cds-font-size-heading);font-weight:var(--cds-font-weight-medium);margin:0 0 var(--cds-gap-sm)">Evolución del equipo (Cesur Distrito Olímpico)</h2>
     <div class="fa-grid">
       <section class="fa-card" id="eq-rebotes">
         <div class="fa-ttl"><h2>Rebotes por jornada</h2></div>
@@ -1200,6 +1200,7 @@ dash.calc('clasificacion', {
 
   // ---- Gráficas del equipo: rebotes por jornada (barras agrupadas)
   function drawTeamRebounds() {
+    const gt = document.querySelector('.fa-gtt'); if (gt) gt.textContent = 'Evolución del equipo (' + team() + ')';
     const box = document.querySelector('.fa-c-reb');
     const ep = dash.data('equipos_partido');
     if (ep.status !== 'ok') { setState(box, ep.status === 'loading' ? 'loading' : 'error', 'No se pudo cargar'); return; }
