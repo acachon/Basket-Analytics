@@ -215,7 +215,7 @@ html.fa-nojs .fa-static{display:block}
 
   <section id="graficas-equipo" class="fa-foldsec">
     <div class="fa-row" style="margin-bottom:var(--cds-gap-sm)">
-      <h2 style="font-size:var(--cds-font-size-heading);font-weight:var(--cds-font-weight-medium);margin:0"><button type="button" class="fa-fold" aria-expanded="true" aria-controls="fa-eq-body-wrap" title="Plegar / desplegar gráficas"><span class="fa-chev" aria-hidden="true">▾</span><span class="fa-gtt">Evolución del equipo (Fundal Alcobendas)</span><span class="fa-fold-l">Ocultar</span></button></h2>
+      <h2 style="font-size:var(--cds-font-size-heading);font-weight:var(--cds-font-weight-medium);margin:0"><button type="button" class="fa-fold" aria-expanded="true" aria-controls="fa-eq-body-wrap" title="Plegar / desplegar gráficas"><span class="fa-chev" aria-hidden="true">▾</span><span class="fa-gtt">Estadísticas de equipo (Fundal Alcobendas)</span><span class="fa-fold-l">Ocultar</span></button></h2>
       <span class="fa-carr-nav"><button type="button" class="fa-carr-btn" data-dir="-1" aria-label="Anterior" disabled="">‹</button><button type="button" class="fa-carr-btn" data-dir="1" aria-label="Siguiente">›</button></span>
     </div>
     <div class="fa-fbody" id="fa-eq-body-wrap">
@@ -297,7 +297,7 @@ html.fa-nojs .fa-static{display:block}
 
 
   <section id="graficas">
-    <h2 style="font-size:var(--cds-font-size-heading);font-weight:var(--cds-font-weight-medium);margin:0 0 var(--cds-gap-sm)">Evolución de las jugadoras seleccionadas</h2>
+    <h2 style="font-size:var(--cds-font-size-heading);font-weight:var(--cds-font-weight-medium);margin:0 0 var(--cds-gap-sm)">Estadísticas de jugadoras seleccionadas</h2>
   <div class="fa-card" id="seleccion" style="margin-bottom:var(--cds-gap-md)">
     <div class="fa-row" style="justify-content:flex-start">
       <label class="fa-label" for="fa-metric">Estadística</label>
@@ -1292,7 +1292,7 @@ dash.calc('clasificacion', {
   }));
   function drawTeamRebounds() {
     if (foldTeam !== team()) { foldTeam = team(); document.querySelectorAll('.fa-foldsec').forEach((sec) => setFold(sec, true)); }
-    document.querySelector('#graficas-equipo .fa-gtt').textContent = 'Evolución del equipo (' + team() + ')';
+    document.querySelector('#graficas-equipo .fa-gtt').textContent = 'Estadísticas de equipo (' + team() + ')';
     if (document.getElementById('graficas-equipo').classList.contains('fa-folded')) return;
     drawTeamShot('.fa-c-tl', 'tla', 'tli', 'TL', 'Tiros libres');
     drawTeamShot('.fa-c-t2', 't2a', 't2i', 'T2', 'Tiros de 2', 'var(--fa-pink1)', '#3a1022');
