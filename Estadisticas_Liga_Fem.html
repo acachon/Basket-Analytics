@@ -1323,7 +1323,7 @@ dash.calc('clasificacion', {
         const sw = document.createElement('span'); sw.className = 'fa-sw'; sw.style.background = s.color;
         const nm = document.createElement('span'); nm.textContent = s.name;
         const v = document.createElement('span');
-        v.textContent = !r ? 'no jugó' : r[field] == null ? 'sin intentos' : fmtVal(m, r[field]);
+        v.textContent = !r ? '--' : r[field] == null ? '--' : fmtVal(m, r[field]);
         l.append(sw, nm, v); tip.append(l);
       }
       tip.hidden = false;
@@ -1843,7 +1843,7 @@ dash.calc('clasificacion', {
           const dd = dorsalOf.get(teamOf.get(r.name) + '|' + r.name);
           const dn = document.createElement('span'); dn.style.color = 'var(--color-fg-muted)'; dn.style.minWidth = '1.6em'; dn.style.textAlign = 'right'; dn.textContent = dd && dd !== 'X' ? dd : '';
           const n2 = document.createElement('span'); n2.textContent = r.name + (r.riv ? ' · vs ' + short(r.riv) : '');
-          const v2 = document.createElement('span'); v2.textContent = r.v == null ? 'no jugó' : fmtV(r.v);
+          const v2 = document.createElement('span'); v2.textContent = r.v == null ? '--' : fmtV(r.v);
           l.append(sw, dn, n2, v2); tip.append(l);
         }
         tip.hidden = false;
