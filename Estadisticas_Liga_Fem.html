@@ -659,6 +659,12 @@ dash.calc('clasificacion', {
   const team = () => dash.params().equipo || DEFAULT_TEAM;
   // nombre del rival bajo la jornada; si no cabe se recorta con «…»
   const rivLab = (r, w) => { const n = short(r), max = Math.max(4, Math.floor(w / 6.3)); return n.length > max ? n.slice(0, max - 1).trimEnd() + '…' : n; };
+  // última columna de las gráficas del equipo: «Total» (Totales) o «Media» por partido (Por partido), según la tabla de clasificación
+  const fmtN = (v) => (Number.isInteger(v) ? String(v) : (Math.round(v * 10) / 10).toLocaleString('es-ES', { minimumFractionDigits: 1, maximumFractionDigits: 1 }));
+  const totDiv = (n) => (eqMode === 'pp' ? n : 1);
+  const totLab = () => (eqMode === 'pp' ? 'Media' : 'Total');
+  const totSub = (n) => (eqMode === 'pp' ? 'por partido' : n + ' partido' + (n > 1 ? 's' : ''));
+  const totHead = (gs) => (eqMode === 'pp' ? 'Media por partido · ' : 'Total · ') + gs.map((g2) => g2.label).join(', ');
   const xLab = (g) => (g.total || g.ganado == null ? g.label : g.label + (g.ganado ? ' (V)' : ' (D)'));
   let teamGames = [];      // partidos del equipo, ordenados: {partido_id, jornada, rival, lugar, pf, pc, ganado, x, label}
   const allIds = () => teamGames.map((g) => g.partido_id);
@@ -1319,9 +1325,9 @@ dash.calc('clasificacion', {
     if (!realGames.length) { setState(box, 'empty', 'Sin partidos elegidos'); return; }
     // columna «Total»: acumulado de las jornadas elegidas
     const TOT = '__total';
-    const totStats = Object.fromEntries(KEYS.map((s0) => [s0.k, d3.sum(realGames, (g) => (per.get(g.partido_id) || {})[s0.k] || 0)]));
+    const totStats = Object.fromEntries(KEYS.map((s0) => [s0.k, d3.sum(realGames, (g) => (per.get(g.partido_id) || {})[s0.k] || 0) / totDiv(realGames.length)]));
     per.set(TOT, totStats);
-    const games = [...realGames, { partido_id: TOT, label: 'Total', rival: '', total: true,
+    const games = [...realGames, { partido_id: TOT, label: totLab(), rival: '', total: true,
       pf: d3.sum(realGames, (g) => g.pf), pc: d3.sum(realGames, (g) => g.pc) }];
     box.replaceChildren();
     const W = Math.max(260, box.clientWidth || 320), H = 260, top = 18, bottom = 44, right = 10;
@@ -1338,7 +1344,7 @@ dash.calc('clasificacion', {
     g.selectAll('line.gr').data(ticks).join('line').attr('x1', left).attr('x2', W - right).attr('y1', (d) => y(d)).attr('y2', (d) => y(d))
       .style('stroke', 'var(--cds-chart-grid)').style('stroke-width', 1);
     g.selectAll('text.yt').data(ticks).join('text').attr('x', left - 8).attr('y', (d) => y(d)).attr('dy', '0.32em').attr('text-anchor', 'end')
-      .style('font-size', 'var(--cds-font-size-caption)').style('fill', 'var(--color-fg-muted)').text((d) => d);
+      .style('font-size', 'var(--cds-font-size-caption)').style('fill', 'var(--color-fg-muted)').text((d) => fmtN(d));
     const bw = Math.min(32, x.bandwidth() / 2 - 3);
     const bx = (k) => x.bandwidth() / 2 + (k === KEYS[0].k ? -bw - 2 : 2);
     for (const gm of games) {
@@ -1349,13 +1355,13 @@ dash.calc('clasificacion', {
         gg.append('rect').attr('x', bx(s0.k)).attr('width', bw).attr('y', y(v)).attr('height', Math.max(0, y(0) - y(v)))
           .attr('rx', 3).style('fill', s0.c);
         gg.append('text').attr('x', bx(s0.k) + bw / 2).attr('y', y(v) - 4).attr('text-anchor', 'middle')
-          .style('font-size', 'var(--cds-font-size-caption)').style('fill', 'var(--color-fg)').text(v);
+          .style('font-size', 'var(--cds-font-size-caption)').style('fill', 'var(--color-fg)').text(fmtN(v));
       }
       const lab = g.append('g').attr('transform', `translate(${x(gm.partido_id) + x.bandwidth() / 2},${H - bottom + 18})`);
       lab.append('text').attr('text-anchor', 'middle').style('font-size', 'var(--cds-font-size-caption)').style('fill', 'var(--color-fg)').text(xLab(gm));
       if (gm.total) lab.select('text').style('font-weight', 'var(--cds-font-weight-medium)');
       if (true) lab.append('text').attr('text-anchor', 'middle').attr('dy', '1.3em').style('font-size', 'var(--cds-font-size-caption)').style('fill', 'var(--color-fg-muted)')
-        .text(gm.total ? realGames.length + ' partido' + (realGames.length > 1 ? 's' : '') : rivLab(gm.rival, x.step()));
+        .text(gm.total ? totSub(realGames.length) : rivLab(gm.rival, x.step()));
     }
     g.append('line').attr('x1', left).attr('x2', W - right).attr('y1', y(0)).attr('y2', y(0)).style('stroke', 'var(--cds-chart-axis)').style('stroke-width', 1);
     const sepX = x(TOT) - x.step() * x.paddingInner() / 2;
@@ -1374,17 +1380,17 @@ dash.calc('clasificacion', {
         const st = per.get(d.gm.partido_id) || {};
         let who;
         if (d.gm.total) {
-          const agg = d3.rollups(pl.filter((r) => ids.includes(r.partido_id)), (v) => ({ jugadora: v[0].jugadora, dorsal: dorsalOf.get(eq + '|' + v[0].jugadora) ?? v[0].dorsal, [d.s0.k]: d3.sum(v, (r) => +r[d.s0.k] || 0) }), (r) => r.jugadora).map((x2) => x2[1]);
+          const agg = d3.rollups(pl.filter((r) => ids.includes(r.partido_id)), (v) => ({ jugadora: v[0].jugadora, dorsal: dorsalOf.get(eq + '|' + v[0].jugadora) ?? v[0].dorsal, [d.s0.k]: d3.sum(v, (r) => +r[d.s0.k] || 0) / totDiv(realGames.length) }), (r) => r.jugadora).map((x2) => x2[1]);
           who = agg.filter((r) => r[d.s0.k] > 0);
         } else who = pl.filter((r) => r.partido_id === d.gm.partido_id && +r[d.s0.k] > 0);
         who.sort((p, q) => +q[d.s0.k] - +p[d.s0.k] || p.jugadora.localeCompare(q.jugadora));
         tip.replaceChildren();
         const h = document.createElement('div'); h.className = 'fa-tip-h';
-        h.textContent = d.gm.total ? 'Total · ' + realGames.map((g2) => g2.label).join(', ') : d.gm.label + ' · vs ' + d.gm.rival + ' (' + d.gm.pf + '-' + d.gm.pc + ')'; tip.append(h);
+        h.textContent = d.gm.total ? totHead(realGames) : d.gm.label + ' · vs ' + d.gm.rival + ' (' + d.gm.pf + '-' + d.gm.pc + ')'; tip.append(h);
         const t = document.createElement('div'); t.className = 'fa-tip-l';
         const sw = document.createElement('span'); sw.className = 'fa-k'; sw.style.background = d.s0.c;
         const nm = document.createElement('b'); nm.textContent = noun ? noun + ' ' + d.s0.l.toLowerCase() : d.s0.l;
-        const tv = document.createElement('b'); tv.textContent = st[d.s0.k] ?? 0;
+        const tv = document.createElement('b'); tv.textContent = fmtN(st[d.s0.k] ?? 0);
         t.append(sw, nm, tv); tip.append(t);
         if (!who.length) { const e = document.createElement('div'); e.className = 'fa-tip-l'; e.textContent = 'Ninguna jugadora'; tip.append(e); }
         for (const r of who) {
@@ -1392,7 +1398,7 @@ dash.calc('clasificacion', {
           const dn = document.createElement('span'); dn.style.color = 'var(--color-fg-muted)'; dn.style.minWidth = '1.6em'; dn.style.textAlign = 'right';
           dn.textContent = r.dorsal === 'X' ? '' : r.dorsal;
           const n2 = document.createElement('span'); n2.textContent = r.jugadora;
-          const v2 = document.createElement('span'); v2.textContent = r[d.s0.k];
+          const v2 = document.createElement('span'); v2.textContent = fmtN(+r[d.s0.k]);
           l.append(dn, n2, v2); tip.append(l);
         }
         tip.hidden = false;
@@ -1415,8 +1421,8 @@ dash.calc('clasificacion', {
     const realGames = teamGames.filter((g) => ids.includes(g.partido_id));
     if (!realGames.length) { setState(box, 'empty', 'Sin partidos elegidos'); return; }
     const TOT = '__total';
-    per.set(TOT, Object.fromEntries(['tla', 'tli', 't2a', 't2i', 't3a', 't3i'].map((k) => [k, d3.sum(realGames, (g) => (per.get(g.partido_id) || {})[k] || 0)])));
-    const games = [...realGames, { partido_id: TOT, label: 'Total', rival: '', total: true }];
+    per.set(TOT, Object.fromEntries(['tla', 'tli', 't2a', 't2i', 't3a', 't3i'].map((k) => [k, d3.sum(realGames, (g) => (per.get(g.partido_id) || {})[k] || 0) / totDiv(realGames.length)])));
+    const games = [...realGames, { partido_id: TOT, label: totLab(), rival: '', total: true }];
     const A = (gm) => (per.get(gm.partido_id) || {})[kA] || 0, I = (gm) => (per.get(gm.partido_id) || {})[kI] || 0;
     const P = (gm) => (I(gm) ? A(gm) / I(gm) : null);
     box.replaceChildren();
@@ -1436,7 +1442,7 @@ dash.calc('clasificacion', {
     g.selectAll('line.gr').data(ticks).join('line').attr('x1', left).attr('x2', W - right).attr('y1', (d) => y(d)).attr('y2', (d) => y(d))
       .style('stroke', 'var(--cds-chart-grid)').style('stroke-width', 1);
     cap(g.selectAll('text.yt').data(ticks).join('text').attr('x', left - 8).attr('y', (d) => y(d)).attr('dy', '0.32em').attr('text-anchor', 'end'))
-      .style('fill', 'var(--color-fg-muted)').text((d) => d);
+      .style('fill', 'var(--color-fg-muted)').text((d) => fmtN(d));
     const bw = Math.min(40, x.bandwidth() * 0.6);
     const cx = (gm) => x(gm.partido_id) + x.bandwidth() / 2;
     const labs = [];
@@ -1446,15 +1452,15 @@ dash.calc('clasificacion', {
       g.append('rect').attr('x', x0).attr('width', bw).attr('y', y(a)).attr('height', Math.max(0, y(0) - y(a))).attr('rx', 3).style('fill', colA);
       const darkH = y(0) - y(a), lightH = y(a) - y(i), p = P(gm);
       let aIn = false;
-      if (darkH >= 15) labs.push({ x: cx(gm), y: y(a) + 12, t: a, inv: true });
-      else if (lightH >= 15) { labs.push({ x: cx(gm), y: y(a) - 4, t: a, bold: true }); aIn = true; }
+      if (darkH >= 15) labs.push({ x: cx(gm), y: y(a) + 12, t: fmtN(a), inv: true });
+      else if (lightH >= 15) { labs.push({ x: cx(gm), y: y(a) - 4, t: fmtN(a), bold: true }); aIn = true; }
       let iy = y(i) - 4;
       if (p != null && Math.abs(yp(p) - (iy - 4)) < 13) iy = (!aIn && lightH >= 28) ? y(i) + 12 : Math.min(y(i), yp(p)) - 12;
-      labs.push({ x: cx(gm), y: iy, t: i });
+      labs.push({ x: cx(gm), y: iy, t: fmtN(i) });
       const lb = g.append('g').attr('transform', `translate(${cx(gm)},${H - bottom + 18})`);
       cap(lb.append('text').attr('text-anchor', 'middle')).style('fill', 'var(--color-fg)').style('font-weight', gm.total ? 'var(--cds-font-weight-medium)' : null).text(xLab(gm));
       if (true) cap(lb.append('text').attr('text-anchor', 'middle').attr('dy', '1.3em')).style('fill', 'var(--color-fg-muted)')
-        .text(gm.total ? realGames.length + ' partido' + (realGames.length > 1 ? 's' : '') : rivLab(gm.rival, x.step()));
+        .text(gm.total ? totSub(realGames.length) : rivLab(gm.rival, x.step()));
     }
     g.append('line').attr('x1', left).attr('x2', W - right).attr('y1', y(0)).attr('y2', y(0)).style('stroke', 'var(--cds-chart-axis)').style('stroke-width', 1);
     const sepX = x(TOT) - x.step() * x.paddingInner() / 2;
@@ -1484,14 +1490,14 @@ dash.calc('clasificacion', {
       .attr('x', (gm) => x(gm.partido_id) - x.step() * x.paddingInner() / 2).attr('width', x.step()).attr('y', 0).attr('height', H).style('fill', 'transparent')
       .on('pointermove pointerdown', function (ev, gm) {
         const src = gm.total ? pl.filter((r) => ids.includes(r.partido_id)) : pl.filter((r) => r.partido_id === gm.partido_id);
-        const who = d3.rollups(src, (v) => ({ jugadora: v[0].jugadora, dorsal: dorsalOf.get(eq + '|' + v[0].jugadora) ?? v[0].dorsal, a: d3.sum(v, (r) => +r[kA] || 0), i: d3.sum(v, (r) => +r[kI] || 0) }), (r) => r.jugadora)
+        const who = d3.rollups(src, (v) => ({ jugadora: v[0].jugadora, dorsal: dorsalOf.get(eq + '|' + v[0].jugadora) ?? v[0].dorsal, a: d3.sum(v, (r) => +r[kA] || 0) / (gm.total ? totDiv(realGames.length) : 1), i: d3.sum(v, (r) => +r[kI] || 0) / (gm.total ? totDiv(realGames.length) : 1) }), (r) => r.jugadora)
           .map((z) => z[1]).filter((r) => r.i > 0).sort((p, q) => q.i - p.i || q.a - p.a || p.jugadora.localeCompare(q.jugadora));
         tip.replaceChildren();
         const h = document.createElement('div'); h.className = 'fa-tip-h';
-        h.textContent = gm.total ? 'Total · ' + realGames.map((g2) => g2.label).join(', ') : gm.label + ' · vs ' + gm.rival + ' (' + gm.pf + '-' + gm.pc + ')'; tip.append(h);
+        h.textContent = gm.total ? totHead(realGames) : gm.label + ' · vs ' + gm.rival + ' (' + gm.pf + '-' + gm.pc + ')'; tip.append(h);
         const t = document.createElement('div'); t.className = 'fa-tip-l';
         const nm = document.createElement('b'); nm.textContent = noun;
-        const tv = document.createElement('b'); tv.textContent = A(gm) + '/' + I(gm) + ' · ' + pctS(A(gm), I(gm));
+        const tv = document.createElement('b'); tv.textContent = fmtN(A(gm)) + '/' + fmtN(I(gm)) + ' · ' + pctS(A(gm), I(gm));
         t.append(nm, tv); tip.append(t);
         if (!who.length) { const e = document.createElement('div'); e.className = 'fa-tip-l'; e.textContent = 'Ningún intento'; tip.append(e); }
         for (const r of who) {
@@ -1499,7 +1505,7 @@ dash.calc('clasificacion', {
           const dn = document.createElement('span'); dn.style.color = 'var(--color-fg-muted)'; dn.style.minWidth = '1.6em'; dn.style.textAlign = 'right';
           dn.textContent = r.dorsal === 'X' ? '' : r.dorsal;
           const n2 = document.createElement('span'); n2.textContent = r.jugadora;
-          const v2 = document.createElement('span'); v2.textContent = r.a + '/' + r.i + ' · ' + pctS(r.a, r.i);
+          const v2 = document.createElement('span'); v2.textContent = fmtN(r.a) + '/' + fmtN(r.i) + ' · ' + pctS(r.a, r.i);
           l.append(dn, n2, v2); tip.append(l);
         }
         tip.hidden = false;
@@ -1523,8 +1529,8 @@ dash.calc('clasificacion', {
     if (!realGames.length) { setState(box, 'empty', 'Sin partidos elegidos'); return; }
     const TOT = '__total';
     const K = ['pts', 'tla', 'tli', 't2a', 't2i', 't3a', 't3i'];
-    per.set(TOT, Object.fromEntries(K.map((k) => [k, d3.sum(realGames, (g) => (per.get(g.partido_id) || {})[k] || 0)])));
-    const games = [...realGames, { partido_id: TOT, label: 'Total', rival: '', total: true }];
+    per.set(TOT, Object.fromEntries(K.map((k) => [k, d3.sum(realGames, (g) => (per.get(g.partido_id) || {})[k] || 0) / totDiv(realGames.length)])));
+    const games = [...realGames, { partido_id: TOT, label: totLab(), rival: '', total: true }];
     const V = (gm, k) => (per.get(gm.partido_id) || {})[k] || 0;
     const tsOf = (pts, fga, fta) => { const d = 2 * (fga + 0.44 * fta); return d ? pts / d : null; };
     const TS = (gm) => tsOf(V(gm, 'pts'), V(gm, 't2i') + V(gm, 't3i'), V(gm, 'tli'));
@@ -1551,7 +1557,7 @@ dash.calc('clasificacion', {
     g.selectAll('line.gr').data(ticks).join('line').attr('x1', left).attr('x2', W - right).attr('y1', (d) => y(d)).attr('y2', (d) => y(d))
       .style('stroke', 'var(--cds-chart-grid)').style('stroke-width', 1);
     cap(g.selectAll('text.yt').data(ticks).join('text').attr('x', left - 8).attr('y', (d) => y(d)).attr('dy', '0.32em').attr('text-anchor', 'end'))
-      .style('fill', 'var(--color-fg-muted)').text((d) => d);
+      .style('fill', 'var(--color-fg-muted)').text((d) => fmtN(d));
     const bw = Math.min(40, x.bandwidth() * 0.6);
     const cx = (gm) => x(gm.partido_id) + x.bandwidth() / 2;
     for (const gm of games) {
@@ -1559,15 +1565,15 @@ dash.calc('clasificacion', {
       for (const s0 of SEG) {
         const v = PV(gm, s0), y1 = y(acc + v), y0 = y(acc), h = y0 - y1;
         if (v > 0) g.append('rect').attr('x', cx(gm) - bw / 2).attr('width', bw).attr('y', y1).attr('height', Math.max(0, h)).style('fill', s0.c);
-        if (h >= 14) cap(g.append('text').attr('x', cx(gm)).attr('y', (y0 + y1) / 2).attr('dy', '0.35em').attr('text-anchor', 'middle')).style('fill', s0.t).style('font-weight', 'var(--cds-font-weight-medium)').text(v);
+        if (h >= 14) cap(g.append('text').attr('x', cx(gm)).attr('y', (y0 + y1) / 2).attr('dy', '0.35em').attr('text-anchor', 'middle')).style('fill', s0.t).style('font-weight', 'var(--cds-font-weight-medium)').text(fmtN(v));
         acc += v;
       }
       cap(g.append('text').attr('x', cx(gm)).attr('y', y(acc) - 4).attr('text-anchor', 'middle')).style('fill', 'var(--color-fg)')
-        .style('paint-order', 'stroke').style('stroke', 'var(--color-panel, #fff)').style('stroke-width', 3).text(acc);
+        .style('paint-order', 'stroke').style('stroke', 'var(--color-panel, #fff)').style('stroke-width', 3).text(fmtN(acc));
       const lb = g.append('g').attr('transform', `translate(${cx(gm)},${H - bottom + 18})`);
       cap(lb.append('text').attr('text-anchor', 'middle')).style('fill', 'var(--color-fg)').style('font-weight', gm.total ? 'var(--cds-font-weight-medium)' : null).text(xLab(gm));
       if (true) cap(lb.append('text').attr('text-anchor', 'middle').attr('dy', '1.3em')).style('fill', 'var(--color-fg-muted)')
-        .text(gm.total ? realGames.length + ' partido' + (realGames.length > 1 ? 's' : '') : rivLab(gm.rival, x.step()));
+        .text(gm.total ? totSub(realGames.length) : rivLab(gm.rival, x.step()));
     }
     g.append('line').attr('x1', left).attr('x2', W - right).attr('y1', y(0)).attr('y2', y(0)).style('stroke', 'var(--cds-chart-axis)').style('stroke-width', 1);
     const sepX = x(TOT) - x.step() * x.paddingInner() / 2;
@@ -1591,14 +1597,14 @@ dash.calc('clasificacion', {
         const pts = V(d.gm, 'pts'), p = d.v, n = V(d.gm, d.s0.k);
         tip.replaceChildren();
         const h = document.createElement('div'); h.className = 'fa-tip-h';
-        h.textContent = d.gm.total ? 'Total · ' + realGames.map((g2) => g2.label).join(', ') : d.gm.label + ' · vs ' + d.gm.rival + ' (' + d.gm.pf + '-' + d.gm.pc + ')'; tip.append(h);
+        h.textContent = d.gm.total ? totHead(realGames) : d.gm.label + ' · vs ' + d.gm.rival + ' (' + d.gm.pf + '-' + d.gm.pc + ')'; tip.append(h);
         const t = document.createElement('div'); t.className = 'fa-tip-l';
         const sw = document.createElement('span'); sw.className = 'fa-k'; sw.style.background = d.s0.c;
         const nm = document.createElement('b'); nm.textContent = d.s0.l;
         const tv = document.createElement('b'); tv.textContent = pts ? Math.round((100 * p) / pts) + '% de los puntos' : '–';
         t.append(sw, nm, tv); tip.append(t);
         const l2 = document.createElement('div'); l2.className = 'fa-tip-l'; l2.style.color = 'var(--color-fg-muted)';
-        l2.textContent = n + ' acierto' + (n > 1 ? 's' : '') + (d.s0.m > 1 ? ' × ' + d.s0.m : '') + ' = ' + p + ' de ' + pts + ' pts';
+        l2.textContent = fmtN(n) + ' acierto' + (n !== 1 ? 's' : '') + (d.s0.m > 1 ? ' × ' + d.s0.m : '') + ' = ' + fmtN(p) + ' de ' + fmtN(pts) + ' pts';
         tip.append(l2);
         tip.hidden = false;
         const scale = W / svg.node().getBoundingClientRect().width;
@@ -1626,6 +1632,7 @@ dash.calc('clasificacion', {
     eqMode = b.dataset.mode;
     eqBtns.forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
     drawStandings();
+    drawTeamRebounds();
   }));
   let stK = 'pos', stDir = 1;
   document.querySelectorAll('.fa-std th button').forEach((btn) => btn.addEventListener('click', () => {
