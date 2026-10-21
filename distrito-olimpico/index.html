@@ -308,40 +308,11 @@ html.fa-nojs .fa-static{display:block}
 .fa button:focus-visible,.fa a:focus-visible,.fa input:focus-visible{outline:2px solid var(--s1);outline-offset:2px;border-radius:6px}
 .fa-seg button,.fa-mt-pre button,.fa-chip{min-height:32px}
 
-/* ===== Resumen del equipo (tarjetas) ===== */
 .fa-h1row{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px}
-.fa-rec{font-size:13px;font-weight:600;padding:3px 10px;border-radius:999px;color:var(--color-ok);background:color-mix(in srgb,var(--color-ok) 12%,transparent);border:1px solid color-mix(in srgb,var(--color-ok) 35%,transparent);white-space:nowrap;font-variant-numeric:tabular-nums}
-.fa-rec.neg{color:var(--color-bad);background:color-mix(in srgb,var(--color-bad) 10%,transparent);border-color:color-mix(in srgb,var(--color-bad) 35%,transparent)}
-.fa-rec.eq0{color:var(--color-fg-muted);background:var(--color-panel);border-color:var(--color-border-line)}
+.fa-rec{font-size:13px;font-weight:600;padding:3px 10px;border-radius:999px;border:1px solid transparent;white-space:nowrap;font-variant-numeric:tabular-nums}
 .fa-take{display:none}
-.fa-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:16px}
-.fa-kpis:empty{display:none}
-@media (max-width:860px){.fa-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.fa-kpi{background:var(--color-panel);border:1px solid var(--color-border-line);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:4px;min-width:0;box-shadow:0 1px 2px rgba(0,0,0,.04)}
-.fa-kpi .k{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--color-fg-muted)}
-.fa-kpi .v{font-size:28px;font-weight:700;letter-spacing:-.02em;line-height:1.15;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.fa-kpi .v small{font-size:14px;font-weight:600;color:var(--color-fg-muted);margin-left:6px;letter-spacing:0}
-.fa-kpi .f{font-size:12px;color:var(--color-fg-muted);line-height:1.4}
-.fa-kpi .up{color:var(--color-ok);font-weight:600}.fa-kpi .dn{color:var(--color-bad);font-weight:600}
-.fa-kpi .bar{position:relative;height:6px;border-radius:99px;background:var(--color-bg);margin-top:6px}
-.fa-kpi .bar i{position:absolute;left:0;top:0;bottom:0;border-radius:99px;background:var(--color-ok)}
-.fa-kpi .bar i.dn{background:var(--color-bad)}
-.fa-kpi .bar b{position:absolute;top:-3px;bottom:-3px;width:2px;margin-left:-1px;background:var(--color-fg)}
-.fa-kpi .v.nm{white-space:normal;overflow:visible;font-size:24px;line-height:1.15}
-@media (max-width:620px){.fa-kpi .v.nm{font-size:19px}}
-.fa-kpi-note{font-size:12px;color:var(--color-fg-muted);margin:8px 0 0}
-.fa-kpi-note[hidden]{display:none}
 .fa-kpi-dots{display:none}
-/* móvil: las tarjetas pasan a carrusel horizontal (se asoma la siguiente) */
-@media (max-width:620px){
-  .fa-kpis{display:flex;grid-template-columns:none;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:16px;margin:16px -16px 0;padding:2px 16px 4px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-  .fa-kpis::-webkit-scrollbar{display:none}
-  .fa-kpis>.fa-kpi{flex:0 0 74%;scroll-snap-align:start}
-  .fa-kpi-dots{display:flex;justify-content:center;gap:6px;margin-top:8px}
-  .fa-kpi-dots button{width:7px;height:7px;min-height:0;padding:0;border:0;border-radius:99px;background:var(--color-border-line);cursor:pointer;transition:width .2s,background .2s}
-  .fa-kpi-dots button[aria-current="true"]{width:18px;background:var(--color-fg-muted)}
-}
-@media (max-width:620px){.fa-kpi .v{font-size:22px}.fa-kpi{padding:12px}.fa-kpis{gap:10px}}
+@media (max-width:620px){.fa-kpi-dots{display:flex;justify-content:center;gap:6px;margin-top:8px}.fa-kpi-dots button{width:7px;height:7px;min-height:0;padding:0;border:0;border-radius:99px;background:var(--color-border-line);cursor:pointer;transition:width .2s,background .2s}.fa-kpi-dots button[aria-current="true"]{width:18px;background:var(--color-fg-muted)}}
 /* ===== Siglas explicadas en las cabeceras ===== */
 .fa-hdtip{position:fixed;z-index:60;max-width:240px;padding:8px 10px;border-radius:8px;background:var(--cds-surface-popover);color:var(--color-fg);border:1px solid var(--cds-border);box-shadow:var(--cds-shadow-popover);font-size:12px;line-height:1.4;pointer-events:none;white-space:normal;text-align:left}
 .fa-hdtip b{display:block;margin-bottom:2px}
@@ -421,33 +392,6 @@ html,body{overflow-x:clip}
 .rd-off{display:none!important}
 html.fa-nojs .rd-off{display:flex!important}
 html.fa-nojs .rd-off.fa-card,html.fa-nojs section.rd-off{display:block!important}
-/* resumen */
-.rd-pane{display:flex;flex-direction:column;gap:12px}
-.rd-toolbar h2{font-size:26px;margin:0;font-weight:700}
-.rd-toolbar p{margin:2px 0 0;color:var(--color-fg-muted);font-size:13px}
-.rd .fa-kpis{margin-top:0}
-.rd .fa-kpi{padding:16px 18px}
-.rd .fa-kpi .k{text-transform:none;letter-spacing:0;font-size:13px}
-.rd-krow{display:flex;align-items:flex-end;justify-content:space-between;gap:8px;margin-top:4px}
-.rd .fa-kpi .v{font-size:38px;line-height:1}
-.rd .fa-kpi .v small{font-size:16px}
-.rd .fa-kpi .f{font-weight:500;margin-top:6px}
-.rd-spark{flex:none}
-.rd-grid2{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:12px}
-@media (max-width:860px){.rd-grid2{grid-template-columns:minmax(0,1fr)}}
-.rd-kref{display:inline-block;width:16px;border-top:2px dashed var(--color-fg);vertical-align:middle;margin-right:6px}
-.rd-lead{list-style:none;margin:0;padding:0}
-.rd-lead li+li{border-top:1px solid var(--color-border-line)}
-.rd-lead button{all:unset;box-sizing:border-box;width:100%;cursor:pointer;display:grid;grid-template-columns:30px 1fr auto;gap:4px 10px;align-items:center;padding:10px 4px;border-radius:8px}
-.rd-lead button:hover{background:var(--fa-shade)}
-.rd-lead button:focus-visible{outline:2px solid var(--rd-brand)}
-.rd-lead .n{font:700 16px var(--rd-num);color:var(--color-fg-muted);text-align:right}
-.rd-lead .nm{font-weight:600}
-.rd-lead .p{font:700 20px var(--rd-num)}.rd-lead .p small{font:600 12px var(--font-anthropic-sans);color:var(--color-fg-muted);margin-left:4px}
-.rd-lead .bar{grid-column:2/4;height:6px;border-radius:99px;background:var(--color-bg);overflow:hidden}
-.rd-lead .bar i{display:block;height:100%;background:var(--rd-brand);border-radius:99px}
-.rd-lead .s{grid-column:2/4;font-size:12px;color:var(--color-fg-muted)}
-.rd-lead button[aria-pressed="true"] .nm::after{content:" · comparando";font-weight:500;color:var(--color-fg-muted);font-size:12px}
 /* tablas por grupos de columnas en el móvil */
 .rd-gbar{display:none;margin:0 0 8px}
 @media (max-width:620px){
@@ -2952,53 +2896,6 @@ dash.calc('clasificacion', {
     upd();
   }
 
-  // --- Rediseño: puntos por jornada con la media de la liga
-  function rdPoints(eq, games, lgPts) {
-    const box = document.querySelector('.fa-c-rdpts'); if (!box || rdOff(box)) return;
-    document.getElementById('rd-pts-me').textContent = short(eq);
-    document.getElementById('rd-pts-lg').textContent = 'Media liga (' + f1.format(lgPts) + ')';
-    box.classList.remove('dash-skeleton'); box.replaceChildren();
-    const W = Math.max(280, box.clientWidth || 320), H = W > 600 ? 330 : 250, top = 22, bottom = 40, left = 30, right = 8;
-    const y = d3.scaleLinear([0, Math.max(lgPts, d3.max(games, (g) => Math.max(g.pf, g.pc)) || 1)], [H - bottom, top]).nice();
-    const x = d3.scaleBand(games.map((g) => g.partido_id), [left, W - right]).paddingInner(0.3).paddingOuter(0.1);
-    const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`);
-    const cap = (sl) => sl.style('font-size', 'var(--cds-font-size-caption)');
-    y.ticks(4).forEach((t) => { svg.append('line').attr('x1', left).attr('x2', W - right).attr('y1', y(t)).attr('y2', y(t)).style('stroke', 'var(--cds-chart-grid)'); cap(svg.append('text').attr('x', left - 6).attr('y', y(t)).attr('dy', '0.32em').attr('text-anchor', 'end')).style('fill', 'var(--color-fg-muted)').text(t); });
-    const bw = Math.min(30, x.bandwidth() / 2 - 2);
-    for (const g of games) {
-      const cx = x(g.partido_id) + x.bandwidth() / 2;
-      [[g.pf, cx - bw - 1, 'var(--rd-brand)', true], [g.pc, cx + 1, 'var(--rd-rival)', false]].forEach(([v, x0, col, me]) => {
-        svg.append('rect').attr('x', x0).attr('width', bw).attr('y', y(v)).attr('height', Math.max(0, y(0) - y(v))).attr('rx', 4).style('fill', col);
-        cap(svg.append('text').attr('x', x0 + bw / 2).attr('y', y(v) - 5).attr('text-anchor', 'middle')).style('fill', me ? 'var(--color-fg)' : 'var(--color-fg-muted)').style('font-weight', me ? 600 : 400).text(v);
-      });
-      const lb = svg.append('text').attr('x', cx).attr('y', H - bottom + 17).attr('text-anchor', 'middle');
-      cap(lb).style('fill', 'var(--color-fg)').style('font-weight', 600).text(g.label + ' ');
-      lb.append('tspan').style('fill', g.ganado ? 'var(--color-ok)' : 'var(--color-bad)').text(g.ganado ? 'V' : 'D');
-      cap(svg.append('text').attr('x', cx).attr('y', H - bottom + 32).attr('text-anchor', 'middle')).style('fill', 'var(--color-fg-muted)').text(rivLab(g.rival, x.step()));
-    }
-    svg.append('line').attr('x1', left).attr('x2', W - right).attr('y1', y(lgPts)).attr('y2', y(lgPts)).style('stroke', 'var(--color-fg)').style('stroke-dasharray', '5 4').style('stroke-width', 1.5);
-    svg.append('line').attr('x1', left).attr('x2', W - right).attr('y1', y(0)).attr('y2', y(0)).style('stroke', 'var(--cds-chart-axis)');
-  }
-  // --- Rediseño: líderes del equipo (toca para añadirla a la comparación)
-  function rdLeaders(eq, rows, games) {
-    const ol = document.getElementById('rd-lead-l'); if (!ol) return;
-    const by = d3.rollups(rows, (v) => ({ pts: d3.sum(v, (r) => Number(r.pts) || 0), val: d3.sum(v, (r) => Number(r.val) || 0), pj: v.length, min: d3.sum(v, (r) => Number(r.min) || 0) }), (r) => r.jugadora)
-      .sort((a, b) => b[1].pts - a[1].pts || b[1].val - a[1].val).slice(0, 5);
-    const mx = by.length ? by[0][1].pts || 1 : 1, selS = new Set(selected());
-    ol.replaceChildren(...by.map(([name, o]) => {
-      const li = document.createElement('li'); const b = document.createElement('button'); b.type = 'button'; b.setAttribute('aria-pressed', String(selS.has(name)));
-      const d = dorsalOf.get(eq + '|' + name);
-      b.innerHTML = '<span class="n"></span><span class="nm"></span><span class="p"></span><span class="bar"><i></i></span><span class="s"></span>';
-      b.querySelector('.n').textContent = d && d !== 'X' ? d : '';
-      b.querySelector('.nm').textContent = name;
-      b.querySelector('.p').textContent = o.pts; b.querySelector('.p').append(Object.assign(document.createElement('small'), { textContent: 'pts' }));
-      b.querySelector('.bar i').style.width = (o.pts / mx * 100) + '%';
-      if (selS.has(name)) b.querySelector('.bar i').style.background = colorOf(name);
-      b.querySelector('.s').textContent = f1.format(o.val / o.pj) + ' val/partido · ' + o.pj + ' PJ · ' + Math.round(o.min) + ' min';
-      b.addEventListener('click', () => toggle(name));
-      li.append(b); return li;
-    }));
-  }
   // --- Rediseño: cabecera marcador (escudo, puesto, cambio de equipo y partidos que cuentan)
   function rdHeader(eq, partidos) {
     const crestBox = document.getElementById('rd-crest');
@@ -3086,73 +2983,14 @@ dash.calc('clasificacion', {
 
   const kpiBound = new WeakSet();
   function renderKpis(eq, games, todos, jug) {
-    const box = document.getElementById('fa-kpis'), rec = document.getElementById('fa-rec');
+    const rec = document.getElementById('fa-rec');
     if (!rec) return;
-    if (jug.status !== 'ok' || !games.length) { if (box) box.replaceChildren(); rec.hidden = true; return; }
-    const ids = new Set(games.map((g) => g.partido_id));
-    const nn = (v) => Number(v) || 0;
-    const ts = (rs) => { const p = d3.sum(rs, (r) => nn(r.pts)), fga = d3.sum(rs, (r) => nn(r.t2i) + nn(r.t3i)), fta = d3.sum(rs, (r) => nn(r.tli)); const d = 2 * (fga + 0.44 * fta); return d > 0 ? p / d : null; };
-    const rows = jug.data.filter((r) => r.equipo === eq && ids.has(r.partido_id));
+    if (jug.status !== 'ok' || !games.length) { rec.hidden = true; return; }
     const n = games.length, w = games.filter((g) => g.ganado).length;
     rec.textContent = w + 'V · ' + (n - w) + 'D';
     rec.className = 'fa-rec' + (w * 2 > n ? '' : w * 2 === n ? ' eq0' : ' neg');
     rec.title = w + ' victorias y ' + (n - w) + ' derrotas' + (todos ? '' : ' en los partidos elegidos');
     rec.hidden = false;
-    if (!box) return;
-    const par = dash.data('partidos'), allP = par.status === 'ok' ? par.data : [];
-    const nTG = allP.length * 2 || 1;
-    const lgPts = d3.sum(allP, (p) => Number(p.pts_local) + Number(p.pts_visitante)) / nTG;
-    const lgVal = d3.sum(jug.data, (r) => nn(r.val)) / nTG, lgTs = ts(jug.data);
-    const pf = d3.sum(games, (g) => g.pf), pc = d3.sum(games, (g) => g.pc);
-    const byG = games.map((g) => { const rs = rows.filter((r) => r.partido_id === g.partido_id); return { g, ts: ts(rs), val: d3.sum(rs, (r) => nn(r.val)) }; });
-    const val = d3.sum(rows, (r) => nn(r.val)), tsE = ts(rows);
-    const g1 = (v) => f1.format(v);
-    const spark = (vals, ref) => {
-      const v2 = vals.filter((v) => v != null); if (v2.length < 2) return null;
-      const W = 92, H = 34, all = ref == null ? v2 : [...v2, ref], mx = Math.max(...all), mn = Math.min(...all), sp = (mx - mn) || 1;
-      const y = (v) => H - 4 - (v - mn) / sp * (H - 8), x = (i) => 3 + i * (W - 6) / (vals.length - 1);
-      const svg = d3.create('svg').attr('width', W).attr('height', H).attr('viewBox', `0 0 ${W} ${H}`).attr('aria-hidden', 'true').attr('class', 'rd-spark');
-      if (ref != null) svg.append('line').attr('x1', 0).attr('x2', W).attr('y1', y(ref)).attr('y2', y(ref)).style('stroke', 'var(--cds-chart-axis)').style('stroke-dasharray', '3 3');
-      svg.append('path').attr('d', d3.line().defined((v) => v != null).x((v, i) => x(i)).y((v) => y(v))(vals)).style('fill', 'none').style('stroke', 'var(--rd-brand)').style('stroke-width', 2);
-      vals.forEach((v, i) => { if (v != null) svg.append('circle').attr('cx', x(i)).attr('cy', y(v)).attr('r', i === vals.length - 1 ? 3.2 : 2).style('fill', 'var(--rd-brand)'); });
-      return svg.node();
-    };
-    const card = (k, v, unit, delta, txt, sp) => {
-      const d = document.createElement('div'); d.className = 'fa-kpi';
-      const a = document.createElement('span'); a.className = 'k'; a.textContent = k;
-      const row = document.createElement('div'); row.className = 'rd-krow';
-      const b = document.createElement('span'); b.className = 'v'; b.textContent = v; if (unit) { const u = document.createElement('small'); u.textContent = unit; b.append(u); }
-      row.append(b); if (sp) row.append(sp);
-      const c = document.createElement('span'); c.className = 'f';
-      if (delta != null) { const e = document.createElement('span'); e.className = delta >= 0 ? 'up' : 'dn'; e.textContent = (delta >= 0 ? '▲ +' : '▼ −') + g1(Math.abs(delta)); c.append(e, ' ' + txt); } else c.textContent = txt;
-      d.append(a, row, c); return d;
-    };
-    const cards = [
-      card('Puntos por partido', g1(pf / n), '', pf / n - lgPts, 'sobre la media de la liga (' + g1(lgPts) + ')', spark(games.map((g) => g.pf), lgPts)),
-      card('Diferencia por partido', ((pf - pc) >= 0 ? '+' : '−') + g1(Math.abs(pf - pc) / n), '', null, pf + ' a favor · ' + pc + ' en contra', spark(games.map((g) => g.pf - g.pc), 0)),
-      card('Acierto real (TS%)', tsE == null ? '--' : g1(tsE * 100), '%', tsE == null || lgTs == null ? null : (tsE - lgTs) * 100, 'puntos sobre la media (' + (lgTs == null ? '--' : g1(lgTs * 100) + '%') + ')', spark(byG.map((o) => (o.ts == null ? null : o.ts * 100)), lgTs == null ? null : lgTs * 100)),
-      card('Valoración por partido', g1(val / n), '', val / n - lgVal, 'sobre la media de la liga (' + g1(lgVal) + ')', spark(byG.map((o) => o.val), lgVal)),
-    ];
-    // textos con signo correcto cuando está por debajo
-    cards.forEach((c) => { const f = c.querySelector('.f'); if (f && f.querySelector('.dn')) f.lastChild.textContent = f.lastChild.textContent.replace('sobre', 'bajo'); });
-    const note = document.getElementById('fa-kpi-note');
-    if (note) { note.hidden = todos; note.textContent = todos ? '' : 'Resumen de los partidos elegidos: ' + games.map((g) => g.label).join(', ') + '.'; }
-    const sub = document.getElementById('rd-res-sub'); if (sub) sub.textContent = n + ' partido' + (n === 1 ? '' : 's') + (todos ? '' : ' elegidos') + ' · comparado con la media de la liga';
-    rdPoints(eq, games, lgPts); rdLeaders(eq, rows, games);
-    box.replaceChildren(...cards);
-    // puntos del carrusel (solo se ven en móvil)
-    const dots = document.getElementById('fa-kpi-dots');
-    if (dots) {
-      dots.replaceChildren(...cards.map((c, i) => { const b = document.createElement('button'); b.type = 'button'; b.tabIndex = -1; b.addEventListener('click', () => box.scrollTo({ left: c.offsetLeft - 16, behavior: 'smooth' })); return b; }));
-      const upd = () => {
-        const x = box.scrollLeft; let k = 0, best = Infinity;
-        cards.forEach((c, i) => { const d = Math.abs(c.offsetLeft - 16 - x); if (d < best) { best = d; k = i; } });
-        if (box.scrollLeft + box.clientWidth >= box.scrollWidth - 2) k = cards.length - 1;
-        [...dots.children].forEach((b, i) => b.setAttribute('aria-current', String(i === k)));
-      };
-      if (!kpiBound.has(box)) { kpiBound.add(box); box.addEventListener('scroll', () => box._upd && box._upd(), { passive: true }); }
-      box._upd = upd; upd();
-    }
   }
 
   dash.onData(() => {
