@@ -2041,7 +2041,7 @@ const realGames = teamGames.filter((g) => ids.includes(g.partido_id));
       pf: d3.sum(realGames, (g) => g.pf), pc: d3.sum(realGames, (g) => g.pc) }];
     box.replaceChildren();
     const W = Math.max(260, box.clientWidth || 320), H = 260, top = 18, bottom = 44, right = 10;
-    const maxV = Math.max(d3.max(games, (g) => d3.max(KEYS, (s0) => (per.get(g.partido_id) || {})[s0.k] || 0)) || 1, ...KEYS.map((s0) => avg[s0.k] || 0));
+    const maxV = Math.max(d3.max(games, (g) => d3.max(KEYS, (s0) => (per.get(g.partido_id) || {})[s0.k] || 0)) || 1, ...KEYS.map((s0) => (eqMode === 'pp' ? avg[s0.k] || 0 : 0)));
 const minV = Math.min(0, d3.min(games, (g) => d3.min(KEYS, (s0) => (per.get(g.partido_id) || {})[s0.k] || 0)) || 0);
 const y = d3.scaleLinear([minV, maxV], [H - bottom, top]).nice();
     const ticks = y.ticks(5);
@@ -2080,14 +2080,15 @@ const y = d3.scaleLinear([minV, maxV], [H - bottom, top]).nice();
     g.append('line').attr('x1', sepX).attr('x2', sepX).attr('y1', top - 6).attr('y2', H - bottom + 30)
       .style('stroke', 'var(--cds-chart-reference)').style('stroke-dasharray', '4 4').style('stroke-width', 1);
 // líneas de puntos: media del grupo por partido de cada indicador, en su color
-for (const s0 of KEYS) {
+if (eqMode === 'pp') for (const s0 of KEYS) {
 if (avg[s0.k] == null) continue;
-const x2 = eqMode === 'pp' ? W - right : sepX;
+const x2 = W - right;
 g.append('line').attr('x1', left).attr('x2', x2).attr('y1', y(avg[s0.k])).attr('y2', y(avg[s0.k]))
 .style('stroke', s0.c).style('stroke-width', 2).style('stroke-dasharray', '1 4').style('stroke-linecap', 'round').style('pointer-events', 'none');
 }
 const legBox = box.closest('.fa-card') && box.closest('.fa-card').querySelector('.fa-leg2');
 if (legBox && !legBox.querySelector('.fa-avg')) { const sp = document.createElement('span'); sp.className = 'fa-avg'; const ic = document.createElement('i'); ic.className = 'fa-kavg'; sp.append(ic, document.createTextNode('Media del grupo')); legBox.append(sp); }
+if (legBox && legBox.querySelector('.fa-avg')) legBox.querySelector('.fa-avg').hidden = eqMode !== 'pp';
 // tooltip por barra: quién cogió esos rebotes
     const jug = faData('jugadoras');
     const pl = jug.status === 'ok' ? jug.data.filter((r) => r.equipo === eq).map(withVal) : [];
@@ -2113,7 +2114,7 @@ if (legBox && !legBox.querySelector('.fa-avg')) { const sp = document.createElem
         const nm = document.createElement('b'); nm.textContent = noun ? noun + ' ' + d.s0.l.toLowerCase() : d.s0.l;
         const tv = document.createElement('b'); tv.textContent = fmtN(st[d.s0.k] ?? 0);
         t.append(sw, nm, tv); tip.append(t);
-if (avg[d.s0.k] != null && (!d.gm.total || eqMode === 'pp')) { const al = document.createElement('div'); al.className = 'fa-tip-l'; const a1 = document.createElement('span'); a1.style.color = 'var(--color-fg-muted)'; a1.textContent = 'Media del grupo'; const a2 = document.createElement('span'); a2.style.color = 'var(--color-fg-muted)'; a2.textContent = fmtN(avg[d.s0.k]); al.append(a1, a2); tip.append(al); }
+if (avg[d.s0.k] != null && eqMode === 'pp') { const al = document.createElement('div'); al.className = 'fa-tip-l'; const a1 = document.createElement('span'); a1.style.color = 'var(--color-fg-muted)'; a1.textContent = 'Media del grupo'; const a2 = document.createElement('span'); a2.style.color = 'var(--color-fg-muted)'; a2.textContent = fmtN(avg[d.s0.k]); al.append(a1, a2); tip.append(al); }
 if (!who.length) { const e = document.createElement('div'); e.className = 'fa-tip-l'; e.textContent = 'Ninguna jugadora'; tip.append(e); }
         for (const r of who) {
           const l = document.createElement('div'); l.className = 'fa-tip-l';
