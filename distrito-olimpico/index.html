@@ -144,7 +144,7 @@ html.fa-nojs .fa-static{display:block}
 .fa-carousel>.fa-card{flex:0 0 calc((100% - 2 * var(--cds-gap-md)) / 3);min-width:0;scroll-snap-align:start}
 @media (max-width:980px){.fa-carousel>.fa-card{flex-basis:calc((100% - var(--cds-gap-md)) / 2)}}
 @media (max-width:620px){.fa-carousel>.fa-card{flex-basis:88%}}
-.fa-carr-nav{display:inline-flex;gap:6px}
+.fa-carr-nav{display:inline-flex;gap:6px}.fa-row>.fa-carr-nav{margin-left:auto}
 .fa-fold{font:inherit;color:inherit;background:none;border:0;padding:4px 6px 4px 0;margin:0;cursor:pointer;display:inline-flex;align-items:center;gap:8px;text-align:left}
 .fa-fold:hover .fa-gtt{text-decoration:underline;text-underline-offset:3px}
 .fa-chev{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;border:1px solid var(--color-border-line);font-size:14px;transition:transform .2s}
@@ -469,7 +469,7 @@ html.fa-nojs .rd-off.fa-card,html.fa-nojs section.rd-off{display:block!important
 
   <section id="graficas-equipo" class="fa-foldsec rd-off">
     <div class="fa-row" style="margin-bottom:var(--cds-gap-sm)">
-      <h2 style="font-size:var(--cds-font-size-heading);font-weight:var(--cds-font-weight-medium);margin:0"><button type="button" class="fa-fold" aria-expanded="true" aria-controls="fa-eq-body-wrap" title="Plegar / desplegar gráficas"><span class="fa-chev" aria-hidden="true">▾</span><span class="fa-gtt">Estadísticas de equipo (Cesur Distrito Olímpico)</span><span class="fa-fold-l">Ocultar</span></button></h2>
+      <h2 style="font-size:var(--cds-font-size-heading);font-weight:var(--cds-font-weight-medium);margin:0"><button type="button" class="fa-fold" aria-expanded="true" aria-controls="fa-eq-body-wrap" title="Plegar / desplegar gráficas"><span class="fa-chev" aria-hidden="true">▾</span><span class="fa-gtt">Estadísticas de equipo</span><span class="fa-fold-l">Ocultar</span></button></h2>
       <span class="fa-carr-nav fa-nonav"><button type="button" class="fa-carr-btn" data-dir="-1" aria-label="Anterior" disabled="">‹</button><button type="button" class="fa-carr-btn" data-dir="1" aria-label="Siguiente" disabled="">›</button></span>
     </div>
     <div class="fa-fbody" id="fa-eq-body-wrap">
@@ -532,7 +532,7 @@ html.fa-nojs .rd-off.fa-card,html.fa-nojs section.rd-off{display:block!important
 
   <section id="mapa-tiro" class="fa-foldsec rd-off">
     <div class="fa-row" style="margin-bottom:var(--cds-gap-sm)">
-      <h2 style="font-size:var(--cds-font-size-heading);font-weight:var(--cds-font-weight-medium);margin:0"><button type="button" class="fa-fold" aria-expanded="true" aria-controls="fa-mt-body-wrap" title="Plegar / desplegar el mapa de tiro"><span class="fa-chev" aria-hidden="true">▾</span><span class="fa-gtt">Mapa de tiro (Cesur Distrito Olímpico)</span><span class="fa-fold-l">Ocultar</span></button></h2>
+      <h2 style="font-size:var(--cds-font-size-heading);font-weight:var(--cds-font-weight-medium);margin:0"><button type="button" class="fa-fold" aria-expanded="true" aria-controls="fa-mt-body-wrap" title="Plegar / desplegar el mapa de tiro"><span class="fa-chev" aria-hidden="true">▾</span><span class="fa-gtt">Mapa de tiro</span><span class="fa-fold-l">Ocultar</span></button></h2>
     </div>
     <div class="fa-fbody" id="fa-mt-body-wrap">
       <div class="fa-mt-ctl">
@@ -570,7 +570,7 @@ html.fa-nojs .rd-off.fa-card,html.fa-nojs section.rd-off{display:block!important
 
   <section class="fa-card fa-foldsec fa-tfold rd-off" id="temporada">
     <div class="fa-row">
-      <div class="fa-ttl"><h2><button type="button" class="fa-fold" aria-expanded="true" aria-controls="fa-jt-body" title="Plegar / desplegar la tabla"><span class="fa-chev" aria-hidden="true">▾</span><span class="fa-gtt fa-t3">Estadísticas jugadoras · Cesur</span><span class="fa-fold-l">Ocultar</span></button></h2><button type="button" class="fa-info" aria-expanded="false" aria-controls="fa-note-jug" title="Cómo usar esta tabla">i</button><button type="button" class="fa-info fa-an" aria-expanded="false" aria-controls="fa-an-jug" title="Análisis de las jugadoras"><svg viewBox="0 0 16 16" width="11" height="11" aria-hidden="true"><path d="M2 12l4-4 3 3 5-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></button></div>
+      <div class="fa-ttl"><h2><button type="button" class="fa-fold" aria-expanded="true" aria-controls="fa-jt-body" title="Plegar / desplegar la tabla"><span class="fa-chev" aria-hidden="true">▾</span><span class="fa-gtt fa-t3">Estadísticas jugadoras</span><span class="fa-fold-l">Ocultar</span></button></h2><button type="button" class="fa-info" aria-expanded="false" aria-controls="fa-note-jug" title="Cómo usar esta tabla">i</button><button type="button" class="fa-info fa-an" aria-expanded="false" aria-controls="fa-an-jug" title="Análisis de las jugadoras"><svg viewBox="0 0 16 16" width="11" height="11" aria-hidden="true"><path d="M2 12l4-4 3 3 5-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></button></div>
       <span class="fa-seg" role="group" aria-label="Cómo ver los datos">
         <button type="button" data-mode="tot" aria-pressed="true">Totales</button>
         <button type="button" data-mode="pp" aria-pressed="false">Por partido</button>
@@ -2001,7 +2001,7 @@ faCalc('clasificacion', {
   }));
   function drawTeamRebounds() {
     if (foldTeam !== team()) { foldTeam = team(); document.querySelectorAll('.fa-foldsec').forEach((sec) => setFold(sec, true)); }
-    document.querySelector('#graficas-equipo .fa-gtt').textContent = 'Estadísticas de equipo (' + team() + ')';
+    document.querySelector('#graficas-equipo .fa-gtt').textContent = 'Estadísticas de equipo';
     drawMapaTiro();
     if (document.getElementById('graficas-equipo').classList.contains('fa-folded') || rdOff('graficas-equipo')) return;
     drawTeamShot('.fa-c-tl', 'tla', 'tli', 'TL', 'Tiros libres');
@@ -2764,7 +2764,7 @@ faCalc('clasificacion', {
   function drawMapaTiro() {
     const sec = document.getElementById('mapa-tiro');
     if (!sec) return;
-    sec.querySelector('.fa-gtt').textContent = 'Mapa de tiro (' + team() + ')';
+    sec.querySelector('.fa-gtt').textContent = 'Mapa de tiro';
     if (sec.classList.contains('fa-folded') || rdOff(sec)) return;
     sec.querySelectorAll('#mt-eqmode button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.mode === eqMode)));
     sec.querySelectorAll('#mt-who button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === mt.who)));
@@ -2780,7 +2780,7 @@ faCalc('clasificacion', {
     gl.textContent = D.withData.length
       ? 'Partidos con mapa de tiro: ' + names + (D.without.length ? ' · sin mapa de tiro subido: ' + D.without.map((g) => g.label).join(', ') : '')
       : '';
-    document.getElementById('mt-map-t').textContent = rivals ? 'Mapa de tiro de los rivales (contra ' + short(team()) + ')' : 'Mapa de tiro de ' + short(team());
+    document.getElementById('mt-map-t').textContent = rivals ? 'Mapa de tiro de los rivales' : 'Mapa de tiro';
     document.getElementById('mt-map-sub').textContent = D.withData.length === 1 ? D.withData[0].label + ' · vs ' + D.withData[0].rival : D.withData.length ? 'Agregado: ' + names : '';
     if (!D.withData.length) {
       const msg = D.allShots ? 'Ninguno de los partidos elegidos tiene mapa de tiro subido.' : 'Este equipo todavía no tiene mapa de tiro subido.';
@@ -3578,8 +3578,8 @@ faCalc('clasificacion', {
     renderKpis(eq, gamesShown, todos, jug);
 
     // Tabla de medias
-    document.querySelector('.fa-t3').textContent = 'Estadísticas jugadoras · ' + (liga ? 'toda la liga'
-      : (todos ? short(eq) : short(eq) + ' · ' + gamesShown.map((g) => g.label).join(', ')));
+    document.querySelector('.fa-t3').textContent = 'Estadísticas jugadoras' + (liga ? ' · toda la liga'
+      : (todos ? '' : ' · ' + gamesShown.map((g) => g.label).join(', ')));
     if (!rdOff('temporada')) buildAndDrawTable(); else { buildIndexes(); tableRows = buildTable(lastSerie); }
 
     if (!rdOff('clasificacion')) drawStandings();
