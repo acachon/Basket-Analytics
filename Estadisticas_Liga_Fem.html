@@ -2164,6 +2164,7 @@ const GR = grpRef();
 const avgI = GR.rows.length ? d3.mean(GR.rows, (r) => +r[kI] || 0) : null;
 const showAvg = eqMode === 'pp' && avgI != null;
 const gPct = (j) => { const rs = GR.inJ(j); const i = d3.sum(rs, (r) => +r[kI] || 0); return i ? d3.sum(rs, (r) => +r[kA] || 0) / i : null; };
+const gI = d3.sum(GR.rows, (r) => +r[kI] || 0), gAll = gI ? d3.sum(GR.rows, (r) => +r[kA] || 0) / gI : null;
 const TOT = '__total';
 per.set(TOT, Object.fromEntries(['tla', 'tli', 't2a', 't2i', 't3a', 't3i'].map((k) => [k, d3.sum(realGames, (g) => (per.get(g.partido_id) || {})[k] || 0) / totDiv(realGames.length)])));
     const games = [...realGames, { partido_id: TOT, label: totLab(), rival: '', total: true }];
@@ -2217,6 +2218,8 @@ const gpts = realGames.map((gm) => ({ gm, p: gPct(gm.jornada) })).filter((d) => 
 g.append('path').datum(gpts).attr('d', d3.line().x((d) => cx(d.gm)).y((d) => yp(d.p))).style('fill', 'none').style('stroke', 'var(--fa-green)').style('stroke-width', 1.5).style('stroke-dasharray', '6 4').style('pointer-events', 'none');
 gpts.forEach((d) => g.append('circle').attr('cx', cx(d.gm)).attr('cy', yp(d.p)).attr('r', 3).style('fill', 'var(--color-panel, #fff)').style('stroke', 'var(--fa-green)').style('stroke-width', 1.5).style('pointer-events', 'none'));
 refLegend(box, [['fa-ref-a', 'Media grupo', showAvg, false], ['fa-ref-p', '%' + lab + ' grupo', true, true]]);
+const gTotX = cx({ partido_id: TOT }), gTotW = bw + 14;
+if (gAll != null) { g.append('line').attr('x1', gTotX - gTotW / 2).attr('x2', gTotX + gTotW / 2).attr('y1', yp(gAll)).attr('y2', yp(gAll)).style('stroke', 'var(--fa-green)').style('stroke-width', 3).style('stroke-dasharray', '4 2').style('pointer-events', 'none'); }
 // línea del % (jornadas unidas; el total como punto aparte)
 const pts = realGames.filter((gm) => P(gm) != null);
     g.append('path').datum(pts).attr('d', d3.line().x(cx).y((gm) => yp(P(gm)))).style('fill', 'none').style('stroke', 'var(--fa-green)').style('stroke-width', 2);
@@ -2250,8 +2253,8 @@ const pts = realGames.filter((gm) => P(gm) != null);
         const nm = document.createElement('b'); nm.textContent = noun;
         const tv = document.createElement('b'); tv.textContent = fmtN(A(gm)) + '/' + fmtN(I(gm)) + ' · ' + pctS(A(gm), I(gm));
         t.append(nm, tv); tip.append(t);
-const gp = gm.total ? null : gPct(gm.jornada);
-const gl = [showAvg ? 'media ' + fmtN(Math.round(avgI * 10) / 10) + ' intentos por partido' : null, gp != null ? Math.round(gp * 100) + '% en la ' + gm.label : null].filter(Boolean);
+const gp = gm.total ? gAll : gPct(gm.jornada);
+const gl = [showAvg ? 'media ' + fmtN(Math.round(avgI * 10) / 10) + ' intentos por partido' : null, gp != null ? Math.round(gp * 100) + '% ' + (gm.total ? 'en todas las jornadas' : 'en la ' + gm.label) : null].filter(Boolean);
 if (gl.length) { const l3 = document.createElement('div'); l3.className = 'fa-tip-l'; l3.style.color = 'var(--color-fg-muted)'; l3.textContent = 'Grupo: ' + gl.join(' · '); tip.append(l3); }
 if (!who.length) { const e = document.createElement('div'); e.className = 'fa-tip-l'; e.textContent = 'Ningún intento'; tip.append(e); }
         for (const r of who) {
@@ -2284,6 +2287,8 @@ if (!who.length) { const e = document.createElement('div'); e.className = 'fa-ti
     const GR = grpRef();
 const avgPts = GR.rows.length ? d3.mean(GR.rows, (r) => +r.pts || 0) : null;
 const showAvg = eqMode === 'pp' && avgPts != null;
+const tsAll = (rs) => { const d = 2 * (d3.sum(rs, (r) => (+r.t2i || 0) + (+r.t3i || 0)) + 0.44 * d3.sum(rs, (r) => +r.tli || 0)); return d ? d3.sum(rs, (r) => +r.pts || 0) / d : null; };
+const gAll = tsAll(GR.rows);
 const gTS = (j) => { const rs = GR.inJ(j); const d = 2 * (d3.sum(rs, (r) => (+r.t2i || 0) + (+r.t3i || 0)) + 0.44 * d3.sum(rs, (r) => +r.tli || 0)); return d ? d3.sum(rs, (r) => +r.pts || 0) / d : null; };
 const TOT = '__total';
 const K = ['pts', 'tla', 'tli', 't2a', 't2i', 't3a', 't3i'];
@@ -2343,6 +2348,8 @@ const gts = realGames.map((gm) => ({ gm, p: gTS(gm.jornada) })).filter((d) => d.
 g.append('path').datum(gts).attr('d', d3.line().x((d) => cx(d.gm)).y((d) => yp(d.p))).style('fill', 'none').style('stroke', 'var(--fa-green)').style('stroke-width', 1.5).style('stroke-dasharray', '6 4').style('pointer-events', 'none');
 gts.forEach((d) => g.append('circle').attr('cx', cx(d.gm)).attr('cy', yp(d.p)).attr('r', 3).style('fill', 'var(--color-panel, #fff)').style('stroke', 'var(--fa-green)').style('stroke-width', 1.5).style('pointer-events', 'none'));
 refLegend(box, [['fa-ref-a', 'Media grupo', showAvg, false], ['fa-ref-p', '%TS grupo', true, true]]);
+const gTotX = cx({ partido_id: TOT }), gTotW = bw + 14;
+if (gAll != null) { g.append('line').attr('x1', gTotX - gTotW / 2).attr('x2', gTotX + gTotW / 2).attr('y1', yp(gAll)).attr('y2', yp(gAll)).style('stroke', 'var(--fa-green)').style('stroke-width', 3).style('stroke-dasharray', '4 2').style('pointer-events', 'none'); }
 const pts = realGames.filter((gm) => TS(gm) != null);
 g.append('path').datum(pts).attr('d', d3.line().x(cx).y((gm) => yp(TS(gm)))).style('fill', 'none').style('stroke', 'var(--fa-green)').style('stroke-width', 2);
     for (const gm of games) {
@@ -2370,8 +2377,8 @@ g.append('path').datum(pts).attr('d', d3.line().x(cx).y((gm) => yp(TS(gm)))).sty
         const l2 = document.createElement('div'); l2.className = 'fa-tip-l'; l2.style.color = 'var(--color-fg-muted)';
         l2.textContent = fmtN(n) + ' acierto' + (n !== 1 ? 's' : '') + (d.s0.m > 1 ? ' × ' + d.s0.m : '') + ' = ' + fmtN(p) + ' de ' + fmtN(pts) + ' pts';
         tip.append(l2);
-const gq = d.gm.total ? null : gTS(d.gm.jornada);
-const gl = [showAvg ? 'media ' + fmtN(Math.round(avgPts * 10) / 10) + ' pts por partido' : null, gq != null ? Math.round(gq * 100) + '% TS en la ' + d.gm.label : null].filter(Boolean);
+const gq = d.gm.total ? gAll : gTS(d.gm.jornada);
+const gl = [showAvg ? 'media ' + fmtN(Math.round(avgPts * 10) / 10) + ' pts por partido' : null, gq != null ? Math.round(gq * 100) + '% TS ' + (d.gm.total ? 'en todas las jornadas' : 'en la ' + d.gm.label) : null].filter(Boolean);
 if (gl.length) { const l3 = document.createElement('div'); l3.className = 'fa-tip-l'; l3.style.color = 'var(--color-fg-muted)'; l3.textContent = 'Grupo: ' + gl.join(' · '); tip.append(l3); }
 tip.hidden = false;
         const scale = W / svg.node().getBoundingClientRect().width;
