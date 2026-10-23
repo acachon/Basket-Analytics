@@ -441,7 +441,7 @@ html.fa-nojs .rd-off.fa-card,html.fa-nojs section.rd-off{display:block!important
 
   <section class="fa-card fa-foldsec fa-tfold" id="clasificacion">
     <div class="fa-row">
-      <div class="fa-ttl"><h2><button type="button" class="fa-fold" aria-expanded="true" aria-controls="fa-cla-body" title="Plegar / desplegar la tabla"><span class="fa-chev" aria-hidden="true">▾</span><span class="fa-gtt" id="fa-cla-t">Estadísticas de equipos - Grupo Par</span><span class="fa-fold-l">Ocultar</span></button></h2><button type="button" class="fa-info" aria-expanded="false" aria-controls="fa-note-cla" title="Cómo usar esta tabla">i</button><button type="button" class="fa-info fa-an" aria-expanded="false" aria-controls="fa-an-cla" title="Análisis del equipo"><svg viewBox="0 0 16 16" width="11" height="11" aria-hidden="true"><path d="M2 12l4-4 3 3 5-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></button></div>
+      <div class="fa-ttl"><h2><button type="button" class="fa-fold" aria-expanded="true" aria-controls="fa-cla-body" title="Plegar / desplegar la tabla"><span class="fa-chev" aria-hidden="true">▾</span><span class="fa-gtt" id="fa-cla-t">Clasificación Grupo Par</span><span class="fa-fold-l">Ocultar</span></button></h2><button type="button" class="fa-info" aria-expanded="false" aria-controls="fa-note-cla" title="Cómo usar esta tabla">i</button><button type="button" class="fa-info fa-an" aria-expanded="false" aria-controls="fa-an-cla" title="Análisis del equipo"><svg viewBox="0 0 16 16" width="11" height="11" aria-hidden="true"><path d="M2 12l4-4 3 3 5-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></button></div>
       <span class="fa-seg fa-seg-eq" role="group" aria-label="Cómo ver las estadísticas de equipo">
         <button type="button" data-mode="tot" aria-pressed="true">Totales</button>
         <button type="button" data-mode="pp" aria-pressed="false">Por partido</button>
@@ -464,12 +464,12 @@ html.fa-nojs .rd-off.fa-card,html.fa-nojs section.rd-off{display:block!important
 
   <section id="graficas-equipo" class="fa-foldsec rd-off">
     <div class="fa-row" style="margin-bottom:var(--cds-gap-sm)">
-      <h2 style="font-size:var(--cds-font-size-heading);font-weight:var(--cds-font-weight-medium);margin:0"><button type="button" class="fa-fold" aria-expanded="true" aria-controls="fa-eq-body-wrap" title="Plegar / desplegar gráficas"><span class="fa-chev" aria-hidden="true">▾</span><span class="fa-gtt">Estadísticas de equipo</span><span class="fa-fold-l">Ocultar</span></button></h2>
+      <h2 style="font-size:var(--cds-font-size-heading);font-weight:var(--cds-font-weight-medium);margin:0"><button type="button" class="fa-fold" aria-expanded="true" aria-controls="fa-eq-body-wrap" title="Plegar / desplegar gráficas"><span class="fa-chev" aria-hidden="true">▾</span><span class="fa-gtt">Estadísticas</span><span class="fa-fold-l">Ocultar</span></button></h2>
       <span class="fa-carr-nav fa-nonav"><button type="button" class="fa-carr-btn" data-dir="-1" aria-label="Anterior" disabled="">‹</button><button type="button" class="fa-carr-btn" data-dir="1" aria-label="Siguiente" disabled="">›</button></span>
     </div>
     <div class="fa-fbody" id="fa-eq-body-wrap">
       <div class="fa-cblock" data-first="1">
-    <div class="fa-carousel" tabindex="0" role="region" aria-label="Carrusel: ▾Estadísticas de equipo (Fundal Alcobendas)Ocultar — usa las flechas para desplazar">
+    <div class="fa-carousel" tabindex="0" role="region" aria-label="Carrusel: ▾EstadísticasOcultar — usa las flechas para desplazar">
       <section class="fa-card" id="eq-val">
         <div class="fa-ttl"><h2>Valoración de ataque y defensa</h2></div>
         <div class="fa-leg2"><span><i class="fa-k fa-k-def"></i>ValD (defensa)</span><span><i class="fa-k fa-k-of"></i>ValO (ataque)</span></div>
@@ -499,7 +499,7 @@ html.fa-nojs .rd-off.fa-card,html.fa-nojs section.rd-off{display:block!important
       </div>
       <div class="fa-cblock fa-cblock2">
         <div class="fa-row fa-cnav2 fa-nonav"><span class="fa-carr-nav"><button type="button" class="fa-carr-btn" data-dir="-1" aria-label="Anterior" disabled="">‹</button><button type="button" class="fa-carr-btn" data-dir="1" aria-label="Siguiente" disabled="">›</button></span></div>
-    <div class="fa-carousel" tabindex="0" role="region" aria-label="Carrusel: ▾Estadísticas de equipo (Fundal Alcobendas)Ocultar (2) — usa las flechas para desplazar">
+    <div class="fa-carousel" tabindex="0" role="region" aria-label="Carrusel: ▾EstadísticasOcultar (2) — usa las flechas para desplazar">
       <section class="fa-card" id="eq-ts">
         <div class="fa-ttl"><h2>Puntos y %TS (T1,2,3)</h2></div>
         <div class="fa-leg2"><span><i class="fa-k fa-k-p3"></i>T3</span><span><i class="fa-k fa-k-p2"></i>T2</span><span><i class="fa-k fa-k-def"></i>TL</span><span><i class="fa-kl"></i>%TS</span></div>
@@ -533,7 +533,7 @@ html.fa-nojs .rd-off.fa-card,html.fa-nojs section.rd-off{display:block!important
       <div class="fa-mt-ctl">
         <span class="fa-note" id="mt-games" style="margin:0"></span>
       </div>
-      <div class="fa-mt-tiles" id="mt-tiles" data-source="tiros" tabindex="0" role="region" aria-label="Carrusel: ▾Mapa de tiro (Fundal Alcobendas)Ocultar — usa las flechas para desplazar"></div>
+      <div class="fa-mt-tiles" id="mt-tiles" data-source="tiros" tabindex="0" role="region" aria-label="Carrusel: ▾Mapa de tiroOcultar — usa las flechas para desplazar"></div>
       <div class="fa-mt-grid">
         <section class="fa-card" id="mt-map">
           <div class="fa-row" style="flex-wrap:wrap;gap:8px"><div class="fa-ttl"><h2 id="mt-map-t">Mapa de tiro</h2><button type="button" class="fa-info" aria-expanded="false" aria-controls="fa-note-mtmap" title="Leyenda y explicación">i</button></div><span class="fa-mt-segs" style="display:inline-flex;flex-wrap:wrap;gap:8px;margin-left:auto;justify-content:flex-end">
@@ -565,7 +565,7 @@ html.fa-nojs .rd-off.fa-card,html.fa-nojs section.rd-off{display:block!important
 
   <section class="fa-card fa-foldsec fa-tfold rd-off" id="temporada">
     <div class="fa-row">
-      <div class="fa-ttl"><h2><button type="button" class="fa-fold" aria-expanded="true" aria-controls="fa-jt-body" title="Plegar / desplegar la tabla"><span class="fa-chev" aria-hidden="true">▾</span><span class="fa-gtt fa-t3">Estadísticas jugadoras</span><span class="fa-fold-l">Ocultar</span></button></h2><button type="button" class="fa-info" aria-expanded="false" aria-controls="fa-note-jug" title="Cómo usar esta tabla">i</button><button type="button" class="fa-info fa-an" aria-expanded="false" aria-controls="fa-an-jug" title="Análisis de las jugadoras"><svg viewBox="0 0 16 16" width="11" height="11" aria-hidden="true"><path d="M2 12l4-4 3 3 5-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></button></div>
+      <div class="fa-ttl"><h2><button type="button" class="fa-fold" aria-expanded="true" aria-controls="fa-jt-body" title="Plegar / desplegar la tabla"><span class="fa-chev" aria-hidden="true">▾</span><span class="fa-gtt fa-t3">Estadísticas</span><span class="fa-fold-l">Ocultar</span></button></h2><button type="button" class="fa-info" aria-expanded="false" aria-controls="fa-note-jug" title="Cómo usar esta tabla">i</button><button type="button" class="fa-info fa-an" aria-expanded="false" aria-controls="fa-an-jug" title="Análisis de las jugadoras"><svg viewBox="0 0 16 16" width="11" height="11" aria-hidden="true"><path d="M2 12l4-4 3 3 5-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></button></div>
       <span class="fa-seg" role="group" aria-label="Cómo ver los datos">
         <button type="button" data-mode="tot" aria-pressed="true">Totales</button>
         <button type="button" data-mode="pp" aria-pressed="false">Por partido</button>
@@ -592,13 +592,13 @@ html.fa-nojs .rd-off.fa-card,html.fa-nojs section.rd-off{display:block!important
 
   <section id="graficas-jug" class="fa-foldsec rd-off">
     <div class="fa-row" style="margin-bottom:var(--cds-gap-sm)">
-      <h2 style="font-size:var(--cds-font-size-heading);font-weight:var(--cds-font-weight-medium);margin:0"><button type="button" class="fa-fold" aria-expanded="true" aria-controls="fa-jug-body-wrap" title="Plegar / desplegar gráficas"><span class="fa-chev" aria-hidden="true">▾</span><span class="fa-gtt">Estadísticas de jugadoras seleccionadas</span><span class="fa-fold-l">Ocultar</span></button></h2>
+      <h2 style="font-size:var(--cds-font-size-heading);font-weight:var(--cds-font-weight-medium);margin:0"><button type="button" class="fa-fold" aria-expanded="true" aria-controls="fa-jug-body-wrap" title="Plegar / desplegar gráficas"><span class="fa-chev" aria-hidden="true">▾</span><span class="fa-gtt">Comparativa jugadoras</span><span class="fa-fold-l">Ocultar</span></button></h2>
       <span class="fa-carr-nav fa-nonav"><button type="button" class="fa-carr-btn" data-dir="-1" aria-label="Anterior" disabled="">‹</button><button type="button" class="fa-carr-btn" data-dir="1" aria-label="Siguiente" disabled="">›</button></span>
     </div>
     <div class="fa-fbody" id="fa-jug-body-wrap">
       <div class="fa-pl-leg" id="fa-pl-leg"><span class="fa-li"><span class="fa-sw" style="background: var(--s1);"></span><b>67</b><span>Irene Fernández</span></span><span class="fa-li"><span class="fa-sw" style="background: var(--s2);"></span><b>14</b><span>Sofía Torres</span></span><span class="fa-li"><span class="fa-sw" style="background: var(--s3);"></span><b>15</b><span>Belén Sánchez</span></span></div>
       <div class="fa-cblock" data-first="1">
-    <div class="fa-carousel" tabindex="0" role="region" aria-label="Carrusel: ▾Estadísticas de jugadoras seleccionadasOcultar — usa las flechas para desplazar">
+    <div class="fa-carousel" tabindex="0" role="region" aria-label="Carrusel: ▾Comparativa jugadorasOcultar — usa las flechas para desplazar">
       <section class="fa-card" id="pl-val">
         <div class="fa-ttl"><h2>Valoración y +/-</h2></div>
         <div class="fa-leg2"><span class="fa-seg fa-pick" role="group" aria-label="Métrica a mostrar"><button type="button" data-k="val" aria-pressed="true">Val</button><button type="button" data-k="valo" aria-pressed="false">ValO</button><button type="button" data-k="vald" aria-pressed="false">ValD</button><button type="button" data-k="mas_menos" aria-pressed="false">+/-</button></span></div>
@@ -628,7 +628,7 @@ html.fa-nojs .rd-off.fa-card,html.fa-nojs section.rd-off{display:block!important
       </div>
       <div class="fa-cblock fa-cblock2">
         <div class="fa-row fa-cnav2 fa-nonav"><span class="fa-carr-nav"><button type="button" class="fa-carr-btn" data-dir="-1" aria-label="Anterior" disabled="">‹</button><button type="button" class="fa-carr-btn" data-dir="1" aria-label="Siguiente" disabled="">›</button></span></div>
-    <div class="fa-carousel" tabindex="0" role="region" aria-label="Carrusel: ▾Estadísticas de jugadoras seleccionadasOcultar (2) — usa las flechas para desplazar">
+    <div class="fa-carousel" tabindex="0" role="region" aria-label="Carrusel: ▾Comparativa jugadorasOcultar (2) — usa las flechas para desplazar">
       <section class="fa-card" id="pl-pts">
         <div class="fa-ttl"><h2>Puntos, minutos y %TS</h2></div>
         <div class="fa-leg2"><span class="fa-seg fa-pick" role="group" aria-label="Métrica a mostrar"><button type="button" data-k="pts" aria-pressed="true">Puntos</button><button type="button" data-k="min" aria-pressed="false">Minutos</button><button type="button" data-k="ppm" aria-pressed="false">Pts/min</button><button type="button" data-k="ts" aria-pressed="false">%TS</button></span></div>
@@ -658,13 +658,13 @@ html.fa-nojs .rd-off.fa-card,html.fa-nojs section.rd-off{display:block!important
   <!-- Sección antigua (selector de estadística + 2 gráficas de líneas): retirada de la vista; su contenido ya está en las gráficas de equipo y de jugadoras seleccionadas. Se mantiene oculta porque el resumen y los análisis comparten su código. -->
   <section id="mapa-jug" class="fa-foldsec rd-off">
     <div class="fa-row" style="margin-bottom:var(--cds-gap-sm)">
-      <h2 style="font-size:var(--cds-font-size-heading);font-weight:var(--cds-font-weight-medium);margin:0"><button type="button" class="fa-fold" aria-expanded="true" aria-controls="fa-mj-body-wrap" title="Plegar / desplegar el mapa de tiro de jugadoras"><span class="fa-chev" aria-hidden="true">▾</span><span class="fa-gtt">Mapa de tiro de jugadoras</span><span class="fa-fold-l">Ocultar</span></button></h2>
+      <h2 style="font-size:var(--cds-font-size-heading);font-weight:var(--cds-font-weight-medium);margin:0"><button type="button" class="fa-fold" aria-expanded="true" aria-controls="fa-mj-body-wrap" title="Plegar / desplegar el mapa de tiro de jugadoras"><span class="fa-chev" aria-hidden="true">▾</span><span class="fa-gtt">Mapa de tiro</span><span class="fa-fold-l">Ocultar</span></button></h2>
     </div>
     <div class="fa-fbody" id="fa-mj-body-wrap">
       <div class="fa-mt-ctl">
         <span class="fa-note" id="mj-games" style="margin:0"></span>
       </div>
-      <div class="fa-mt-tiles" id="mj-tiles" data-source="tiros jugadoras" tabindex="0" role="region" aria-label="Carrusel: ▾Mapa de tiro de jugadorasOcultar — usa las flechas para desplazar"></div>
+      <div class="fa-mt-tiles" id="mj-tiles" data-source="tiros jugadoras" tabindex="0" role="region" aria-label="Carrusel: ▾Mapa de tiroOcultar — usa las flechas para desplazar"></div>
       <div class="fa-mt-grid">
         <section class="fa-card" id="mj-map">
           <div class="fa-row" style="flex-wrap:wrap;gap:8px"><div class="fa-ttl"><h2 id="mj-map-t">Mapa de tiro</h2><button type="button" class="fa-info" aria-expanded="false" aria-controls="fa-note-mjmap" title="Leyenda y explicación">i</button></div>
@@ -2002,7 +2002,7 @@ faCalc('clasificacion', {
   }));
   function drawTeamRebounds() {
     if (foldTeam !== team()) { foldTeam = team(); document.querySelectorAll('.fa-foldsec').forEach((sec) => setFold(sec, true)); }
-    document.querySelector('#graficas-equipo .fa-gtt').textContent = 'Estadísticas de equipo';
+    document.querySelector('#graficas-equipo .fa-gtt').textContent = 'Estadísticas';
     drawMapaTiro();
     if (document.getElementById('graficas-equipo').classList.contains('fa-folded') || rdOff('graficas-equipo')) return;
     drawTeamShot('.fa-c-tl', 'tla', 'tli', 'TL', 'Tiros libres');
@@ -3436,7 +3436,7 @@ faCalc('clasificacion', {
     const m = MET[dash.params().metrica] || MET.pts;
     const gName = window.FA_GRUPOS[window.__faG];
     document.getElementById('fa-gname').textContent = gName;
-    const claT = document.getElementById('fa-cla-t'); if (claT) claT.textContent = 'Estadísticas de equipos - ' + gName;
+    const claT = document.getElementById('fa-cla-t'); if (claT) claT.textContent = 'Clasificación ' + gName;
     document.querySelectorAll('#rd-grp button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.g === window.__faG)));
     const grpEmpty = par.status === 'ok' && Array.isArray(par.data) && !par.data.length;
     document.querySelector('.fa').classList.toggle('fa-gempty', grpEmpty);
@@ -3579,7 +3579,7 @@ faCalc('clasificacion', {
     renderKpis(eq, gamesShown, todos, jug);
 
     // Tabla de medias
-    document.querySelector('.fa-t3').textContent = 'Estadísticas jugadoras' + (liga ? ' · toda la liga'
+    document.querySelector('.fa-t3').textContent = 'Estadísticas' + (liga ? ' · toda la liga'
       : (todos ? '' : ' · ' + gamesShown.map((g) => g.label).join(', ')));
     if (!rdOff('temporada')) buildAndDrawTable(); else { buildIndexes(); tableRows = buildTable(lastSerie); }
 
