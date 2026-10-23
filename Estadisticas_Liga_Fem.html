@@ -548,7 +548,7 @@ html.fa-nojs .rd-off.fa-card,html.fa-nojs section.rd-off{display:block!important
           <div class="fa-mtbox fa-c-mt dash-skeleton" data-source="tiros partidos" style="min-height:300px"></div>
         </section>
         <section class="fa-card" id="mt-evo">
-          <div class="fa-ttl"><h2 id="mt-evo-t">Evolución por zonas</h2><button type="button" class="fa-info" aria-expanded="false" aria-controls="fa-note-mtevo" title="Cómo usar esta gráfica">i</button></div>
+          <div class="fa-ttl"><h2 id="mt-evo-t">Estadísticas de tiro</h2><button type="button" class="fa-info" aria-expanded="false" aria-controls="fa-note-mtevo" title="Cómo usar esta gráfica">i</button></div>
           <p class="fa-note" id="fa-note-mtevo" hidden="">Elige zonas en el mapa de tiro o en la tabla (o un atajo) para ver cómo evolucionan los tiros y el % de acierto; es la misma selección en los tres sitios y, sin ninguna, se cuentan todas.</p>
           <div class="fa-mt-pre" id="mt-pre"></div>
           <div class="fa-leg2"><span><i class="fa-k fa-k-def"></i>Aciertos</span><span><i class="fa-k fa-k-mis"></i>Fallos</span><span><i class="fa-kl"></i>% de acierto</span><span><i class="fa-kl fa-kl-int"></i>% de intentos</span></div>
@@ -2970,7 +2970,7 @@ tip.hidden = false;
     const legI = document.querySelector('#mt-evo .fa-kl-int'); if (legI) legI.parentNode.style.display = TL ? 'none' : '';
     const zs = MT_ALL.filter((z) => act.has(z));
     const zTxt = TL ? 'tiros libres' : zs.length === MT_ALL.length ? 'todos los tiros de campo' : zs.length === 1 ? MT_ZN[zs[0]] : zs.length + ' zonas';
-    document.getElementById('mt-evo-t').textContent = (mt.evo === 'cum' ? 'Evolución acumulada' : 'Evolución jornada a jornada') + ' · ' + zTxt + (rivals ? ' (rivales)' : '');
+    document.getElementById('mt-evo-t').textContent = 'Estadísticas de tiro · ' + zTxt + (mt.evo === 'cum' ? ' · acumulado' : '') + (rivals ? ' (rivales)' : '');
     // series por partido
     const per = games.map((g) => {
       if (TL) { const r = ep.data.find((x) => x.partido_id === g.partido_id && (rivals ? x.equipo !== team() : x.equipo === team())) || {}; return { g, m: nz(r.tla), a: nz(r.tli), by: null, allA: null }; }
@@ -2988,13 +2988,21 @@ tip.hidden = false;
     if (legI) legI.parentNode.style.display = (TL || zs.length === MT_ALL.length) ? 'none' : '';
     const items = showTot ? [...cols, tot] : cols;
     const P = (c) => { const m = c.pctM != null ? c.pctM : c.m, a = c.pctA != null ? c.pctA : c.a; return a ? m / a : null; };
-    box.classList.remove('dash-skeleton'); box.replaceChildren();
+// referencias del grupo (todos los equipos del grupo con datos): media de intentos por partido y % de acierto por jornada, misma selección de zonas
+const GRm = grpRef(), tdG = faData('tiros'), tAll = tdG.status === 'ok' ? tdG.data : [];
+const gRows = TL ? GRm.rows.map((r) => ({ partido_id: r.partido_id, m: nz(r.tla), a: nz(r.tli) })) : tAll.filter((r) => act.has(r.zona));
+const gUnits = TL ? GRm.rows.length : new Set(tAll.map((r) => r.partido_id + '|' + r.equipo)).size;
+const gAvgA = gUnits ? d3.sum(gRows, (r) => r.a) / gUnits : null;
+const gPctJ = (j) => { const rs = gRows.filter((r) => { const jj = GRm.jOf.get(r.partido_id); return mt.evo === 'cum' ? jj <= j : jj === j; }); const a = d3.sum(rs, (r) => r.a); return a ? d3.sum(rs, (r) => r.m) / a : null; };
+const gA0 = d3.sum(gRows, (r) => r.a), gAllP = gA0 ? d3.sum(gRows, (r) => r.m) / gA0 : null;
+const showGAvg = eqMode === 'pp' && mt.evo !== 'cum' && gAvgA != null;
+box.classList.remove('dash-skeleton'); box.replaceChildren();
     const W = Math.max(260, box.clientWidth || 320), H = 340, top = 18, bottom = 44, right = 22;
-    const yMax = d3.max(items, (c) => c.a) || 1;
-    const y = d3.scaleLinear([0, yMax], [H - bottom, top]).nice();
-    const yp = d3.scaleLinear([0, 1], [H - bottom, top]);
-    const ticks = y.ticks(5);
-    const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`);
+    const yMax = Math.max(d3.max(items, (c) => c.a) || 1, showGAvg ? gAvgA : 0);
+const y = d3.scaleLinear([0, yMax], [H - bottom, top]).nice();
+const yp = d3.scaleLinear([0, 1], [H - bottom, top]);
+const ticks = y.ticks(5);
+const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`);
     const meas = svg.append('g').style('font-size', 'var(--cds-font-size-caption)');
     let mw = 0; ticks.forEach((t) => { mw = Math.max(mw, meas.append('text').text(t).node().getComputedTextLength()); }); meas.remove();
     const left = Math.ceil(mw) + 10;
@@ -3033,8 +3041,14 @@ tip.hidden = false;
       g.append('circle').attr('cx', cx(c)).attr('cy', yp(c.pi)).attr('r', 3.5).style('fill', 'var(--fa-blue)').style('stroke', 'var(--color-panel, #fff)').style('stroke-width', 1.5);
       cap(g.append('text').attr('x', cx(c) + bw / 2 + 4).attr('y', yp(c.pi) + (P(c) != null && c.pi > P(c) ? -8 : 15))).style('fill', 'var(--fa-blue)').style('font-weight', 'var(--cds-font-weight-medium)').style('paint-order', 'stroke').style('stroke', 'var(--color-panel, #fff)').style('stroke-width', 3).text(Math.round(c.pi * 100) + '%');
     }
-    const line = items.filter((c) => !c.total && P(c) != null);
-    g.append('path').datum(line).attr('d', d3.line().x(cx).y((c) => yp(P(c)))).style('fill', 'none').style('stroke', 'var(--fa-green)').style('stroke-width', 2);
+    if (showGAvg) g.append('line').attr('x1', left).attr('x2', W - right).attr('y1', y(gAvgA)).attr('y2', y(gAvgA)).style('stroke', 'var(--color-fg-muted)').style('stroke-width', 1.5).style('stroke-dasharray', '6 4').style('pointer-events', 'none');
+const gpts = items.filter((c) => !c.total).map((c) => ({ c, p: gPctJ(c.g.jornada) })).filter((d) => d.p != null);
+g.append('path').datum(gpts).attr('d', d3.line().x((d) => cx(d.c)).y((d) => yp(d.p))).style('fill', 'none').style('stroke', 'var(--fa-green)').style('stroke-width', 1.5).style('stroke-dasharray', '6 4').style('pointer-events', 'none');
+gpts.forEach((d) => g.append('circle').attr('cx', cx(d.c)).attr('cy', yp(d.p)).attr('r', 3).style('fill', 'var(--color-panel, #fff)').style('stroke', 'var(--fa-green)').style('stroke-width', 1.5).style('pointer-events', 'none'));
+if (gAllP != null) { const gTotX = cx(tot), gTotW = bw + 14; g.append('line').attr('x1', gTotX - gTotW / 2).attr('x2', gTotX + gTotW / 2).attr('y1', yp(gAllP)).attr('y2', yp(gAllP)).style('stroke', 'var(--fa-green)').style('stroke-width', 3).style('stroke-dasharray', '4 2').style('pointer-events', 'none'); }
+refLegend(box, [['fa-ref-a', 'Media grupo', showGAvg, false], ['fa-ref-p', '% acierto grupo', true, true]]);
+const line = items.filter((c) => !c.total && P(c) != null);
+g.append('path').datum(line).attr('d', d3.line().x(cx).y((c) => yp(P(c)))).style('fill', 'none').style('stroke', 'var(--fa-green)').style('stroke-width', 2);
     for (const c of items) {
       const p = P(c); if (p == null) continue;
       g.append('circle').attr('cx', cx(c)).attr('cy', yp(p)).attr('r', 4).style('fill', 'var(--fa-green)').style('stroke', 'var(--color-panel, #fff)').style('stroke-width', 1.5);
@@ -3059,6 +3073,9 @@ tip.hidden = false;
       add('Aciertos/intentos', fmtN(c.m) + '/' + fmtN(c.a));
       add('% de acierto', P(c) == null ? '--' : mtPct(P(c)));
       if (c.pi != null) add('% de intentos', mtPct(c.pi));
+const gq = c.total ? gAllP : gPctJ(c.g.jornada);
+if (showGAvg) add('Media del grupo (intentos)', fmtN(Math.round(gAvgA * 10) / 10));
+if (gq != null) add('% de acierto del grupo' + (c.total ? ' (todas las jornadas)' : ''), mtPct(gq));
       if (c.by && zs.length > 1) { for (const z of zs) { const v = c.by.get(z); if (v && v.a) add(MT_ZN[z], v.m + '/' + v.a + ' · ' + mtPct(v.m / v.a)); } }
       tip.hidden = false;
       const bw2 = box.clientWidth, tw = tip.offsetWidth, cx0 = cx(c) / scale;
