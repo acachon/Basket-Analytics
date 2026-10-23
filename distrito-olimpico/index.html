@@ -144,7 +144,7 @@ html.fa-nojs .fa-static{display:block}
 .fa-carousel>.fa-card{flex:0 0 calc((100% - 2 * var(--cds-gap-md)) / 3);min-width:0;scroll-snap-align:start}
 @media (max-width:980px){.fa-carousel>.fa-card{flex-basis:calc((100% - var(--cds-gap-md)) / 2)}}
 @media (max-width:620px){.fa-carousel>.fa-card{flex-basis:88%}}
-.fa-carr-nav{display:inline-flex;gap:6px}.fa-kavg{display:inline-block;width:18px;height:0;border-top:3px dotted var(--color-fg-muted);vertical-align:middle;margin-right:6px}.fa-foldsec.fa-folded #ge-eqmode{display:none}.fa-row>.fa-carr-nav{margin-left:auto}
+.fa-carr-nav{display:inline-flex;gap:6px}.fa-kdash{display:inline-block;width:18px;height:0;border-top:2px dashed var(--color-fg-muted);vertical-align:middle;margin-right:6px}.fa-kdash.fa-kdash-o{border-top-color:var(--fa-green)}.fa-leg2>[hidden]{display:none!important}.fa-kavg{display:inline-block;width:18px;height:0;border-top:3px dotted var(--color-fg-muted);vertical-align:middle;margin-right:6px}.fa-foldsec.fa-folded #ge-eqmode{display:none}.fa-row>.fa-carr-nav{margin-left:auto}
 .fa-fold{font:inherit;color:inherit;background:none;border:0;padding:4px 6px 4px 0;margin:0;cursor:pointer;display:inline-flex;align-items:center;gap:8px;text-align:left}
 .fa-fold:hover .fa-gtt{text-decoration:underline;text-underline-offset:3px}
 .fa-chev{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;border:1px solid var(--color-border-line);font-size:14px;transition:transform .2s}
@@ -2134,24 +2134,44 @@ if (!who.length) { const e = document.createElement('div'); e.className = 'fa-ti
   }
 
   // Columnas apiladas: aciertos (abajo, gris oscuro) + fallos (arriba, gris claro) = intentos; línea con el % de acierto
-  function drawTeamShot(sel, kA, kI, lab, noun, colA = 'var(--fa-blue)', txtA = 'var(--color-panel, #fff)') {
+  // referencia del grupo (todos los equipos del grupo elegido): filas por equipo y partido + jornada de cada partido
+const grpRef = () => {
+const ep0 = faData('equipos_partido'), pa0 = faData('partidos');
+const rows = ep0.status === 'ok' ? ep0.data : [];
+const jOf = new Map((pa0.status === 'ok' && Array.isArray(pa0.data) ? pa0.data : []).map((p) => [p.partido_id, Number(p.jornada)]));
+return { rows, jOf, inJ: (j) => rows.filter((r) => jOf.get(r.partido_id) === j) };
+};
+// leyenda de las líneas de referencia (se añade una vez; se oculta la que no se dibuja)
+const refLegend = (box, items) => {
+const card = box.closest('.fa-card'); const leg = card && card.querySelector('.fa-leg2'); if (!leg) return;
+items.forEach(([cls, txt, show, orange]) => {
+let sp = leg.querySelector('.' + cls);
+if (!sp) { sp = document.createElement('span'); sp.className = cls; const ic = document.createElement('i'); ic.className = 'fa-kdash' + (orange ? ' fa-kdash-o' : ''); sp.append(ic, document.createTextNode(txt)); leg.append(sp); }
+sp.hidden = !show;
+});
+};
+function drawTeamShot(sel, kA, kI, lab, noun, colA = 'var(--fa-blue)', txtA = 'var(--color-panel, #fff)') {
     const box = document.querySelector(sel);
     const ep = faData('equipos_partido');
     if (ep.status !== 'ok') { setState(box, ep.status === 'loading' ? 'loading' : 'error', 'No se pudo cargar'); return; }
     box.classList.remove('dash-skeleton');
     const eq = team(), ids = gamesSel();
     const per = new Map(ep.data.filter((r) => r.equipo === eq).map((r) => [r.partido_id, r]));
-    const realGames = teamGames.filter((g) => ids.includes(g.partido_id));
-    if (!realGames.length) { setState(box, 'empty', 'Sin partidos elegidos'); return; }
-    const TOT = '__total';
-    per.set(TOT, Object.fromEntries(['tla', 'tli', 't2a', 't2i', 't3a', 't3i'].map((k) => [k, d3.sum(realGames, (g) => (per.get(g.partido_id) || {})[k] || 0) / totDiv(realGames.length)])));
+const realGames = teamGames.filter((g) => ids.includes(g.partido_id));
+if (!realGames.length) { setState(box, 'empty', 'Sin partidos elegidos'); return; }
+const GR = grpRef();
+const avgI = GR.rows.length ? d3.mean(GR.rows, (r) => +r[kI] || 0) : null;
+const showAvg = eqMode === 'pp' && avgI != null;
+const gPct = (j) => { const rs = GR.inJ(j); const i = d3.sum(rs, (r) => +r[kI] || 0); return i ? d3.sum(rs, (r) => +r[kA] || 0) / i : null; };
+const TOT = '__total';
+per.set(TOT, Object.fromEntries(['tla', 'tli', 't2a', 't2i', 't3a', 't3i'].map((k) => [k, d3.sum(realGames, (g) => (per.get(g.partido_id) || {})[k] || 0) / totDiv(realGames.length)])));
     const games = [...realGames, { partido_id: TOT, label: totLab(), rival: '', total: true }];
     const A = (gm) => (per.get(gm.partido_id) || {})[kA] || 0, I = (gm) => (per.get(gm.partido_id) || {})[kI] || 0;
     const P = (gm) => (I(gm) ? A(gm) / I(gm) : null);
     box.replaceChildren();
     const W = Math.max(260, box.clientWidth || 320), H = 260, top = 18, bottom = 44, right = 22;
     // misma escala vertical en TL, T2 y T3: el máximo de intentos entre las tres gráficas
-    const yMax = d3.max(games, (gm) => d3.max(['tli', 't2i', 't3i'], (k) => (per.get(gm.partido_id) || {})[k] || 0)) || 1;
+    const yMax = Math.max(d3.max(games, (gm) => d3.max(['tli', 't2i', 't3i'], (k) => (per.get(gm.partido_id) || {})[k] || 0)) || 1, eqMode === 'pp' && GR.rows.length ? d3.max(['tli', 't2i', 't3i'], (k) => d3.mean(GR.rows, (r) => +r[k] || 0)) : 0);
     const y = d3.scaleLinear([0, yMax], [H - bottom, top]).nice();
     const yp = d3.scaleLinear([0, 1], [H - bottom, top]);
     const ticks = y.ticks(5);
@@ -2190,8 +2210,14 @@ if (!who.length) { const e = document.createElement('div'); e.className = 'fa-ti
     const sepX = x(TOT) - x.step() * x.paddingInner() / 2;
     g.append('line').attr('x1', sepX).attr('x2', sepX).attr('y1', top - 6).attr('y2', H - bottom + 30)
       .style('stroke', 'var(--cds-chart-reference)').style('stroke-dasharray', '4 4').style('stroke-width', 1);
-    // línea del % (jornadas unidas; el total como punto aparte)
-    const pts = realGames.filter((gm) => P(gm) != null);
+    // referencias del grupo: media de intentos por partido (gris, solo «Por partido») y % de acierto del grupo en cada jornada (naranja discontinua)
+if (showAvg) g.append('line').attr('x1', left).attr('x2', W - right).attr('y1', y(avgI)).attr('y2', y(avgI)).style('stroke', 'var(--color-fg-muted)').style('stroke-width', 1.5).style('stroke-dasharray', '6 4').style('pointer-events', 'none');
+const gpts = realGames.map((gm) => ({ gm, p: gPct(gm.jornada) })).filter((d) => d.p != null);
+g.append('path').datum(gpts).attr('d', d3.line().x((d) => cx(d.gm)).y((d) => yp(d.p))).style('fill', 'none').style('stroke', 'var(--fa-green)').style('stroke-width', 1.5).style('stroke-dasharray', '6 4').style('pointer-events', 'none');
+gpts.forEach((d) => g.append('circle').attr('cx', cx(d.gm)).attr('cy', yp(d.p)).attr('r', 3).style('fill', 'var(--color-panel, #fff)').style('stroke', 'var(--fa-green)').style('stroke-width', 1.5).style('pointer-events', 'none'));
+refLegend(box, [['fa-ref-a', 'Media grupo', showAvg, false], ['fa-ref-p', '%' + lab + ' grupo', true, true]]);
+// línea del % (jornadas unidas; el total como punto aparte)
+const pts = realGames.filter((gm) => P(gm) != null);
     g.append('path').datum(pts).attr('d', d3.line().x(cx).y((gm) => yp(P(gm)))).style('fill', 'none').style('stroke', 'var(--fa-green)').style('stroke-width', 2);
     for (const gm of games) {
       const p = P(gm); if (p == null) continue;
@@ -2223,7 +2249,10 @@ if (!who.length) { const e = document.createElement('div'); e.className = 'fa-ti
         const nm = document.createElement('b'); nm.textContent = noun;
         const tv = document.createElement('b'); tv.textContent = fmtN(A(gm)) + '/' + fmtN(I(gm)) + ' · ' + pctS(A(gm), I(gm));
         t.append(nm, tv); tip.append(t);
-        if (!who.length) { const e = document.createElement('div'); e.className = 'fa-tip-l'; e.textContent = 'Ningún intento'; tip.append(e); }
+const gp = gm.total ? null : gPct(gm.jornada);
+const gl = [showAvg ? 'media ' + fmtN(Math.round(avgI * 10) / 10) + ' intentos por partido' : null, gp != null ? Math.round(gp * 100) + '% en la ' + gm.label : null].filter(Boolean);
+if (gl.length) { const l3 = document.createElement('div'); l3.className = 'fa-tip-l'; l3.style.color = 'var(--color-fg-muted)'; l3.textContent = 'Grupo: ' + gl.join(' · '); tip.append(l3); }
+if (!who.length) { const e = document.createElement('div'); e.className = 'fa-tip-l'; e.textContent = 'Ningún intento'; tip.append(e); }
         for (const r of who) {
           const l = document.createElement('div'); l.className = 'fa-tip-l';
           const dn = document.createElement('span'); dn.style.color = 'var(--color-fg-muted)'; dn.style.minWidth = '1.6em'; dn.style.textAlign = 'right';
@@ -2251,8 +2280,12 @@ if (!who.length) { const e = document.createElement('div'); e.className = 'fa-ti
     const per = new Map(ep.data.filter((r) => r.equipo === eq).map((r) => [r.partido_id, r]));
     const realGames = teamGames.filter((g) => ids.includes(g.partido_id));
     if (!realGames.length) { setState(box, 'empty', 'Sin partidos elegidos'); return; }
-    const TOT = '__total';
-    const K = ['pts', 'tla', 'tli', 't2a', 't2i', 't3a', 't3i'];
+    const GR = grpRef();
+const avgPts = GR.rows.length ? d3.mean(GR.rows, (r) => +r.pts || 0) : null;
+const showAvg = eqMode === 'pp' && avgPts != null;
+const gTS = (j) => { const rs = GR.inJ(j); const d = 2 * (d3.sum(rs, (r) => (+r.t2i || 0) + (+r.t3i || 0)) + 0.44 * d3.sum(rs, (r) => +r.tli || 0)); return d ? d3.sum(rs, (r) => +r.pts || 0) / d : null; };
+const TOT = '__total';
+const K = ['pts', 'tla', 'tli', 't2a', 't2i', 't3a', 't3i'];
     per.set(TOT, Object.fromEntries(K.map((k) => [k, d3.sum(realGames, (g) => (per.get(g.partido_id) || {})[k] || 0) / totDiv(realGames.length)])));
     const games = [...realGames, { partido_id: TOT, label: totLab(), rival: '', total: true }];
     const V = (gm, k) => (per.get(gm.partido_id) || {})[k] || 0;
@@ -2268,7 +2301,7 @@ if (!who.length) { const e = document.createElement('div'); e.className = 'fa-ti
     const tot = (gm) => SEG.reduce((a, s0) => a + PV(gm, s0), 0);
     box.replaceChildren();
     const W = Math.max(260, box.clientWidth || 320), H = 260, top = 18, bottom = 44, right = 30;
-    const y = d3.scaleLinear([0, d3.max(games, tot) || 1], [H - bottom, top]).nice();
+    const y = d3.scaleLinear([0, Math.max(d3.max(games, tot) || 1, showAvg ? avgPts : 0)], [H - bottom, top]).nice();
     const yp = d3.scaleLinear([0, 1], [H - bottom, top]);
     const ticks = y.ticks(5);
     const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`);
@@ -2304,8 +2337,13 @@ if (!who.length) { const e = document.createElement('div'); e.className = 'fa-ti
     const sepX = x(TOT) - x.step() * x.paddingInner() / 2;
     g.append('line').attr('x1', sepX).attr('x2', sepX).attr('y1', top - 6).attr('y2', H - bottom + 30)
       .style('stroke', 'var(--cds-chart-reference)').style('stroke-dasharray', '4 4').style('stroke-width', 1);
-    const pts = realGames.filter((gm) => TS(gm) != null);
-    g.append('path').datum(pts).attr('d', d3.line().x(cx).y((gm) => yp(TS(gm)))).style('fill', 'none').style('stroke', 'var(--fa-green)').style('stroke-width', 2);
+    if (showAvg) g.append('line').attr('x1', left).attr('x2', W - right).attr('y1', y(avgPts)).attr('y2', y(avgPts)).style('stroke', 'var(--color-fg-muted)').style('stroke-width', 1.5).style('stroke-dasharray', '6 4').style('pointer-events', 'none');
+const gts = realGames.map((gm) => ({ gm, p: gTS(gm.jornada) })).filter((d) => d.p != null);
+g.append('path').datum(gts).attr('d', d3.line().x((d) => cx(d.gm)).y((d) => yp(d.p))).style('fill', 'none').style('stroke', 'var(--fa-green)').style('stroke-width', 1.5).style('stroke-dasharray', '6 4').style('pointer-events', 'none');
+gts.forEach((d) => g.append('circle').attr('cx', cx(d.gm)).attr('cy', yp(d.p)).attr('r', 3).style('fill', 'var(--color-panel, #fff)').style('stroke', 'var(--fa-green)').style('stroke-width', 1.5).style('pointer-events', 'none'));
+refLegend(box, [['fa-ref-a', 'Media grupo', showAvg, false], ['fa-ref-p', '%TS grupo', true, true]]);
+const pts = realGames.filter((gm) => TS(gm) != null);
+g.append('path').datum(pts).attr('d', d3.line().x(cx).y((gm) => yp(TS(gm)))).style('fill', 'none').style('stroke', 'var(--fa-green)').style('stroke-width', 2);
     for (const gm of games) {
       const p = TS(gm); if (p == null) continue;
       g.append('circle').attr('cx', cx(gm)).attr('cy', yp(p)).attr('r', 4).style('fill', 'var(--fa-green)').style('stroke', 'var(--color-panel, #fff)').style('stroke-width', 1.5);
@@ -2331,7 +2369,10 @@ if (!who.length) { const e = document.createElement('div'); e.className = 'fa-ti
         const l2 = document.createElement('div'); l2.className = 'fa-tip-l'; l2.style.color = 'var(--color-fg-muted)';
         l2.textContent = fmtN(n) + ' acierto' + (n !== 1 ? 's' : '') + (d.s0.m > 1 ? ' × ' + d.s0.m : '') + ' = ' + fmtN(p) + ' de ' + fmtN(pts) + ' pts';
         tip.append(l2);
-        tip.hidden = false;
+const gq = d.gm.total ? null : gTS(d.gm.jornada);
+const gl = [showAvg ? 'media ' + fmtN(Math.round(avgPts * 10) / 10) + ' pts por partido' : null, gq != null ? Math.round(gq * 100) + '% TS en la ' + d.gm.label : null].filter(Boolean);
+if (gl.length) { const l3 = document.createElement('div'); l3.className = 'fa-tip-l'; l3.style.color = 'var(--color-fg-muted)'; l3.textContent = 'Grupo: ' + gl.join(' · '); tip.append(l3); }
+tip.hidden = false;
         const scale = W / svg.node().getBoundingClientRect().width;
         const px = cx(d.gm) / scale, bwid = box.clientWidth, tw = tip.offsetWidth;
         tip.style.left = Math.max(0, Math.min(bwid - tw, px + 24 + tw > bwid ? px - tw - 24 : px + 24)) + 'px';
