@@ -293,6 +293,11 @@ html.fa-nojs .fa-static{display:block}
   .fa-std td:nth-child(2){position:sticky;left:var(--fa-s1w,3.6rem);z-index:1;background:var(--color-panel);box-shadow:1px 0 0 var(--color-border-line)}
   .fa-std tr.fa-cur td:nth-child(2),.fa-std tr.fa-sub td:nth-child(2),.fa-std tr.fa-total td:nth-child(2){background:var(--color-bg)}
   .fa-std .fa-tname{max-width:8.5rem;overflow:hidden;text-overflow:ellipsis;display:inline-block;vertical-align:middle}
+  /* la zona fija (# + equipo) no pasa del 60 % del ancho visible: así siempre se pueden deslizar los KPIs */
+  .fa-std{--fa-n2w:calc(60vw - var(--fa-s1w,3.6rem))}
+  .fa-std td:nth-child(2),.fa-std th.fa-stick2,.fa-std th.fa-namecol{width:var(--fa-n2w);min-width:var(--fa-n2w);max-width:var(--fa-n2w);box-sizing:border-box}
+  .fa-std .fa-tname{max-width:calc(var(--fa-n2w) - 64px)}
+  .fa-std tr.fa-sub td:nth-child(2){white-space:normal;line-height:1.25;padding-left:8px;overflow-wrap:anywhere}
   .fa-std .fa-crest{width:20px;height:20px}
   .fa-ptab td:nth-child(2){position:sticky;left:var(--fa-c1w,4.6rem);z-index:1;background:var(--color-panel);box-shadow:1px 0 0 var(--color-border-line)}
   .fa-ptab tr.fa-total td:nth-child(2),.fa-ptab tr.fa-psub td:nth-child(2){background:var(--color-bg)}
