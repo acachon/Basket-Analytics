@@ -57,7 +57,7 @@ html,body{overflow-x:clip;margin:0;background:var(--color-bg);color:var(--color-
 .fa-static{display:none;margin:0 0 14px;padding:10px 12px;border-radius:10px;border:1px solid var(--color-border-line);background:var(--color-panel);font-size:12px;color:var(--color-fg-muted)}
 html.fa-nojs .fa-static{display:block}
 </style>
-</head>
+<style id="fa-refsel-css">.fa-refsel{display:inline-flex;align-items:center;gap:6px;font-size:var(--cds-font-size-caption);color:var(--color-fg-muted)}.fa-refsel select{font:inherit;font-size:var(--cds-font-size-caption);color:var(--color-fg);background:var(--color-panel);border:1px solid var(--color-border-line,rgba(0,0,0,.15));border-radius:8px;padding:5px 8px;max-width:200px;cursor:pointer}.fa-leg2{flex-wrap:wrap;row-gap:4px}</style></head>
 <body>
 <div id="dash-root">
 <p class="fa-static">Vista fija con Cesur Distrito Olímpico y las 3 jugadoras con más minutos. Para tocar equipos, jugadoras y filtros, abre este archivo en Safari o Chrome.</p>
@@ -473,9 +473,9 @@ html.fa-nojs .rd-off.fa-card,html.fa-nojs section.rd-off{display:block!important
 
 
   <section id="graficas-equipo" class="fa-foldsec rd-off">
-    <div class="fa-row" style="margin-bottom:var(--cds-gap-sm)">
+    <div class="fa-row" style="margin-bottom: var(--cds-gap-sm); flex-wrap: wrap; gap: 8px;">
       <h2 style="font-size:var(--cds-font-size-heading);font-weight:var(--cds-font-weight-medium);margin:0"><button type="button" class="fa-fold" aria-expanded="true" aria-controls="fa-eq-body-wrap" title="Plegar / desplegar gráficas"><span class="fa-chev" aria-hidden="true">▾</span><span class="fa-gtt">Estadísticas</span><span class="fa-fold-l">Ocultar</span></button></h2><span class="fa-seg" id="ge-eqmode" role="group" aria-label="Cómo ver las estadísticas"><button type="button" data-mode="tot" aria-pressed="false">Totales</button><button type="button" data-mode="pp" aria-pressed="true">Por partido</button></span>
-      <span class="fa-carr-nav fa-nonav"><button type="button" class="fa-carr-btn" data-dir="-1" aria-label="Anterior" disabled="">‹</button><button type="button" class="fa-carr-btn" data-dir="1" aria-label="Siguiente" disabled="">›</button></span>
+      <label id="fa-ref-eq" class="fa-refsel" title="Qué pintan las líneas discontinuas de referencia: la media de todo el grupo o la de un equipo concreto"><span>Comparar con</span><select aria-label="Referencia de las líneas de media"><option value="__grp">Media grupo</option><option value="C.B. Las Rozas">C.B. Las Rozas</option><option value="Cesur Distrito Olímpico">Cesur Distrito Olímpico</option><option value="Colegio Alameda de Osuna">Colegio Alameda de Osuna</option><option value="Colmenar Viejo A">Colmenar Viejo A</option><option value="Femenino Alcorcón">Femenino Alcorcón</option><option value="Fundal Alcobendas">Fundal Alcobendas</option><option value="Isaac Newton">Isaac Newton</option><option value="Quiero Valcude Alcobendas">Quiero Valcude Alcobendas</option><option value="Ricopia Funbal Alcalá CBJA">Ricopia Funbal Alcalá CBJA</option><option value="Veritas Pozuelo">Veritas Pozuelo</option></select></label><span class="fa-carr-nav fa-nonav"><button type="button" class="fa-carr-btn" data-dir="-1" aria-label="Anterior" disabled="">‹</button><button type="button" class="fa-carr-btn" data-dir="1" aria-label="Siguiente" disabled="">›</button></span>
     </div>
     <div class="fa-fbody" id="fa-eq-body-wrap">
       <div class="fa-cblock" data-first="1">
@@ -536,9 +536,9 @@ html.fa-nojs .rd-off.fa-card,html.fa-nojs section.rd-off{display:block!important
   </section>
 
   <section id="mapa-tiro" class="fa-foldsec rd-off">
-    <div class="fa-row" style="margin-bottom:var(--cds-gap-sm)">
+    <div class="fa-row" style="margin-bottom: var(--cds-gap-sm); flex-wrap: wrap; gap: 8px;">
       <h2 style="font-size:var(--cds-font-size-heading);font-weight:var(--cds-font-weight-medium);margin:0"><button type="button" class="fa-fold" aria-expanded="true" aria-controls="fa-mt-body-wrap" title="Plegar / desplegar el mapa de tiro"><span class="fa-chev" aria-hidden="true">▾</span><span class="fa-gtt">Mapa de tiro</span><span class="fa-fold-l">Ocultar</span></button></h2>
-    </div>
+    <label id="fa-ref-mt" class="fa-refsel" title="Qué pintan las líneas discontinuas de referencia: la media de todo el grupo o la de un equipo concreto"><span>Comparar con</span><select aria-label="Referencia de las líneas de media"><option value="__grp">Media grupo</option><option value="C.B. Las Rozas">C.B. Las Rozas</option><option value="Cesur Distrito Olímpico">Cesur Distrito Olímpico</option><option value="Colegio Alameda de Osuna">Colegio Alameda de Osuna</option><option value="Colmenar Viejo A">Colmenar Viejo A</option><option value="Femenino Alcorcón">Femenino Alcorcón</option><option value="Fundal Alcobendas">Fundal Alcobendas</option><option value="Isaac Newton">Isaac Newton</option><option value="Quiero Valcude Alcobendas">Quiero Valcude Alcobendas</option><option value="Ricopia Funbal Alcalá CBJA">Ricopia Funbal Alcalá CBJA</option><option value="Veritas Pozuelo">Veritas Pozuelo</option></select></label></div>
     <div class="fa-fbody" id="fa-mt-body-wrap">
       <div class="fa-mt-ctl">
         <span class="fa-note" id="mt-games" style="margin:0"></span>
@@ -2007,6 +2007,7 @@ faCalc('clasificacion', {
   function drawTeamRebounds() {
     if (foldTeam !== team()) { foldTeam = team(); document.querySelectorAll('.fa-foldsec').forEach((sec) => setFold(sec, true)); }
     document.querySelector('#graficas-equipo .fa-gtt').textContent = 'Estadísticas';
+refSelect('eq', '#graficas-equipo > .fa-row', drawTeamRebounds);
     document.querySelectorAll('#ge-eqmode button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.mode === eqMode)));
     drawMapaTiro();
     if (document.getElementById('graficas-equipo').classList.contains('fa-folded') || rdOff('graficas-equipo')) return;
@@ -2034,11 +2035,14 @@ faCalc('clasificacion', {
     const eq = team(), ids = gamesSel();
     const per = new Map(ep.data.filter((r) => r.equipo === eq).map((r) => [r.partido_id, withVal(r)]));
 // media del grupo por partido (todos los equipos y partidos jugados del grupo elegido)
-const grpRows = ep.data.map(withVal);
-const avg = Object.fromEntries(KEYS.map((s0) => [s0.k, grpRows.length ? d3.mean(grpRows, (r) => +r[s0.k] || 0) : null]));
+const GRp = grpRef(), grpRows = refFilter('eq', ep.data).map(withVal);
+const avgJ = (k, j) => { const rs = grpRows.filter((r) => GRp.jOf.get(r.partido_id) === j); return rs.length ? d3.mean(rs, (r) => +r[k] || 0) : null; };
 const realGames = teamGames.filter((g) => ids.includes(g.partido_id));
     if (!realGames.length) { setState(box, 'empty', 'Sin partidos elegidos'); return; }
-    // columna «Total»: acumulado de las jornadas elegidas
+const selJ = new Set(realGames.map((g2) => +g2.jornada));
+const avgRows = grpRows.filter((r) => selJ.has(GRp.jOf.get(r.partido_id)));
+const avg = Object.fromEntries(KEYS.map((s0) => [s0.k, avgRows.length ? d3.mean(avgRows, (r) => +r[s0.k] || 0) : null]));
+// columna «Total»: acumulado de las jornadas elegidas
     const TOT = '__total';
     const totStats = Object.fromEntries(KEYS.map((s0) => [s0.k, d3.sum(realGames, (g) => (per.get(g.partido_id) || {})[s0.k] || 0) / totDiv(realGames.length)]));
     per.set(TOT, totStats);
@@ -2046,7 +2050,7 @@ const realGames = teamGames.filter((g) => ids.includes(g.partido_id));
       pf: d3.sum(realGames, (g) => g.pf), pc: d3.sum(realGames, (g) => g.pc) }];
     box.replaceChildren();
     const W = Math.max(260, box.clientWidth || 320), H = 260, top = 18, bottom = 44, right = 10;
-    const maxV = Math.max(d3.max(games, (g) => d3.max(KEYS, (s0) => (per.get(g.partido_id) || {})[s0.k] || 0)) || 1, ...KEYS.map((s0) => (eqMode === 'pp' ? avg[s0.k] || 0 : 0)));
+    const maxV = Math.max(d3.max(games, (g) => d3.max(KEYS, (s0) => (per.get(g.partido_id) || {})[s0.k] || 0)) || 1, ...KEYS.map((s0) => (eqMode === 'pp' ? Math.max(avg[s0.k] || 0, ...realGames.map((gm) => avgJ(s0.k, +gm.jornada) || 0)) : 0)));
 const minV = Math.min(0, d3.min(games, (g) => d3.min(KEYS, (s0) => (per.get(g.partido_id) || {})[s0.k] || 0)) || 0);
 const y = d3.scaleLinear([minV, maxV], [H - bottom, top]).nice();
     const ticks = y.ticks(5);
@@ -2086,13 +2090,16 @@ const y = d3.scaleLinear([minV, maxV], [H - bottom, top]).nice();
       .style('stroke', 'var(--cds-chart-reference)').style('stroke-dasharray', '4 4').style('stroke-width', 1);
 // líneas de puntos: media del grupo por partido de cada indicador, en su color
 if (eqMode === 'pp') for (const s0 of KEYS) {
-if (avg[s0.k] == null) continue;
-const x2 = W - right;
-g.append('line').attr('x1', left).attr('x2', x2).attr('y1', y(avg[s0.k])).attr('y2', y(avg[s0.k]))
-.style('stroke', s0.c).style('stroke-width', 2).style('stroke-dasharray', '1 4').style('stroke-linecap', 'round').style('pointer-events', 'none');
+// media de la referencia en cada jornada (puntos unidos) y media de todas las jornadas en la columna final
+const pxA = (gm) => x(gm.partido_id) + bx(s0.k) + bw / 2;
+const ptsJ = realGames.map((gm) => ({ gm, v: avgJ(s0.k, +gm.jornada) })).filter((d) => d.v != null);
+g.append('path').datum(ptsJ).attr('d', d3.line().x((d) => pxA(d.gm)).y((d) => y(d.v))).style('fill', 'none').style('stroke', s0.c).style('stroke-width', 2).style('stroke-dasharray', '1 4').style('stroke-linecap', 'round').style('pointer-events', 'none');
+ptsJ.forEach((d) => g.append('circle').attr('cx', pxA(d.gm)).attr('cy', y(d.v)).attr('r', 3).style('fill', 'var(--color-panel, #fff)').style('stroke', s0.c).style('stroke-width', 1.5).style('pointer-events', 'none'));
+if (avg[s0.k] != null) { const tx = x(TOT) + bx(s0.k); [['var(--color-panel, #fff)', 6, null], [s0.c, 3, '4 2']].forEach(([c0, w0, da]) => g.append('line').attr('x1', tx - 4).attr('x2', tx + bw + 4).attr('y1', y(avg[s0.k])).attr('y2', y(avg[s0.k])).style('stroke', c0).style('stroke-width', w0).style('stroke-dasharray', da).style('pointer-events', 'none')); }
 }
 const legBox = box.closest('.fa-card') && box.closest('.fa-card').querySelector('.fa-leg2');
-if (legBox && !legBox.querySelector('.fa-avg')) { const sp = document.createElement('span'); sp.className = 'fa-avg'; const ic = document.createElement('i'); ic.className = 'fa-kavg'; sp.append(ic, document.createTextNode('Media del grupo')); legBox.append(sp); }
+if (legBox && !legBox.querySelector('.fa-avg')) { const sp = document.createElement('span'); sp.className = 'fa-avg'; const ic = document.createElement('i'); ic.className = 'fa-kavg'; sp.append(ic, document.createTextNode('Media grupo')); legBox.append(sp); }
+if (legBox && legBox.querySelector('.fa-avg')) legBox.querySelector('.fa-avg').lastChild.textContent = refLab('eq');
 if (legBox && legBox.querySelector('.fa-avg')) legBox.querySelector('.fa-avg').hidden = eqMode !== 'pp';
 // tooltip por barra: quién cogió esos rebotes
     const jug = faData('jugadoras');
@@ -2119,7 +2126,8 @@ if (legBox && legBox.querySelector('.fa-avg')) legBox.querySelector('.fa-avg').h
         const nm = document.createElement('b'); nm.textContent = noun ? noun + ' ' + d.s0.l.toLowerCase() : d.s0.l;
         const tv = document.createElement('b'); tv.textContent = fmtN(st[d.s0.k] ?? 0);
         t.append(sw, nm, tv); tip.append(t);
-if (avg[d.s0.k] != null && eqMode === 'pp') { const al = document.createElement('div'); al.className = 'fa-tip-l'; const a1 = document.createElement('span'); a1.style.color = 'var(--color-fg-muted)'; a1.textContent = 'Media del grupo'; const a2 = document.createElement('span'); a2.style.color = 'var(--color-fg-muted)'; a2.textContent = fmtN(avg[d.s0.k]); al.append(a1, a2); tip.append(al); }
+const avD = d.gm.total ? avg[d.s0.k] : avgJ(d.s0.k, +d.gm.jornada);
+if (avD != null && eqMode === 'pp') { const al = document.createElement('div'); al.className = 'fa-tip-l'; const a1 = document.createElement('span'); a1.style.color = 'var(--color-fg-muted)'; a1.textContent = (REF.eq === REF_G ? 'Media del grupo' : refShort(REF.eq)) + (d.gm.total ? '' : ' en la ' + d.gm.label); const a2 = document.createElement('span'); a2.style.color = 'var(--color-fg-muted)'; a2.textContent = fmtN(Math.round(avD * 10) / 10); al.append(a1, a2); tip.append(al); }
 if (!who.length) { const e = document.createElement('div'); e.className = 'fa-tip-l'; e.textContent = 'Ninguna jugadora'; tip.append(e); }
         for (const r of who) {
           const l = document.createElement('div'); l.className = 'fa-tip-l';
@@ -2152,9 +2160,33 @@ const card = box.closest('.fa-card'); const leg = card && card.querySelector('.f
 items.forEach(([cls, txt, show, orange]) => {
 let sp = leg.querySelector('.' + cls);
 if (!sp) { sp = document.createElement('span'); sp.className = cls; const ic = document.createElement('i'); ic.className = 'fa-kdash' + (orange ? ' fa-kdash-o' : ''); sp.append(ic, document.createTextNode(txt)); leg.append(sp); }
+if (sp.lastChild) sp.lastChild.textContent = txt;
 sp.hidden = !show;
 });
 };
+// referencia de las líneas de media en cada sección: todo el grupo o un equipo concreto del grupo
+const REF_G = '__grp';
+const REF = { eq: REF_G, mt: REF_G };
+const REF_SHORT = { 'Saltium Alcorcón Basket': 'Saltium', 'Baloncesto Daganzo Isuzu Revein': 'Daganzo', 'C.B. Getafe': 'Getafe', 'Baloncesto Rivas Sureste': 'Rivas', 'Jansen BT': 'Jansen', 'Club Baloncesto Zona Press': 'Zona Press', 'C.B. Coslada': 'Coslada' };
+const refShort = (e) => REF_SHORT[e] || short(e);
+const refTeams = () => { const ep0 = faData('equipos_partido'); return ep0.status === 'ok' ? [...new Set(ep0.data.map((r) => r.equipo))] : []; };
+const refOk = (sec) => { const eqs = refTeams(); if (REF[sec] !== REF_G && eqs.length && !eqs.includes(REF[sec])) REF[sec] = REF_G; };
+const refLab = (sec) => (REF[sec] === REF_G ? 'Media grupo' : refShort(REF[sec]));
+const refWord = (sec) => (REF[sec] === REF_G ? 'grupo' : refShort(REF[sec]));
+const refHead = (sec) => (REF[sec] === REF_G ? 'Grupo: ' : refShort(REF[sec]) + ': ');
+const refFilter = (sec, rows) => { refOk(sec); return REF[sec] === REF_G ? rows : rows.filter((r) => r.equipo === REF[sec]); };
+function refSelect(sec, hostSel, redraw) {
+const host = document.querySelector(hostSel); if (!host) return;
+if (!document.getElementById('fa-refsel-css')) { const st = document.createElement('style'); st.id = 'fa-refsel-css'; st.textContent = '.fa-refsel{display:inline-flex;align-items:center;gap:6px;font-size:var(--cds-font-size-caption);color:var(--color-fg-muted)}.fa-refsel select{font:inherit;font-size:var(--cds-font-size-caption);color:var(--color-fg);background:var(--color-panel);border:1px solid var(--color-border-line,rgba(0,0,0,.15));border-radius:8px;padding:5px 8px;max-width:200px;cursor:pointer}.fa-leg2{flex-wrap:wrap;row-gap:4px}'; document.head.append(st); }
+let lab = document.getElementById('fa-ref-' + sec);
+if (!lab) { lab = document.createElement('label'); lab.id = 'fa-ref-' + sec; lab.className = 'fa-refsel'; lab.title = 'Qué pintan las líneas discontinuas de referencia: la media de todo el grupo o la de un equipo concreto'; const sp = document.createElement('span'); sp.textContent = 'Comparar con'; const s0 = document.createElement('select'); s0.setAttribute('aria-label', 'Referencia de las líneas de media'); lab.append(sp, s0); const nav = host.querySelector('.fa-carr-nav'); if (nav) host.insertBefore(lab, nav); else host.append(lab); host.style.flexWrap = 'wrap'; host.style.gap = '8px'; }
+refOk(sec);
+const s = lab.querySelector('select');
+const eqs = refTeams().sort((a, b) => a.localeCompare(b, 'es'));
+s.replaceChildren(...[[REF_G, 'Media grupo'], ...eqs.map((e) => [e, e])].map(([v, t]) => { const o = document.createElement('option'); o.value = v; o.textContent = t; return o; }));
+s.value = REF[sec];
+s.onchange = () => { REF[sec] = s.value; redraw(); };
+}
 function drawTeamShot(sel, kA, kI, lab, noun, colA = 'var(--fa-blue)', txtA = 'var(--color-panel, #fff)') {
     const box = document.querySelector(sel);
     const ep = faData('equipos_partido');
@@ -2164,11 +2196,15 @@ function drawTeamShot(sel, kA, kI, lab, noun, colA = 'var(--fa-blue)', txtA = 'v
     const per = new Map(ep.data.filter((r) => r.equipo === eq).map((r) => [r.partido_id, r]));
 const realGames = teamGames.filter((g) => ids.includes(g.partido_id));
 if (!realGames.length) { setState(box, 'empty', 'Sin partidos elegidos'); return; }
-const GR = grpRef();
-const avgI = GR.rows.length ? d3.mean(GR.rows, (r) => +r[kI] || 0) : null;
+const GR = grpRef(), gRef = refFilter('eq', GR.rows);
+const selJ = new Set(realGames.map((g2) => +g2.jornada));
+const inJ = (j) => gRef.filter((r) => GR.jOf.get(r.partido_id) === +j);
+const gSel = gRef.filter((r) => selJ.has(GR.jOf.get(r.partido_id)));
+const avgIJ = (j) => { const rs = inJ(j); return rs.length ? d3.mean(rs, (r) => +r[kI] || 0) : null; };
+const avgI = gSel.length ? d3.mean(gSel, (r) => +r[kI] || 0) : null;
 const showAvg = eqMode === 'pp' && avgI != null;
-const gPct = (j) => { const rs = GR.inJ(j); const i = d3.sum(rs, (r) => +r[kI] || 0); return i ? d3.sum(rs, (r) => +r[kA] || 0) / i : null; };
-const gI = d3.sum(GR.rows, (r) => +r[kI] || 0), gAll = gI ? d3.sum(GR.rows, (r) => +r[kA] || 0) / gI : null;
+const gPct = (j) => { const rs = inJ(j); const i = d3.sum(rs, (r) => +r[kI] || 0); return i ? d3.sum(rs, (r) => +r[kA] || 0) / i : null; };
+const gI = d3.sum(gSel, (r) => +r[kI] || 0), gAll = gI ? d3.sum(gSel, (r) => +r[kA] || 0) / gI : null;
 const TOT = '__total';
 per.set(TOT, Object.fromEntries(['tla', 'tli', 't2a', 't2i', 't3a', 't3i'].map((k) => [k, d3.sum(realGames, (g) => (per.get(g.partido_id) || {})[k] || 0) / totDiv(realGames.length)])));
     const games = [...realGames, { partido_id: TOT, label: totLab(), rival: '', total: true }];
@@ -2177,7 +2213,7 @@ per.set(TOT, Object.fromEntries(['tla', 'tli', 't2a', 't2i', 't3a', 't3i'].map((
     box.replaceChildren();
     const W = Math.max(260, box.clientWidth || 320), H = 260, top = 18, bottom = 44, right = 22;
     // misma escala vertical en TL, T2 y T3: el máximo de intentos entre las tres gráficas
-    const yMax = Math.max(d3.max(games, (gm) => d3.max(['tli', 't2i', 't3i'], (k) => (per.get(gm.partido_id) || {})[k] || 0)) || 1, eqMode === 'pp' && GR.rows.length ? d3.max(['tli', 't2i', 't3i'], (k) => d3.mean(GR.rows, (r) => +r[k] || 0)) : 0);
+    const yMax = Math.max(d3.max(games, (gm) => d3.max(['tli', 't2i', 't3i'], (k) => (per.get(gm.partido_id) || {})[k] || 0)) || 1, eqMode === 'pp' && gRef.length ? d3.max(['tli', 't2i', 't3i'], (k) => d3.max([...selJ], (j) => { const rs = inJ(j); return rs.length ? d3.mean(rs, (r) => +r[k] || 0) : 0; })) : 0);
     const y = d3.scaleLinear([0, yMax], [H - bottom, top]).nice();
     const yp = d3.scaleLinear([0, 1], [H - bottom, top]);
     const ticks = y.ticks(5);
@@ -2217,11 +2253,14 @@ per.set(TOT, Object.fromEntries(['tla', 'tli', 't2a', 't2i', 't3a', 't3i'].map((
     g.append('line').attr('x1', sepX).attr('x2', sepX).attr('y1', top - 6).attr('y2', H - bottom + 30)
       .style('stroke', 'var(--cds-chart-reference)').style('stroke-dasharray', '4 4').style('stroke-width', 1);
     // referencias del grupo: media de intentos por partido (gris, solo «Por partido») y % de acierto del grupo en cada jornada (naranja discontinua)
-if (showAvg) g.append('line').attr('x1', left).attr('x2', W - right).attr('y1', y(avgI)).attr('y2', y(avgI)).style('stroke', 'var(--color-fg-muted)').style('stroke-width', 1.5).style('stroke-dasharray', '6 4').style('pointer-events', 'none');
+if (showAvg) { const aj = realGames.map((gm) => ({ gm, v: avgIJ(gm.jornada) })).filter((d) => d.v != null);
+g.append('path').datum(aj).attr('d', d3.line().x((d) => cx(d.gm)).y((d) => y(d.v))).style('fill', 'none').style('stroke', 'var(--color-fg-muted)').style('stroke-width', 1.5).style('stroke-dasharray', '6 4').style('pointer-events', 'none');
+aj.forEach((d) => g.append('circle').attr('cx', cx(d.gm)).attr('cy', y(d.v)).attr('r', 2.5).style('fill', 'var(--color-fg-muted)').style('pointer-events', 'none'));
+const tXa = cx({ partido_id: TOT }); [['var(--color-panel, #fff)', 6, null], ['var(--color-fg-muted)', 3, '4 2']].forEach(([c0, w0, da]) => g.append('line').attr('x1', tXa - bw / 2 - 7).attr('x2', tXa + bw / 2 + 7).attr('y1', y(avgI)).attr('y2', y(avgI)).style('stroke', c0).style('stroke-width', w0).style('stroke-dasharray', da).style('pointer-events', 'none')); }
 const gpts = realGames.map((gm) => ({ gm, p: gPct(gm.jornada) })).filter((d) => d.p != null);
 g.append('path').datum(gpts).attr('d', d3.line().x((d) => cx(d.gm)).y((d) => yp(d.p))).style('fill', 'none').style('stroke', 'var(--fa-green)').style('stroke-width', 1.5).style('stroke-dasharray', '6 4').style('pointer-events', 'none');
 gpts.forEach((d) => g.append('circle').attr('cx', cx(d.gm)).attr('cy', yp(d.p)).attr('r', 3).style('fill', 'var(--color-panel, #fff)').style('stroke', 'var(--fa-green)').style('stroke-width', 1.5).style('pointer-events', 'none'));
-refLegend(box, [['fa-ref-a', 'Media grupo', showAvg, false], ['fa-ref-p', '%' + lab + ' grupo', true, true]]);
+refLegend(box, [['fa-ref-a', refLab('eq'), showAvg, false], ['fa-ref-p', '%' + lab + ' ' + refWord('eq'), true, true]]);
 const gTotX = cx({ partido_id: TOT }), gTotW = bw + 14;
 if (gAll != null) { g.append('line').attr('x1', gTotX - gTotW / 2).attr('x2', gTotX + gTotW / 2).attr('y1', yp(gAll)).attr('y2', yp(gAll)).style('stroke', 'var(--fa-green)').style('stroke-width', 3).style('stroke-dasharray', '4 2').style('pointer-events', 'none'); }
 // línea del % (jornadas unidas; el total como punto aparte)
@@ -2258,8 +2297,9 @@ const pts = realGames.filter((gm) => P(gm) != null);
         const tv = document.createElement('b'); tv.textContent = fmtN(A(gm)) + '/' + fmtN(I(gm)) + ' · ' + pctS(A(gm), I(gm));
         t.append(nm, tv); tip.append(t);
 const gp = gm.total ? gAll : gPct(gm.jornada);
-const gl = [showAvg ? 'media ' + fmtN(Math.round(avgI * 10) / 10) + ' intentos por partido' : null, gp != null ? Math.round(gp * 100) + '% ' + (gm.total ? 'en todas las jornadas' : 'en la ' + gm.label) : null].filter(Boolean);
-if (gl.length) { const l3 = document.createElement('div'); l3.className = 'fa-tip-l'; l3.style.color = 'var(--color-fg-muted)'; l3.textContent = 'Grupo: ' + gl.join(' · '); tip.append(l3); }
+const avT = gm.total ? avgI : avgIJ(gm.jornada);
+const gl = [showAvg && avT != null ? 'media ' + fmtN(Math.round(avT * 10) / 10) + ' intentos' + (gm.total ? ' por partido' : ' en la ' + gm.label) : null, gp != null ? Math.round(gp * 100) + '% ' + (gm.total ? 'en todas las jornadas' : 'en la ' + gm.label) : null].filter(Boolean);
+if (gl.length) { const l3 = document.createElement('div'); l3.className = 'fa-tip-l'; l3.style.color = 'var(--color-fg-muted)'; l3.textContent = refHead('eq') + gl.join(' · '); tip.append(l3); }
 if (!who.length) { const e = document.createElement('div'); e.className = 'fa-tip-l'; e.textContent = 'Ningún intento'; tip.append(e); }
         for (const r of who) {
           const l = document.createElement('div'); l.className = 'fa-tip-l';
@@ -2288,12 +2328,16 @@ if (!who.length) { const e = document.createElement('div'); e.className = 'fa-ti
     const per = new Map(ep.data.filter((r) => r.equipo === eq).map((r) => [r.partido_id, r]));
     const realGames = teamGames.filter((g) => ids.includes(g.partido_id));
     if (!realGames.length) { setState(box, 'empty', 'Sin partidos elegidos'); return; }
-    const GR = grpRef();
-const avgPts = GR.rows.length ? d3.mean(GR.rows, (r) => +r.pts || 0) : null;
+    const GR = grpRef(), gRef = refFilter('eq', GR.rows);
+const selJ = new Set(realGames.map((g2) => +g2.jornada));
+const inJ = (j) => gRef.filter((r) => GR.jOf.get(r.partido_id) === +j);
+const gSel = gRef.filter((r) => selJ.has(GR.jOf.get(r.partido_id)));
+const avgPJ = (j) => { const rs = inJ(j); return rs.length ? d3.mean(rs, (r) => +r.pts || 0) : null; };
+const avgPts = gSel.length ? d3.mean(gSel, (r) => +r.pts || 0) : null;
 const showAvg = eqMode === 'pp' && avgPts != null;
 const tsAll = (rs) => { const d = 2 * (d3.sum(rs, (r) => (+r.t2i || 0) + (+r.t3i || 0)) + 0.44 * d3.sum(rs, (r) => +r.tli || 0)); return d ? d3.sum(rs, (r) => +r.pts || 0) / d : null; };
-const gAll = tsAll(GR.rows);
-const gTS = (j) => { const rs = GR.inJ(j); const d = 2 * (d3.sum(rs, (r) => (+r.t2i || 0) + (+r.t3i || 0)) + 0.44 * d3.sum(rs, (r) => +r.tli || 0)); return d ? d3.sum(rs, (r) => +r.pts || 0) / d : null; };
+const gAll = tsAll(gSel);
+const gTS = (j) => { const rs = inJ(j); const d = 2 * (d3.sum(rs, (r) => (+r.t2i || 0) + (+r.t3i || 0)) + 0.44 * d3.sum(rs, (r) => +r.tli || 0)); return d ? d3.sum(rs, (r) => +r.pts || 0) / d : null; };
 const TOT = '__total';
 const K = ['pts', 'tla', 'tli', 't2a', 't2i', 't3a', 't3i'];
     per.set(TOT, Object.fromEntries(K.map((k) => [k, d3.sum(realGames, (g) => (per.get(g.partido_id) || {})[k] || 0) / totDiv(realGames.length)])));
@@ -2311,7 +2355,7 @@ const K = ['pts', 'tla', 'tli', 't2a', 't2i', 't3a', 't3i'];
     const tot = (gm) => SEG.reduce((a, s0) => a + PV(gm, s0), 0);
     box.replaceChildren();
     const W = Math.max(260, box.clientWidth || 320), H = 260, top = 18, bottom = 44, right = 30;
-    const y = d3.scaleLinear([0, Math.max(d3.max(games, tot) || 1, showAvg ? avgPts : 0)], [H - bottom, top]).nice();
+    const y = d3.scaleLinear([0, Math.max(d3.max(games, tot) || 1, showAvg ? Math.max(avgPts, ...realGames.map((gm) => avgPJ(gm.jornada) || 0)) : 0)], [H - bottom, top]).nice();
     const yp = d3.scaleLinear([0, 1], [H - bottom, top]);
     const ticks = y.ticks(5);
     const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`);
@@ -2347,11 +2391,14 @@ const K = ['pts', 'tla', 'tli', 't2a', 't2i', 't3a', 't3i'];
     const sepX = x(TOT) - x.step() * x.paddingInner() / 2;
     g.append('line').attr('x1', sepX).attr('x2', sepX).attr('y1', top - 6).attr('y2', H - bottom + 30)
       .style('stroke', 'var(--cds-chart-reference)').style('stroke-dasharray', '4 4').style('stroke-width', 1);
-    if (showAvg) g.append('line').attr('x1', left).attr('x2', W - right).attr('y1', y(avgPts)).attr('y2', y(avgPts)).style('stroke', 'var(--color-fg-muted)').style('stroke-width', 1.5).style('stroke-dasharray', '6 4').style('pointer-events', 'none');
+    if (showAvg) { const aj = realGames.map((gm) => ({ gm, v: avgPJ(gm.jornada) })).filter((d) => d.v != null);
+g.append('path').datum(aj).attr('d', d3.line().x((d) => cx(d.gm)).y((d) => y(d.v))).style('fill', 'none').style('stroke', 'var(--color-fg-muted)').style('stroke-width', 1.5).style('stroke-dasharray', '6 4').style('pointer-events', 'none');
+aj.forEach((d) => g.append('circle').attr('cx', cx(d.gm)).attr('cy', y(d.v)).attr('r', 2.5).style('fill', 'var(--color-fg-muted)').style('pointer-events', 'none'));
+const tXa = cx({ partido_id: TOT }); [['var(--color-panel, #fff)', 6, null], ['var(--color-fg-muted)', 3, '4 2']].forEach(([c0, w0, da]) => g.append('line').attr('x1', tXa - bw / 2 - 7).attr('x2', tXa + bw / 2 + 7).attr('y1', y(avgPts)).attr('y2', y(avgPts)).style('stroke', c0).style('stroke-width', w0).style('stroke-dasharray', da).style('pointer-events', 'none')); }
 const gts = realGames.map((gm) => ({ gm, p: gTS(gm.jornada) })).filter((d) => d.p != null);
 g.append('path').datum(gts).attr('d', d3.line().x((d) => cx(d.gm)).y((d) => yp(d.p))).style('fill', 'none').style('stroke', 'var(--fa-green)').style('stroke-width', 1.5).style('stroke-dasharray', '6 4').style('pointer-events', 'none');
 gts.forEach((d) => g.append('circle').attr('cx', cx(d.gm)).attr('cy', yp(d.p)).attr('r', 3).style('fill', 'var(--color-panel, #fff)').style('stroke', 'var(--fa-green)').style('stroke-width', 1.5).style('pointer-events', 'none'));
-refLegend(box, [['fa-ref-a', 'Media grupo', showAvg, false], ['fa-ref-p', '%TS grupo', true, true]]);
+refLegend(box, [['fa-ref-a', refLab('eq'), showAvg, false], ['fa-ref-p', '%TS ' + refWord('eq'), true, true]]);
 const gTotX = cx({ partido_id: TOT }), gTotW = bw + 14;
 if (gAll != null) { g.append('line').attr('x1', gTotX - gTotW / 2).attr('x2', gTotX + gTotW / 2).attr('y1', yp(gAll)).attr('y2', yp(gAll)).style('stroke', 'var(--fa-green)').style('stroke-width', 3).style('stroke-dasharray', '4 2').style('pointer-events', 'none'); }
 const pts = realGames.filter((gm) => TS(gm) != null);
@@ -2382,8 +2429,9 @@ g.append('path').datum(pts).attr('d', d3.line().x(cx).y((gm) => yp(TS(gm)))).sty
         l2.textContent = fmtN(n) + ' acierto' + (n !== 1 ? 's' : '') + (d.s0.m > 1 ? ' × ' + d.s0.m : '') + ' = ' + fmtN(p) + ' de ' + fmtN(pts) + ' pts';
         tip.append(l2);
 const gq = d.gm.total ? gAll : gTS(d.gm.jornada);
-const gl = [showAvg ? 'media ' + fmtN(Math.round(avgPts * 10) / 10) + ' pts por partido' : null, gq != null ? Math.round(gq * 100) + '% TS ' + (d.gm.total ? 'en todas las jornadas' : 'en la ' + d.gm.label) : null].filter(Boolean);
-if (gl.length) { const l3 = document.createElement('div'); l3.className = 'fa-tip-l'; l3.style.color = 'var(--color-fg-muted)'; l3.textContent = 'Grupo: ' + gl.join(' · '); tip.append(l3); }
+const avT = d.gm.total ? avgPts : avgPJ(d.gm.jornada);
+const gl = [showAvg && avT != null ? 'media ' + fmtN(Math.round(avT * 10) / 10) + ' pts' + (d.gm.total ? ' por partido' : ' en la ' + d.gm.label) : null, gq != null ? Math.round(gq * 100) + '% TS ' + (d.gm.total ? 'en todas las jornadas' : 'en la ' + d.gm.label) : null].filter(Boolean);
+if (gl.length) { const l3 = document.createElement('div'); l3.className = 'fa-tip-l'; l3.style.color = 'var(--color-fg-muted)'; l3.textContent = refHead('eq') + gl.join(' · '); tip.append(l3); }
 tip.hidden = false;
         const scale = W / svg.node().getBoundingClientRect().width;
         const px = cx(d.gm) / scale, bwid = box.clientWidth, tw = tip.offsetWidth;
@@ -2830,6 +2878,7 @@ tip.hidden = false;
     return { status: 'ok', withData, without, pick, allShots: hasShots.size };
   }
   function drawMapaTiro() {
+refSelect('mt', '#mapa-tiro > .fa-row', drawMapaTiro);
     const sec = document.getElementById('mapa-tiro');
     if (!sec) return;
     sec.querySelector('.fa-gtt').textContent = 'Mapa de tiro';
@@ -2993,16 +3042,21 @@ tip.hidden = false;
     const items = showTot ? [...cols, tot] : cols;
     const P = (c) => { const m = c.pctM != null ? c.pctM : c.m, a = c.pctA != null ? c.pctA : c.a; return a ? m / a : null; };
 // referencias del grupo (todos los equipos del grupo con datos): media de intentos por partido y % de acierto por jornada, misma selección de zonas
-const GRm = grpRef(), tdG = faData('tiros'), tAll = tdG.status === 'ok' ? tdG.data : [];
-const gRows = TL ? GRm.rows.map((r) => ({ partido_id: r.partido_id, m: nz(r.tla), a: nz(r.tli) })) : tAll.filter((r) => act.has(r.zona));
-const gUnits = TL ? GRm.rows.length : new Set(tAll.map((r) => r.partido_id + '|' + r.equipo)).size;
+const GRm = grpRef(), tdG = faData('tiros'), tAll = refFilter('mt', tdG.status === 'ok' ? tdG.data : []), gEp = refFilter('mt', GRm.rows);
+const jOfR = (r) => GRm.jOf.get(r.partido_id) ?? (r.jornada != null ? +r.jornada : null);
+const selJm = new Set(per.map((p) => +p.g.jornada));
+const gRowsAll = TL ? gEp.map((r) => ({ partido_id: r.partido_id, equipo: r.equipo, m: nz(r.tla), a: nz(r.tli) })) : tAll.filter((r) => act.has(r.zona));
+const unitsJ = (j) => (TL ? gEp.filter((r) => jOfR(r) === j).length : new Set(tAll.filter((r) => jOfR(r) === j).map((r) => r.partido_id + '|' + r.equipo)).size);
+const avgAJ = (j) => { j = +j; const u = unitsJ(j); return u ? d3.sum(gRowsAll.filter((r) => jOfR(r) === j), (r) => r.a) / u : null; };
+const gRows = gRowsAll.filter((r) => selJm.has(jOfR(r)));
+const gUnits = d3.sum([...selJm], unitsJ);
 const gAvgA = gUnits ? d3.sum(gRows, (r) => r.a) / gUnits : null;
-const gPctJ = (j) => { const rs = gRows.filter((r) => { const jj = GRm.jOf.get(r.partido_id); return mt.evo === 'cum' ? jj <= j : jj === j; }); const a = d3.sum(rs, (r) => r.a); return a ? d3.sum(rs, (r) => r.m) / a : null; };
+const gPctJ = (j) => { const rs = gRowsAll.filter((r) => { const jj = jOfR(r); return mt.evo === 'cum' ? jj <= j : jj === j; }); const a = d3.sum(rs, (r) => r.a); return a ? d3.sum(rs, (r) => r.m) / a : null; };
 const gA0 = d3.sum(gRows, (r) => r.a), gAllP = gA0 ? d3.sum(gRows, (r) => r.m) / gA0 : null;
 const showGAvg = eqMode === 'pp' && mt.evo !== 'cum' && gAvgA != null;
 box.classList.remove('dash-skeleton'); box.replaceChildren();
     const W = Math.max(260, box.clientWidth || 320), H = 340, top = 18, bottom = 44, right = 22;
-    const yMax = Math.max(d3.max(items, (c) => c.a) || 1, showGAvg ? gAvgA : 0);
+    const yMax = Math.max(d3.max(items, (c) => c.a) || 1, showGAvg ? Math.max(gAvgA, ...cols.map((c) => avgAJ(c.g.jornada) || 0)) : 0);
 const y = d3.scaleLinear([0, yMax], [H - bottom, top]).nice();
 const yp = d3.scaleLinear([0, 1], [H - bottom, top]);
 const ticks = y.ticks(5);
@@ -3045,12 +3099,15 @@ const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `
       g.append('circle').attr('cx', cx(c)).attr('cy', yp(c.pi)).attr('r', 3.5).style('fill', 'var(--fa-blue)').style('stroke', 'var(--color-panel, #fff)').style('stroke-width', 1.5);
       cap(g.append('text').attr('x', cx(c) + bw / 2 + 4).attr('y', yp(c.pi) + (P(c) != null && c.pi > P(c) ? -8 : 15))).style('fill', 'var(--fa-blue)').style('font-weight', 'var(--cds-font-weight-medium)').style('paint-order', 'stroke').style('stroke', 'var(--color-panel, #fff)').style('stroke-width', 3).text(Math.round(c.pi * 100) + '%');
     }
-    if (showGAvg) g.append('line').attr('x1', left).attr('x2', W - right).attr('y1', y(gAvgA)).attr('y2', y(gAvgA)).style('stroke', 'var(--color-fg-muted)').style('stroke-width', 1.5).style('stroke-dasharray', '6 4').style('pointer-events', 'none');
+    if (showGAvg) { const aj = cols.map((c) => ({ c, v: avgAJ(c.g.jornada) })).filter((d) => d.v != null);
+g.append('path').datum(aj).attr('d', d3.line().x((d) => cx(d.c)).y((d) => y(d.v))).style('fill', 'none').style('stroke', 'var(--color-fg-muted)').style('stroke-width', 1.5).style('stroke-dasharray', '6 4').style('pointer-events', 'none');
+aj.forEach((d) => g.append('circle').attr('cx', cx(d.c)).attr('cy', y(d.v)).attr('r', 2.5).style('fill', 'var(--color-fg-muted)').style('pointer-events', 'none'));
+const tXa = cx(tot); [['var(--color-panel, #fff)', 6, null], ['var(--color-fg-muted)', 3, '4 2']].forEach(([c0, w0, da]) => g.append('line').attr('x1', tXa - bw / 2 - 7).attr('x2', tXa + bw / 2 + 7).attr('y1', y(gAvgA)).attr('y2', y(gAvgA)).style('stroke', c0).style('stroke-width', w0).style('stroke-dasharray', da).style('pointer-events', 'none')); }
 const gpts = items.filter((c) => !c.total).map((c) => ({ c, p: gPctJ(c.g.jornada) })).filter((d) => d.p != null);
 g.append('path').datum(gpts).attr('d', d3.line().x((d) => cx(d.c)).y((d) => yp(d.p))).style('fill', 'none').style('stroke', 'var(--fa-green)').style('stroke-width', 1.5).style('stroke-dasharray', '6 4').style('pointer-events', 'none');
 gpts.forEach((d) => g.append('circle').attr('cx', cx(d.c)).attr('cy', yp(d.p)).attr('r', 3).style('fill', 'var(--color-panel, #fff)').style('stroke', 'var(--fa-green)').style('stroke-width', 1.5).style('pointer-events', 'none'));
 if (gAllP != null) { const gTotX = cx(tot), gTotW = bw + 14; g.append('line').attr('x1', gTotX - gTotW / 2).attr('x2', gTotX + gTotW / 2).attr('y1', yp(gAllP)).attr('y2', yp(gAllP)).style('stroke', 'var(--fa-green)').style('stroke-width', 3).style('stroke-dasharray', '4 2').style('pointer-events', 'none'); }
-refLegend(box, [['fa-ref-a', 'Media grupo', showGAvg, false], ['fa-ref-p', '% acierto grupo', true, true]]);
+refLegend(box, [['fa-ref-a', refLab('mt'), showGAvg, false], ['fa-ref-p', '% acierto ' + refWord('mt'), true, true]]);
 const line = items.filter((c) => !c.total && P(c) != null);
 g.append('path').datum(line).attr('d', d3.line().x(cx).y((c) => yp(P(c)))).style('fill', 'none').style('stroke', 'var(--fa-green)').style('stroke-width', 2);
     for (const c of items) {
@@ -3078,8 +3135,9 @@ g.append('path').datum(line).attr('d', d3.line().x(cx).y((c) => yp(P(c)))).style
       add('% de acierto', P(c) == null ? '--' : mtPct(P(c)));
       if (c.pi != null) add('% de intentos', mtPct(c.pi));
 const gq = c.total ? gAllP : gPctJ(c.g.jornada);
-if (showGAvg) add('Media del grupo (intentos)', fmtN(Math.round(gAvgA * 10) / 10));
-if (gq != null) add('% de acierto del grupo' + (c.total ? ' (todas las jornadas)' : ''), mtPct(gq));
+const avT = c.total ? gAvgA : avgAJ(c.g.jornada);
+if (showGAvg && avT != null) add((REF.mt === REF_G ? 'Media del grupo' : refShort(REF.mt)) + ' (intentos)', fmtN(Math.round(avT * 10) / 10));
+if (gq != null) add('% de acierto ' + (REF.mt === REF_G ? 'del grupo' : 'de ' + refShort(REF.mt)) + (c.total ? ' (todas las jornadas)' : ''), mtPct(gq));
       if (c.by && zs.length > 1) { for (const z of zs) { const v = c.by.get(z); if (v && v.a) add(MT_ZN[z], v.m + '/' + v.a + ' · ' + mtPct(v.m / v.a)); } }
       tip.hidden = false;
       const bw2 = box.clientWidth, tw = tip.offsetWidth, cx0 = cx(c) / scale;
