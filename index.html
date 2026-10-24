@@ -161,8 +161,8 @@ html.fa-nojs .fa-static{display:block}
 .fa-carr-nav.fa-nonav{visibility:hidden}
 .fa-carr-btn{font:inherit;font-size:18px;line-height:1;width:30px;height:30px;border-radius:50%;border:1px solid var(--color-border-line);background:var(--color-panel);color:var(--color-fg);cursor:pointer}
 .fa-carr-btn:disabled{opacity:.35;cursor:default}
-#dash-root{--fa-blue:#3f4249;--fa-green:#E0661A;--fa-shade:rgba(0,0,0,.045);--fa-lgray:#cfcdc6;--fa-pink1:#8FB2E4;--fa-pink2:#1D4F91}
-@media (prefers-color-scheme: dark){#dash-root{--fa-blue:#e8e8e8;--fa-green:#F2924E;--fa-shade:rgba(255,255,255,.06);--fa-lgray:#5f5f5f;--fa-pink1:#5D86C4;--fa-pink2:#A9C6F0}}
+#dash-root{--fa-blue:#3f4249;--fa-green:#E0661A;--fa-cmp:#1E6B3A;--fa-shade:rgba(0,0,0,.045);--fa-lgray:#cfcdc6;--fa-pink1:#8FB2E4;--fa-pink2:#1D4F91}
+@media (prefers-color-scheme: dark){#dash-root{--fa-blue:#e8e8e8;--fa-green:#F2924E;--fa-cmp:#5FBF84;--fa-shade:rgba(255,255,255,.06);--fa-lgray:#5f5f5f;--fa-pink1:#5D86C4;--fa-pink2:#A9C6F0}}
 .fa-leg2{display:flex;gap:14px;font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);margin:2px 0 var(--cds-gap-sm)}
 .fa-leg2 span{display:inline-flex;align-items:center;gap:6px}
 .fa-k{display:inline-block;width:10px;height:10px;border-radius:2px}
@@ -595,7 +595,7 @@ html.fa-nojs .rd-off.fa-card,html.fa-nojs section.rd-off{display:block!important
 </div>
 </div>
 <section class="fa-card" id="mt-tab" style="margin-bottom:var(--cds-gap-md)">
-        <div class="fa-row"><div class="fa-ttl"><h2>Tiros por zona</h2><button type="button" class="fa-info" aria-expanded="false" aria-controls="fa-note-mt" title="Cómo usar esta tabla">i</button></div><span class="fa-seg" id="mt-eqmode" role="group" aria-label="Cómo ver el acumulado"><button type="button" data-mode="tot" aria-pressed="false">Totales</button><button type="button" data-mode="pp" aria-pressed="true">Por partido</button></span></div>
+        <div class="fa-row"><div class="fa-ttl"><h2>Tiros por zona</h2><button type="button" class="fa-info" aria-expanded="false" aria-controls="fa-note-mt" title="Cómo usar esta tabla">i</button></div><span class="fa-seg" id="mt-eqmode" role="group" aria-label="Cómo ver el acumulado"><button type="button" data-mode="tot" aria-pressed="false">Totales</button><button type="button" data-mode="pp" aria-pressed="true">Por partido</button></span><span class="fa-seg" id="mt-tview" role="group" aria-label="Columnas de la tabla"><button type="button" data-v="jor" aria-pressed="true" title="Una columna por jornada">Jornadas</button><button type="button" data-v="cmp" aria-pressed="false" title="El equipo, la comparación elegida y la media del grupo">Comparar</button></span></div>
         <p class="fa-note" id="fa-note-mt" hidden="">Por partido: intentos (Int.), % sobre el total de intentos (%Int), aciertos (Ac.) y % de acierto de la zona (%Ac); al final, el acumulado de los partidos (Totales) o la media por partido (Por partido; los % no cambian). Toca una o varias zonas (o un grupo) para destacarlas en el mapa y en la gráfica de evolución; sin selección se ven todas. Ordena con las cabeceras; «Zona» vuelve al orden del mapa.</p>
         <div class="fa-mt-tw"><table class="fa-mt-zl fa-mt-zl2" id="mt-zl" data-source="tiros"></table></div>
       </section>
@@ -2830,7 +2830,7 @@ tip.hidden = false;
   const MT_ALL = Object.keys(MT_ZN);
   const MT_GRP = (z) => (z === 'aro' || z === 'pintura' ? 'Aro y pintura' : z.startsWith('media') ? 'Media distancia' : 'Triples');
   const MT_PRE = [['Todas', MT_ALL], ['Aro y pintura', MT_ALL.filter((z) => MT_GRP(z) === 'Aro y pintura')], ['Media distancia', MT_ALL.filter((z) => MT_GRP(z) === 'Media distancia')], ['Triples', MT_ALL.filter((z) => MT_GRP(z) === 'Triples')]];
-  const mt = { who: 'eq', mode: 'pct', evo: 'game', tl: false, zones: new Set(), sort: { k: 'idx', dir: 1 } };  // zones vacío = todas
+  const mt = { who: 'eq', mode: 'pct', evo: 'game', tview: 'jor', tl: false, zones: new Set(), sort: { k: 'idx', dir: 1 } };  // zones vacío = todas
   const mtC = [225, 47];
   const mtP = (a) => [mtC[0] + 1000 * Math.cos(a * Math.PI / 180), mtC[1] + 1000 * Math.sin(a * Math.PI / 180)];
   const mtWedge = (a0, a1) => 'M' + [mtC, mtP(a0), mtP((a0 + a1) / 2), mtP(a1)].map((p) => p.join(',')).join('L') + 'Z';
@@ -2938,11 +2938,12 @@ const eq = team(), ids = gamesSel(), jOf = grpRef().jOf, grp = REF.mt === REF_G,
 const jOfR = (r) => jOf.get(r.partido_id) ?? (r.jornada != null ? +r.jornada : null);
 const jAct = new Set(teamGames.filter((g) => ids.includes(g.partido_id)).map((g) => +g.jornada));
 const mapIds = new Set(D.withData.map((g) => g.partido_id)), jMap = new Set(D.withData.map((g) => +g.jornada));
-const S = [{ id: 'eq', name: short(eq), color: 'var(--fa-blue)' }, { id: 'cmp', name: refLab('mt'), color: 'var(--fa-green)' }];
+const S = [{ id: 'eq', name: short(eq), color: 'var(--fa-blue)' }, { id: 'cmp', name: refLab('mt'), color: 'var(--fa-cmp)' }];
 const epRows = [ep.data.filter((r) => r.equipo === eq && ids.includes(r.partido_id)), ep.data.filter((r) => jAct.has(jOfR(r)) && (grp || r.equipo === other))];
 const tdRows = [td.data.filter((r) => r.equipo === eq && mapIds.has(r.partido_id)), td.data.filter((r) => jMap.has(jOfR(r)) && (grp || r.equipo === other))];
+const tdGrp = td.data.filter((r) => jMap.has(jOfR(r)));
 const units = (rows) => new Set(rows.map((r) => r.partido_id + '|' + r.equipo)).size;
-return { status: 'ok', S, epRows, tdRows, jOfR, units, jAct: [...jAct].sort((a, b) => a - b), jMap: [...jMap].sort((a, b) => a - b), D, grp };
+return { status: 'ok', S, epRows, tdRows, tdGrp, jOfR, units, jAct: [...jAct].sort((a, b) => a - b), jMap: [...jMap].sort((a, b) => a - b), D, grp };
 }
 const mtcLabel = (D, j) => { const g = teamGames.find((x) => +x.jornada === j); return { label: g ? xLab(g) : 'J' + j, sub: g ? short(g.rival) : '' }; };
 function drawMtCmp(D0) {
@@ -3162,14 +3163,27 @@ drawMtCmp();
     drawMapaTiro();
   }
   const MT_KINDS = [['i', 'Int.', 'Intentos'], ['pi', '%Int', 'Peso de la zona: intentos de la zona / intentos de todas las zonas'], ['a', 'Ac.', 'Aciertos'], ['pa', '%Ac', '% de acierto: aciertos / intentos de la misma zona']];
-  function drawMapaTable(D) {
-    const zl = document.getElementById('mt-zl');
-    zl.replaceChildren();
-    const cols = [...D.withData.map((g) => ({ id: g.partido_id, g, Z: mtAgg(D.pick(g)) })), { id: '__tot', g: { label: 'Total', total: true }, Z: mtAgg(D.withData.flatMap((g) => D.pick(g))) }];
+  // tabla de zonas del equipo en modo «Comparar»: el equipo, la comparación elegida y la media del grupo (por partido)
+function mtCmpCols(D) {
+const R = mtcSeries(); if (R.status !== 'ok' || !R.tdRows[0].length) return null;
+const mk = (id, name, rows) => ({ id, g: { label: name + ' · por partido', cmp: true }, Z: mtAgg(rows), dv: R.units(rows) || 1 });
+const cols = [mk('eq', R.S[0].name, R.tdRows[0])];
+if (!R.grp) cols.push(mk('cmp', R.S[1].name, R.tdRows[1]));
+cols.push(mk('grp', 'Media grupo', R.tdGrp));
+return cols;
+}
+document.querySelectorAll('#mt-tview button').forEach((b) => b.addEventListener('click', () => { mt.tview = b.dataset.v; drawMapaTiro(); }));
+function drawMapaTable(D) {
+const zl = document.getElementById('mt-zl');
+zl.replaceChildren();
+const cmpCols = mt.tview === 'cmp' ? mtCmpCols(D) : null;
+const eqSeg = document.getElementById('mt-eqmode'); if (eqSeg) eqSeg.style.display = cmpCols ? 'none' : '';
+document.querySelectorAll('#mt-tview button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === (cmpCols ? 'cmp' : 'jor'))));
+    const cols = cmpCols || [...D.withData.map((g) => ({ id: g.partido_id, g, Z: mtAgg(D.pick(g)) })), { id: '__tot', g: { label: 'Total', total: true }, Z: mtAgg(D.withData.flatMap((g) => D.pick(g))) }];
     cols.forEach((c) => { c.T = d3.sum([...c.Z.values()], (v) => v.a); });
     const val = (c, kind, zs) => {
       let m = 0, a = 0; zs.forEach((z) => { const v = c.Z.get(z); if (v) { m += v.m; a += v.a; } });
-      const dv = c.id === '__tot' ? totDiv(D.withData.length) : 1; a /= dv; m /= dv;
+      const dv = c.dv != null ? c.dv : (c.id === '__tot' ? totDiv(D.withData.length) : 1); a /= dv; m /= dv;
       return kind === 'i' ? a : kind === 'pi' ? (c.T ? a * dv / c.T : null) : kind === 'a' ? m : (a ? m / a : null);
     };
     const fmt = (kind, v) => (v == null ? '--' : kind === 'i' || kind === 'a' ? fmtN(v) : mtPct(v));
@@ -3182,7 +3196,7 @@ drawMtCmp();
     h0.append(b0); r1.append(h0);
     cols.forEach((c, ci) => {
       const h = document.createElement('th'); h.colSpan = 4; h.className = 'gh gs' + (ci % 2 ? ' ga' : '') + (c.g.total ? ' gt' : '');
-      h.textContent = c.g.total ? (eqMode === 'pp' ? 'Por partido' : 'Total' + (cols.length > 2 ? ' (' + (cols.length - 1) + ' partidos)' : '')) : xLab(c.g) + ' · ' + short(c.g.rival);
+      h.textContent = c.g.cmp ? c.g.label : c.g.total ? (eqMode === 'pp' ? 'Por partido' : 'Total' + (cols.length > 2 ? ' (' + (cols.length - 1) + ' partidos)' : '')) : xLab(c.g) + ' · ' + short(c.g.rival);
       r1.append(h);
       MT_KINDS.forEach(([kind, lab, tt], ki) => {
         const k = c.id + '|' + kind, on = mt.sort.k === k;
