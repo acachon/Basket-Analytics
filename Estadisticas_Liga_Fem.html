@@ -3017,6 +3017,7 @@ const a = v.a / v.d, m = v.m / v.d;
 g.append('rect').attr('x', bx).attr('width', bw).attr('y', y(a)).attr('height', Math.max(0, y(0) - y(a))).attr('rx', 3).style('fill', col).style('fill-opacity', 0.3);
 g.append('rect').attr('x', bx).attr('width', bw).attr('y', y(m)).attr('height', Math.max(0, y(0) - y(m))).attr('rx', 3).style('fill', col);
 if (showLab) cap(g.append('text').attr('x', bx + bw / 2).attr('y', y(a) - 4).attr('text-anchor', 'middle')).style('fill', 'var(--color-fg)').style('font-size', lfs).text(fmtN(a));
+if (showLab && y(0) - y(m) >= 14) cap(g.append('text').attr('x', bx + bw / 2).attr('y', (y(m) + y(0)) / 2).attr('dy', '0.35em').attr('text-anchor', 'middle')).style('fill', 'var(--color-panel, #fff)').style('font-size', lfs).style('pointer-events', 'none').text(fmtN(m));
 }
 }
 cap(g.append('text').attr('x', x0(c.lab) + x0.bandwidth() / 2).attr('y', H - bottom + 18).attr('text-anchor', 'middle')).style('fill', 'var(--color-fg)').text(c.lab);
@@ -3507,6 +3508,7 @@ drawMjSEvo(D);
           g.append('rect').attr('x', bx).attr('width', bw).attr('y', y(a)).attr('height', Math.max(0, y(0) - y(a))).attr('rx', 3).style('fill', col).style('fill-opacity', 0.3);
           g.append('rect').attr('x', bx).attr('width', bw).attr('y', y(m)).attr('height', Math.max(0, y(0) - y(m))).attr('rx', 3).style('fill', col);
           if (showLab) cap(g.append('text').attr('x', bx + bw / 2).attr('y', y(a) - 4).attr('text-anchor', 'middle')).style('fill', 'var(--color-fg)').style('font-size', lfs).text(fmtN(a));
+if (showLab && y(0) - y(m) >= 14) cap(g.append('text').attr('x', bx + bw / 2).attr('y', (y(m) + y(0)) / 2).attr('dy', '0.35em').attr('text-anchor', 'middle')).style('fill', 'var(--color-panel, #fff)').style('font-size', lfs).style('pointer-events', 'none').text(fmtN(m));
         }
       }
       cap(g.append('text').attr('x', x0(c.lab) + x0.bandwidth() / 2).attr('y', H - bottom + 18).attr('text-anchor', 'middle')).style('fill', 'var(--color-fg)').text(c.lab);
