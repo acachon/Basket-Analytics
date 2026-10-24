@@ -3402,6 +3402,8 @@ drawMjSEvo(D);
   document.querySelectorAll('#mj-zevok button').forEach((b) => b.addEventListener('click', () => { const zs = (MJ_ZPRE.find(([k]) => k === b.dataset.v) || [])[2] || MT_ALL; mj.tl = false; mj.zones = zs.length === MT_ALL.length ? new Set() : new Set(zs); drawPlayerMap(); }));
   // «Estadísticas de tiro» de las jugadoras seleccionadas, sumadas: misma gráfica que la del equipo (zonas elegibles, por jornada)
 function drawMjSEvo(D) {
+// sigue al mapa de al lado: la jugadora elegida en su selector o, con «Todas», el conjunto de seleccionadas
+const PL = mj.who === MJ_ALL ? D.P : D.P.filter((p) => p.name === mj.who);
 const box = document.querySelector('.fa-c-mjsevo'), preBox = document.getElementById('mj-pre'), sub = document.getElementById('mj-sevo-sub'), titleEl = document.getElementById('mj-sevo-t');
 if (!box) return;
 const TL = mj.tl;
@@ -3422,14 +3424,14 @@ return b;
 const legI = document.querySelector('#mj-sevo .fa-kl-int');
 const zTxt = TL ? 'tiros libres' : allZ ? 'todos los tiros de campo' : zs.length === 1 ? MT_ZN[zs[0]] : zs.length + ' zonas';
 titleEl.textContent = 'Estadísticas de tiro · ' + zTxt;
-if (!D.P.length) { setState(box, 'empty', 'Toca jugadoras en la tabla de estadísticas de jugadoras para verlas aquí'); sub.textContent = ''; return; }
-sub.textContent = (D.P.length > 1 ? 'Suma de ' + D.P.length + ' jugadoras: ' : '') + D.P.map((p) => p.name).join(', ');
+if (!PL.length) { setState(box, 'empty', 'Toca jugadoras en la tabla de estadísticas de jugadoras para verlas aquí'); sub.textContent = ''; return; }
+sub.textContent = (PL.length > 1 ? 'Suma de las ' + PL.length + ' jugadoras seleccionadas: ' : '') + PL.map((p) => p.name).join(', ');
 const nn = (v) => Number(v) || 0;
 // por jornada: aciertos/intentos de las zonas elegidas (o libres), intentos de campo totales, y detalle por zona y jugadora
-const jornOf = new Map(); D.P.forEach((p) => p.actas.forEach((r) => jornOf.set(r.partido_id, Number(r.jornada))));
+const jornOf = new Map(); PL.forEach((p) => p.actas.forEach((r) => jornOf.set(r.partido_id, Number(r.jornada))));
 const byJ = new Map();
 const cellOf = (j) => { if (!byJ.has(j)) byJ.set(j, { j, m: 0, a: 0, allA: 0, by: new Map(), pl: new Map() }); return byJ.get(j); };
-for (const p of D.P) {
+for (const p of PL) {
 if (TL) { p.actas.forEach((r) => { const c = cellOf(Number(r.jornada)); const m = nn(r.tla), a = nn(r.tli); c.m += m; c.a += a; const o = c.pl.get(p.name) || { m: 0, a: 0 }; o.m += m; o.a += a; c.pl.set(p.name, o); }); continue; }
 const mg = new Set(p.mapActas.map((r) => r.partido_id));
 mg.forEach((id) => cellOf(jornOf.get(id)));
@@ -3440,7 +3442,7 @@ const po = c.pl.get(p.name) || { m: 0, a: 0 }; po.m += x.m; po.a += x.a; c.pl.se
 }
 const jorns = [...byJ.keys()].sort((a, b) => a - b);
 if (!jorns.length) { setState(box, 'empty', TL ? 'Sin partidos elegidos' : 'Ninguno de los partidos elegidos tiene mapa de tiro subido'); if (legI) legI.parentNode.style.display = 'none'; return; }
-const single = D.P.every((p) => p.equipo === team());
+const single = PL.every((p) => p.equipo === team());
 const showI = !TL && !allZ;
 if (legI) legI.parentNode.style.display = showI ? '' : 'none';
 const pp = mj.agg === 'pp';
@@ -3515,7 +3517,7 @@ const c = items.reduce((a, b) => (Math.abs(x(b.id) - px) < Math.abs(x(a.id) - px
 const lines = [[c.total ? (pp ? 'Media ' + c.sub : 'Total') : c.label + (c.sub ? ' · vs ' + c.sub : '') + (c.g && c.g.pf != null ? ' (' + c.g.pf + '-' + c.g.pc + ')' : ''), 'fa-tip-h', null],
 ['Aciertos/intentos', null, fmtN(c.m) + '/' + fmtN(c.a)], ['% de acierto', null, mtPct(P(c))]];
 if (c.pi != null) lines.push(['% de intentos', null, mtPct(c.pi)]);
-if (!c.total && D.P.length > 1) cols.length && [...c.pl].forEach(([nm, v]) => { if (v.a) lines.push([nm, null, v.m + '/' + v.a + ' · ' + mtPct(v.m / v.a)]); });
+if (!c.total && PL.length > 1) cols.length && [...c.pl].forEach(([nm, v]) => { if (v.a) lines.push([nm, null, v.m + '/' + v.a + ' · ' + mtPct(v.m / v.a)]); });
 if (!c.total && c.by && zs.length > 1) for (const z of zs) { const v = c.by.get(z); if (v && v.a) lines.push([MT_ZN[z], null, v.m + '/' + v.a + ' · ' + mtPct(v.m / v.a)]); }
 mtTip(box, ev, lines);
 };
