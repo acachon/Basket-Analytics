@@ -353,6 +353,9 @@ th button[data-tip]{text-decoration:underline dotted color-mix(in srgb,currentCo
 .fa-mjcar .fa-carousel{align-items:stretch}
 @media (min-width:981px){.fa-mjcar .fa-carousel>.fa-card{flex-basis:calc((100% - var(--cds-gap-md)) / 2)}}
 #mj-sevo .fa-chart{min-height:340px}
+#mt-cmp .fa-chart{min-height:210px}
+#mt-cmp .fa-pl-leg{margin:2px 0 4px}
+#mt-cevo-leg,#mt-czevo-leg{flex-wrap:wrap;gap:4px 14px}
 .fa-carousel:focus-visible,.fa-kpis:focus-visible,.fa-mt-tiles:focus-visible{outline:2px solid var(--s1);outline-offset:2px;border-radius:8px}
 
 /* ================= REDISEÑO ================= */
@@ -569,7 +572,34 @@ html.fa-nojs .rd-off.fa-card,html.fa-nojs section.rd-off{display:block!important
           <div class="fa-chart fa-c-mtevo dash-skeleton" data-source="tiros partidos"></div>
         </section>
       </div>
-      <section class="fa-card" id="mt-tab" style="margin-bottom:var(--cds-gap-md)">
+      <div class="fa-cblock fa-mjcar" id="mt-cblock">
+<div class="fa-row fa-cnav2"><label class="fa-refsel" title="Equipo o media del grupo con el que se compara el equipo en las gráficas de debajo"><span>Comparar con</span><select id="mt-cmpsel" aria-label="Comparar con"></select></label><span class="fa-note" id="mt-cmp-sub" style="margin:0 auto 0 8px"></span><span class="fa-carr-nav"><button type="button" class="fa-carr-btn" data-dir="-1" aria-label="Anterior">‹</button><button type="button" class="fa-carr-btn" data-dir="1" aria-label="Siguiente">›</button></span></div>
+<div class="fa-carousel">
+<section class="fa-card" id="mt-cmp">
+<div class="fa-row" style="flex-wrap:wrap;gap:8px"><div class="fa-ttl"><h2>Comparativa de tiro</h2><button type="button" class="fa-info" aria-expanded="false" aria-controls="fa-note-mtcmp" title="Cómo leer estas gráficas">i</button></div>
+<span class="fa-seg" id="mt-cmpmode" role="group" aria-label="Qué comparar"><button type="button" data-v="pct" aria-pressed="true">% de acierto</button><button type="button" data-v="vol">Intentos</button></span></div>
+<p class="fa-note" id="fa-note-mtcmp" hidden>Dos barras por categoría: el equipo elegido y la comparación elegida arriba (media de los equipos del grupo o un equipo concreto), en los mismos partidos o jornadas. «Por tipo de tiro» sale de las actas (libres, tiros de 2, triples y total de campo); «Por distancia» sale del mapa de tiro (corta = aro y pintura, media = media distancia, larga = triples). En «Intentos» se muestran por partido, con los aciertos en la parte oscura.</p>
+<div class="fa-pl-leg" id="mt-cmp-leg"></div>
+<h3 class="fa-mj-h3">Por tipo de tiro</h3>
+<div class="fa-chart fa-c-mtc1 dash-skeleton" data-source="equipos_partido" style="min-height:210px"></div>
+<h3 class="fa-mj-h3">Por distancia</h3>
+<div class="fa-chart fa-c-mtc2 dash-skeleton" data-source="tiros" style="min-height:210px"></div>
+</section>
+<section class="fa-card" id="mt-cevo">
+<div class="fa-row"><div class="fa-ttl"><h2 id="mt-cevo-t">Evolución por jornada</h2><button type="button" class="fa-info" aria-expanded="false" aria-controls="fa-note-mtcevo" title="Cómo leer esta gráfica">i</button></div><span class="fa-seg" id="mt-cevok" role="group" aria-label="Tipo de tiro"><button type="button" data-v="tl" aria-pressed="false">TL</button><button type="button" data-v="t2" aria-pressed="false">T2</button><button type="button" data-v="t3" aria-pressed="false">T3</button><button type="button" data-v="tc" aria-pressed="true">TC</button></span></div>
+<p class="fa-note" id="fa-note-mtcevo" hidden>Para cada jornada, una barra del equipo y otra de la comparación (media del grupo o equipo elegido): la parte clara son los intentos por partido y la oscura los aciertos. La línea de cada uno es su % de acierto (escala de la derecha). La última columna es la media por partido de todas las jornadas.</p>
+<div class="fa-leg2" id="mt-cevo-leg"></div>
+<div class="fa-chart fa-c-mtcevo dash-skeleton" data-source="equipos_partido" style="min-height:300px"></div>
+</section>
+<section class="fa-card" id="mt-czevo">
+<div class="fa-row"><div class="fa-ttl"><h2 id="mt-czevo-t">Evolución por zonas</h2><button type="button" class="fa-info" aria-expanded="false" aria-controls="fa-note-mtczevo" title="Cómo leer esta gráfica">i</button></div><span class="fa-seg" id="mt-czevok" role="group" aria-label="Zonas"><button type="button" data-v="all" aria-pressed="true">Todas</button><button type="button" data-v="c" aria-pressed="false">Corta</button><button type="button" data-v="m" aria-pressed="false">Media</button><button type="button" data-v="l" aria-pressed="false">Larga</button></span></div>
+<p class="fa-note" id="fa-note-mtczevo" hidden>Igual que la gráfica anterior, pero con los tiros del mapa de tiro y las zonas elegidas (Corta = aro y pintura, Media = media distancia, Larga = triples; también se eligen en el mapa o en la tabla de zonas). Solo cuentan los partidos con mapa de tiro subido.</p>
+<div class="fa-leg2" id="mt-czevo-leg"></div>
+<div class="fa-chart fa-c-mtczevo dash-skeleton" data-source="tiros equipos_partido" style="min-height:300px"></div>
+</section>
+</div>
+</div>
+<section class="fa-card" id="mt-tab" style="margin-bottom:var(--cds-gap-md)">
         <div class="fa-row"><div class="fa-ttl"><h2>Tiros por zona</h2><button type="button" class="fa-info" aria-expanded="false" aria-controls="fa-note-mt" title="Cómo usar esta tabla">i</button></div><span class="fa-seg" id="mt-eqmode" role="group" aria-label="Cómo ver el acumulado"><button type="button" data-mode="tot" aria-pressed="false">Totales</button><button type="button" data-mode="pp" aria-pressed="true">Por partido</button></span></div>
         <p class="fa-note" id="fa-note-mt" hidden="">Por partido: intentos (Int.), % sobre el total de intentos (%Int), aciertos (Ac.) y % de acierto de la zona (%Ac); al final, el acumulado de los partidos (Totales) o la media por partido (Por partido; los % no cambian). Toca una o varias zonas (o un grupo) para destacarlas en el mapa y en la gráfica de evolución; sin selección se ven todas. Ordena con las cabeceras; «Zona» vuelve al orden del mapa.</p>
         <div class="fa-mt-tw"><table class="fa-mt-zl fa-mt-zl2" id="mt-zl" data-source="tiros"></table></div>
@@ -2894,7 +2924,173 @@ tip.hidden = false;
     const pick = (g) => td.data.filter((r) => r.partido_id === g.partido_id && (mt.who === 'eq' ? r.equipo === eq : r.equipo !== eq));
     return { status: 'ok', withData, without, pick, allShots: hasShots.size };
   }
-  function drawMapaTiro() {
+  // ---- Comparativa de tiro del equipo: el equipo elegido frente a «Comparar con» (media del grupo o un equipo concreto)
+const mtc = { cmp: 'pct', evo: 'tc' };
+const MTC_ZPRE = [['all', 'Todas', MT_ALL], ['c', 'Corta', MT_ALL.filter((z) => MT_GRP(z) === 'Aro y pintura')], ['m', 'Media', MT_ALL.filter((z) => MT_GRP(z) === 'Media distancia')], ['l', 'Larga', MT_ALL.filter((z) => MT_GRP(z) === 'Triples')]];
+const MTC_EVO = { tl: ['tla', 'tli', 'Tiros libres'], t2: ['t2a', 't2i', 'Tiros de 2'], t3: ['t3a', 't3i', 'Triples'], tc: [null, null, 'Tiros de campo'] };
+function mtcSeries() {
+const ep = faData('equipos_partido'), td = faData('tiros');
+if (ep.status !== 'ok' || td.status !== 'ok') return { status: ep.status !== 'ok' ? ep.status : td.status };
+const D = mtData(); if (D.status !== 'ok') return { status: D.status };
+refOk('mt');
+const eq = team(), ids = gamesSel(), jOf = grpRef().jOf, grp = REF.mt === REF_G, other = grp ? null : REF.mt;
+const jOfR = (r) => jOf.get(r.partido_id) ?? (r.jornada != null ? +r.jornada : null);
+const jAct = new Set(teamGames.filter((g) => ids.includes(g.partido_id)).map((g) => +g.jornada));
+const mapIds = new Set(D.withData.map((g) => g.partido_id)), jMap = new Set(D.withData.map((g) => +g.jornada));
+const S = [{ id: 'eq', name: short(eq), color: 'var(--fa-blue)' }, { id: 'cmp', name: refLab('mt'), color: 'var(--fa-green)' }];
+const epRows = [ep.data.filter((r) => r.equipo === eq && ids.includes(r.partido_id)), ep.data.filter((r) => jAct.has(jOfR(r)) && (grp || r.equipo === other))];
+const tdRows = [td.data.filter((r) => r.equipo === eq && mapIds.has(r.partido_id)), td.data.filter((r) => jMap.has(jOfR(r)) && (grp || r.equipo === other))];
+const units = (rows) => new Set(rows.map((r) => r.partido_id + '|' + r.equipo)).size;
+return { status: 'ok', S, epRows, tdRows, jOfR, units, jAct: [...jAct].sort((a, b) => a - b), jMap: [...jMap].sort((a, b) => a - b), D, grp };
+}
+const mtcLabel = (D, j) => { const g = teamGames.find((x) => +x.jornada === j); return { label: g ? xLab(g) : 'J' + j, sub: g ? short(g.rival) : '' }; };
+function drawMtCmp(D0) {
+const sec = document.getElementById('mt-cblock'); if (!sec) return;
+const b1 = sec.querySelector('.fa-c-mtc1'), b2 = sec.querySelector('.fa-c-mtc2'), b3 = sec.querySelector('.fa-c-mtcevo'), b4 = sec.querySelector('.fa-c-mtczevo');
+const legs = ['mt-cmp-leg', 'mt-cevo-leg', 'mt-czevo-leg'].map((id) => document.getElementById(id));
+const sel = document.getElementById('mt-cmpsel');
+// desplegable «Comparar con» (mismo valor que el del encabezado del mapa de tiro)
+const eqs = refTeams().filter((e) => e !== team()).sort((a, b) => a.localeCompare(b, 'es'));
+sel.replaceChildren(...[[REF_G, 'Media grupo'], ...eqs.map((e) => [e, e])].map(([v, t]) => { const o = document.createElement('option'); o.value = v; o.textContent = t; return o; }));
+refOk('mt'); if (REF.mt === team()) REF.mt = REF_G; sel.value = REF.mt;
+sel.onchange = () => { REF.mt = sel.value; drawMapaTiro(); };
+sec.querySelectorAll('#mt-cmpmode button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === mtc.cmp)));
+sec.querySelectorAll('#mt-cevok button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === mtc.evo)));
+const R = mtcSeries();
+const clear = (st, msg) => { [b1, b2, b3, b4].forEach((b) => setState(b, st, msg)); legs.forEach((l) => l.replaceChildren()); };
+if (R.status !== 'ok') { clear(R.status === 'loading' ? 'loading' : 'error', 'No se pudo cargar'); return; }
+const leg = (el) => el.replaceChildren(...R.S.map((s) => { const sp = document.createElement('span'); sp.className = 'fa-li'; const sw = document.createElement('span'); sw.className = 'fa-sw'; sw.style.background = s.color; const nm = document.createElement('span'); nm.textContent = s.name; sp.append(sw, nm); return sp; }));
+legs.forEach(leg);
+document.getElementById('mt-cmp-sub').textContent = 'Por partido: ' + R.S[0].name + ' frente a ' + (R.grp ? 'la media de los equipos del grupo' : R.S[1].name);
+const nn = (v) => Number(v) || 0;
+const sumR = (rows, ka, ki) => ({ m: d3.sum(rows, (r) => ka ? nn(r[ka]) : nn(r.t2a) + nn(r.t3a)), a: d3.sum(rows, (r) => ki ? nn(r[ki]) : nn(r.t2i) + nn(r.t3i)) });
+// por tipo de tiro (actas)
+const tipo = [['Libres', 'tla', 'tli'], ['T2', 't2a', 't2i'], ['T3', 't3a', 't3i'], ['Campo', null, null]].map(([lab, ka, ki]) => ({ lab, vals: R.S.map((s, i) => ({ s, ...sumR(R.epRows[i], ka, ki), d: R.epRows[i].length || 1 })) }));
+// por distancia (mapa de tiro)
+const dist = [['Corta', 'Aro y pintura'], ['Media', 'Media distancia'], ['Larga', 'Triples']].map(([lab, g]) => ({ lab, sub: g, vals: R.S.map((s, i) => { const rs = R.tdRows[i].filter((r) => MT_GRP(r.zona) === g); return { s, m: d3.sum(rs, (r) => r.m), a: d3.sum(rs, (r) => r.a), d: R.units(R.tdRows[i]) || 1 }; }) }));
+if (!R.epRows[0].length) { setState(b1, 'empty', 'Sin partidos elegidos'); } else mtcBars(b1, tipo, R);
+if (!R.tdRows[0].length) { setState(b2, 'empty', 'Ninguno de los partidos elegidos tiene mapa de tiro subido'); } else mtcBars(b2, dist, R);
+// evolución por jornada (actas)
+const [ka, ki, lab] = MTC_EVO[mtc.evo];
+mtcEvo(R, b3, legs[1], document.getElementById('mt-cevo-t'), 'Evolución por jornada · ' + lab, lab, R.jAct, (i, j) => { const rs = R.epRows[i].filter((r) => R.jOfR(r) === j); return { ...sumR(rs, ka, ki), u: rs.length }; }, 'Sin partidos elegidos');
+// evolución por zonas (mapa de tiro)
+const act = mt.zones.size ? mt.zones : new Set(MT_ALL);
+const same = (zs) => zs.length === act.size && zs.every((z) => act.has(z));
+const pre = MTC_ZPRE.find(([, , zs]) => same(zs));
+document.querySelectorAll('#mt-czevok button').forEach((b) => b.setAttribute('aria-pressed', String(!!pre && b.dataset.v === pre[0])));
+const zlab = pre ? (pre[0] === 'all' ? 'Todos los tiros de campo' : { c: 'Corta (aro y pintura)', m: 'Media distancia', l: 'Larga (triples)' }[pre[0]]) : (act.size === 1 ? MT_ZN[[...act][0]] : act.size + ' zonas seleccionadas');
+mtcEvo(R, b4, legs[2], document.getElementById('mt-czevo-t'), 'Evolución por zonas · ' + zlab, zlab, R.jMap, (i, j) => { const all = R.tdRows[i].filter((r) => R.jOfR(r) === j), rs = all.filter((r) => act.has(r.zona)); return { m: d3.sum(rs, (r) => r.m), a: d3.sum(rs, (r) => r.a), u: R.units(all) }; }, 'Ninguno de los partidos elegidos tiene mapa de tiro subido');
+}
+// barras agrupadas: el equipo y su comparación en cada categoría (% de acierto, o intentos por partido con los aciertos dentro)
+function mtcBars(box, cats, R) {
+box.classList.remove('dash-skeleton'); box.replaceChildren();
+const pct = mtc.cmp === 'pct';
+const W = Math.max(260, box.clientWidth || 320), H = 210, top = 20, bottom = 30, right = 6;
+const vmax = pct ? 1 : (d3.max(cats, (c) => d3.max(c.vals, (v) => v.a / v.d)) || 1);
+const y = d3.scaleLinear([0, vmax], [H - bottom, top]); if (!pct) y.nice();
+const ticks = pct ? [0, 0.25, 0.5, 0.75, 1] : y.ticks(4);
+const tf = (t) => (pct ? Math.round(t * 100) + '%' : fmtN(t));
+const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`);
+const meas = svg.append('g').style('font-size', 'var(--cds-font-size-caption)');
+let mw = 0; ticks.forEach((t) => { mw = Math.max(mw, meas.append('text').text(tf(t)).node().getComputedTextLength()); }); meas.remove();
+const left = Math.ceil(mw) + 8;
+const x0 = d3.scaleBand(cats.map((c) => c.lab), [left, W - right]).paddingInner(0.22).paddingOuter(0.08);
+const x1 = d3.scaleBand(R.S.map((s) => s.id), [0, x0.bandwidth()]).paddingInner(0.12);
+const g = svg.append('g');
+const cap = (s) => s.style('font-size', 'var(--cds-font-size-caption)');
+g.selectAll('line.gr').data(ticks).join('line').attr('x1', left).attr('x2', W - right).attr('y1', (d) => y(d)).attr('y2', (d) => y(d)).style('stroke', 'var(--cds-chart-grid)').style('stroke-width', 1);
+cap(g.selectAll('text.yt').data(ticks).join('text').attr('x', left - 6).attr('y', (d) => y(d)).attr('dy', '0.32em').attr('text-anchor', 'end')).style('fill', 'var(--color-fg-muted)').text(tf);
+const bw = Math.min(34, x1.bandwidth());
+const showLab = bw >= 10, lfs = bw >= 22 ? '11px' : bw >= 15 ? '9px' : '8px';
+for (const c of cats) {
+for (const v of c.vals) {
+const bx = x0(c.lab) + x1(v.s.id) + (x1.bandwidth() - bw) / 2, col = v.s.color;
+if (pct) {
+const p = v.a ? v.m / v.a : null;
+if (p == null) { cap(g.append('text').attr('x', bx + bw / 2).attr('y', y(0) - 4).attr('text-anchor', 'middle')).style('fill', 'var(--color-fg-muted)').text('–'); continue; }
+g.append('rect').attr('x', bx).attr('width', bw).attr('y', y(p)).attr('height', Math.max(0, y(0) - y(p))).attr('rx', 3).style('fill', col);
+if (showLab) cap(g.append('text').attr('x', bx + bw / 2).attr('y', y(p) - 4).attr('text-anchor', 'middle')).style('fill', 'var(--color-fg)').style('font-size', lfs).text(Math.round(p * 100) + '%');
+} else {
+const a = v.a / v.d, m = v.m / v.d;
+g.append('rect').attr('x', bx).attr('width', bw).attr('y', y(a)).attr('height', Math.max(0, y(0) - y(a))).attr('rx', 3).style('fill', col).style('fill-opacity', 0.3);
+g.append('rect').attr('x', bx).attr('width', bw).attr('y', y(m)).attr('height', Math.max(0, y(0) - y(m))).attr('rx', 3).style('fill', col);
+if (showLab) cap(g.append('text').attr('x', bx + bw / 2).attr('y', y(a) - 4).attr('text-anchor', 'middle')).style('fill', 'var(--color-fg)').style('font-size', lfs).text(fmtN(a));
+}
+}
+cap(g.append('text').attr('x', x0(c.lab) + x0.bandwidth() / 2).attr('y', H - bottom + 18).attr('text-anchor', 'middle')).style('fill', 'var(--color-fg)').text(c.lab);
+g.append('rect').attr('x', x0(c.lab) - x0.step() * x0.paddingInner() / 2).attr('width', x0.step()).attr('y', 0).attr('height', H).style('fill', 'transparent')
+.on('pointermove pointerdown', (ev) => mtTip(box, ev, [[c.lab + (c.sub ? ' · ' + c.sub : ''), 'fa-tip-h', null], ...c.vals.map((v) => [v.s.name, null, fmtN(v.m / v.d) + '/' + fmtN(v.a / v.d) + ' por partido · ' + (v.a ? mtPct(v.m / v.a) : '--')])]))
+.on('pointerleave', () => mtUntip(box));
+}
+g.append('line').attr('x1', left).attr('x2', W - right).attr('y1', y(0)).attr('y2', y(0)).style('stroke', 'var(--cds-chart-axis)').style('stroke-width', 1);
+}
+// evolución por jornada: dos barras por jornada (equipo y comparación; clara = intentos por partido, oscura = aciertos) y línea del % de acierto
+function mtcEvo(R, box, leg, titleEl, title, lab, jorns, cellOf, emptyMsg) {
+titleEl.textContent = title;
+if (!jorns.length) { setState(box, 'empty', emptyMsg); return; }
+const TOT = '__tot';
+const cols = [...jorns.map((j) => ({ id: 'J' + j, j, ...mtcLabel(R.D, j) })), { id: TOT, total: true, label: 'Media', sub: 'por partido' }];
+const V = new Map();
+R.S.forEach((s, i) => {
+const per = jorns.map((j) => cellOf(i, j));
+cols.forEach((c, ci) => {
+if (c.total) { const u = d3.sum(per, (p) => p.u), pm = d3.sum(per, (p) => p.m), pa = d3.sum(per, (p) => p.a); V.set(s.id + '|' + c.id, u ? { m: pm / u, a: pa / u, pm, pa } : null); return; }
+const p = per[ci]; V.set(s.id + '|' + c.id, p.u ? { m: p.m / p.u, a: p.a / p.u, pm: p.m, pa: p.a } : null);
+});
+});
+box.classList.remove('dash-skeleton'); box.replaceChildren();
+const W = Math.max(280, box.clientWidth || 320), H = 300, top = 18, bottom = 42;
+const yMax = d3.max([...V.values()].filter(Boolean), (v) => v.a) || 1;
+const y = d3.scaleLinear([0, yMax], [H - bottom, top]).nice();
+const yp = d3.scaleLinear([0, 1], [H - bottom, top]);
+const ticks = y.ticks(5), pticks = [0, 0.25, 0.5, 0.75, 1];
+const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`);
+const meas = svg.append('g').style('font-size', 'var(--cds-font-size-caption)');
+let mw = 0; ticks.forEach((t) => { mw = Math.max(mw, meas.append('text').text(fmtN(t)).node().getComputedTextLength()); });
+const pw = meas.append('text').text('100%').node().getComputedTextLength(); meas.remove();
+const left = Math.ceil(mw) + 10, right = Math.ceil(pw) + 10;
+const x0 = d3.scaleBand(cols.map((c) => c.id), [left, W - right]).paddingInner(0.22).paddingOuter(0.1);
+const x1 = d3.scaleBand(R.S.map((s) => s.id), [0, x0.bandwidth()]).paddingInner(0.12);
+const g = svg.append('g');
+shadeTotal(g, x0, TOT, W, right, H, top, bottom);
+const cap = (sl) => sl.style('font-size', 'var(--cds-font-size-caption)');
+g.selectAll('line.gr').data(ticks).join('line').attr('x1', left).attr('x2', W - right).attr('y1', (d) => y(d)).attr('y2', (d) => y(d)).style('stroke', 'var(--cds-chart-grid)').style('stroke-width', 1);
+cap(g.selectAll('text.yt').data(ticks).join('text').attr('x', left - 8).attr('y', (d) => y(d)).attr('dy', '0.32em').attr('text-anchor', 'end')).style('fill', 'var(--color-fg-muted)').text((d) => fmtN(d));
+cap(g.selectAll('text.pt').data(pticks).join('text').attr('x', W - right + 8).attr('y', (d) => yp(d)).attr('dy', '0.32em').attr('text-anchor', 'start')).style('fill', 'var(--color-fg-muted)').text((d) => Math.round(d * 100) + '%');
+const bw = Math.min(28, x1.bandwidth());
+const bx = (s, c) => x0(c.id) + x1(s.id) + x1.bandwidth() / 2;
+for (const c of cols) {
+for (const s of R.S) {
+const v = V.get(s.id + '|' + c.id); if (!v) continue;
+const x = bx(s, c) - bw / 2;
+g.append('rect').attr('x', x).attr('width', bw).attr('y', y(v.a)).attr('height', Math.max(0, y(0) - y(v.a))).attr('rx', 3).style('fill', s.color).style('fill-opacity', 0.28);
+g.append('rect').attr('x', x).attr('width', bw).attr('y', y(v.m)).attr('height', Math.max(0, y(0) - y(v.m))).attr('rx', 3).style('fill', s.color).style('fill-opacity', 0.9);
+}
+const lb = g.append('g').attr('transform', `translate(${x0(c.id) + x0.bandwidth() / 2},${H - bottom + 17})`);
+cap(lb.append('text').attr('text-anchor', 'middle')).style('fill', 'var(--color-fg)').style('font-weight', c.total ? 'var(--cds-font-weight-medium)' : null).text(c.label);
+if (c.sub) cap(lb.append('text').attr('text-anchor', 'middle').attr('dy', '1.3em')).style('fill', 'var(--color-fg-muted)').text(c.total ? c.sub : rivLab(c.sub, x0.step() - 8));
+}
+g.append('line').attr('x1', left).attr('x2', W - right).attr('y1', y(0)).attr('y2', y(0)).style('stroke', 'var(--cds-chart-axis)').style('stroke-width', 1);
+const sepX = x0(TOT) - x0.step() * x0.paddingInner() / 2;
+g.append('line').attr('x1', sepX).attr('x2', sepX).attr('y1', top - 6).attr('y2', H - bottom + 30).style('stroke', 'var(--cds-chart-reference)').style('stroke-dasharray', '4 4').style('stroke-width', 1);
+for (const s of R.S) {
+const pts = cols.filter((c) => !c.total).map((c) => ({ c, v: V.get(s.id + '|' + c.id) })).filter((o) => o.v && o.v.pa > 0);
+g.append('path').datum(pts).attr('d', d3.line().x((o) => bx(s, o.c)).y((o) => yp(o.v.pm / o.v.pa))).style('fill', 'none').style('stroke', s.color).style('stroke-width', 2);
+const tv = V.get(s.id + '|' + TOT);
+const all = tv && tv.pa > 0 ? [...pts, { c: cols[cols.length - 1], v: tv }] : pts;
+g.selectAll(null).data(all).join('circle').attr('cx', (o) => bx(s, o.c)).attr('cy', (o) => yp(o.v.pm / o.v.pa)).attr('r', 4).style('fill', s.color).style('stroke', 'var(--color-panel, #fff)').style('stroke-width', 1.5);
+}
+for (const c of cols) {
+g.append('rect').attr('x', x0(c.id) - x0.step() * x0.paddingInner() / 2).attr('width', x0.step()).attr('y', 0).attr('height', H).style('fill', 'transparent')
+.on('pointermove pointerdown', (ev) => mtTip(box, ev, [[(c.total ? 'Media por partido' : c.label + (c.sub ? ' · vs ' + c.sub : '')) + ' · ' + lab, 'fa-tip-h', null],
+...R.S.map((s) => { const v = V.get(s.id + '|' + c.id); return [s.name, null, !v ? 'sin datos' : fmtN(v.m) + '/' + fmtN(v.a) + ' por partido · ' + (v.pa ? mtPct(v.pm / v.pa) : '--')]; })]))
+.on('pointerleave', () => mtUntip(box));
+}
+}
+document.querySelectorAll('#mt-cmpmode button').forEach((b) => b.addEventListener('click', () => { mtc.cmp = b.dataset.v; drawMapaTiro(); }));
+document.querySelectorAll('#mt-cevok button').forEach((b) => b.addEventListener('click', () => { mtc.evo = b.dataset.v; drawMapaTiro(); }));
+document.querySelectorAll('#mt-czevok button').forEach((b) => b.addEventListener('click', () => { const zs = (MTC_ZPRE.find(([k]) => k === b.dataset.v) || [])[2] || MT_ALL; mt.tl = false; mt.zones = zs.length === MT_ALL.length ? new Set() : new Set(zs); drawMapaTiro(); }));
+function drawMapaTiro() {
 refSelect('mt', '#mapa-tiro > .fa-row', drawMapaTiro);
     const sec = document.getElementById('mapa-tiro');
     if (!sec) return;
@@ -2908,7 +3104,7 @@ refSelect('mt', '#mapa-tiro > .fa-row', drawMapaTiro);
     const tilesBox = document.getElementById('mt-tiles'), zl = document.getElementById('mt-zl'), gl = document.getElementById('mt-games');
     const D = mtData();
     const clearAll = (st, msg) => { [mapBox, evoBox].forEach((b) => setState(b, st, msg)); tilesBox.replaceChildren(); zl.replaceChildren(); document.getElementById('mt-pre').replaceChildren(); };
-    if (D.status !== 'ok') { clearAll(D.status === 'loading' ? 'loading' : 'error', 'No se pudo cargar el mapa de tiro'); gl.textContent = ''; return; }
+    if (D.status !== 'ok') { clearAll(D.status === 'loading' ? 'loading' : 'error', 'No se pudo cargar el mapa de tiro'); gl.textContent = ''; drawMtCmp(); return; }
     const rivals = mt.who === 'riv';
     const names = D.withData.map((g) => g.label).join(', ');
     gl.textContent = D.withData.length
@@ -2918,7 +3114,7 @@ refSelect('mt', '#mapa-tiro > .fa-row', drawMapaTiro);
     document.getElementById('mt-map-sub').textContent = D.withData.length === 1 ? D.withData[0].label + ' · vs ' + D.withData[0].rival : D.withData.length ? 'Agregado: ' + names : '';
     if (!D.withData.length) {
       const msg = D.allShots ? 'Ninguno de los partidos elegidos tiene mapa de tiro subido.' : 'Este equipo todavía no tiene mapa de tiro subido.';
-      clearAll('empty', msg); return;
+      clearAll('empty', msg); drawMtCmp(); return;
     }
     const rows = D.withData.flatMap((g) => D.pick(g));
     const Z = mtAgg(rows);
@@ -2951,8 +3147,9 @@ refSelect('mt', '#mapa-tiro > .fa-row', drawMapaTiro);
     tilesBox.replaceChildren(tile('Total tiros de campo', sum(() => true)), ...['Aro y pintura', 'Media distancia', 'Triples'].map((g) => tile(g, sum((k) => MT_GRP(k) === g))));
     carDots(tilesBox);
     drawMapaTable(D);
-    drawMapaEvo(D);
-  }
+drawMapaEvo(D);
+drawMtCmp();
+}
   function mtToggle(k) {
     mt.tl = false;
     if (!mt.zones.size) mt.zones = new Set([k]); else if (mt.zones.has(k)) mt.zones.delete(k); else mt.zones.add(k);
@@ -3535,8 +3732,13 @@ if (zs.every((z) => mj.zones.has(z))) zs.forEach((z) => mj.zones.delete(z)); els
   function drawMjTable(D) {
     const zl = document.getElementById('mj-zl');
     zl.replaceChildren();
-    const cols = D.P.map((p) => ({ id: p.name, p, Z: p.Z, dv: mj.agg === 'pp' ? (p.pgMap || 1) : 1 }));
-    if (D.P.length > 1) {
+    // con una sola jugadora, una columna por jornada (con mapa de tiro) y el total o la media por partido
+const one = D.P.length === 1 ? D.P[0] : null;
+const cols = one
+? [...one.mapActas.slice().sort((a, b) => Number(a.jornada) - Number(b.jornada)).map((r) => ({ id: r.partido_id, game: r, p: one, Z: mtAgg(one.rows.filter((x) => x.partido_id === r.partido_id)), dv: 1 })),
+{ id: '__tot', total: true, p: one, Z: one.Z, dv: mj.agg === 'pp' ? (one.pgMap || 1) : 1 }]
+: D.P.map((p) => ({ id: p.name, p, Z: p.Z, dv: mj.agg === 'pp' ? (p.pgMap || 1) : 1 }));
+if (D.P.length > 1) {
       const Zt = mtAgg(D.P.flatMap((p) => p.rows));
       // en «Por partido», el total suma las medias de cada jugadora
       if (mj.agg === 'pp') { Zt.clear(); D.P.forEach((p) => { const dv = p.pgMap || 1; for (const [k, v] of p.Z) { const o = Zt.get(k) || { m: 0, a: 0, tipo: v.tipo }; o.m += v.m / dv; o.a += v.a / dv; Zt.set(k, o); } }); }
@@ -3557,7 +3759,9 @@ if (zs.every((z) => mj.zones.has(z))) zs.forEach((z) => mj.zones.delete(z)); els
     h0.append(b0); r1.append(h0);
     cols.forEach((c, ci) => {
       const h = document.createElement('th'); h.colSpan = 4; h.className = 'gh gs' + (ci % 2 ? ' ga' : '') + (c.total ? ' gt' : '');
-      if (c.total) h.textContent = 'Seleccionadas (' + D.P.length + ')';
+      if (one && c.game) { const pf = String(c.game.resultado || '').split('-').map(Number); h.textContent = 'J' + c.game.jornada + (pf.length === 2 && pf[0] !== pf[1] ? (pf[0] > pf[1] ? ' (V)' : ' (D)') : '') + ' · ' + short(c.game.rival); }
+else if (one && c.total) h.textContent = mj.agg === 'pp' ? 'Por partido' : 'Total' + (cols.length > 2 ? ' (' + (cols.length - 1) + ' partidos)' : '');
+else if (c.total) h.textContent = 'Seleccionadas (' + D.P.length + ')';
       else { const sw = document.createElement('span'); sw.className = 'fa-sw'; sw.style.cssText = 'display:inline-block;margin-right:6px;vertical-align:middle;background:' + (c.p.color || 'var(--fa-blue)'); h.append(sw, mjLabel(D, c.p)); }
       r1.append(h);
       MT_KINDS.forEach(([kind, lab, tt], ki) => {
