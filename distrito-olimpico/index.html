@@ -3067,6 +3067,7 @@ const v = V.get(s.id + '|' + c.id); if (!v) continue;
 const x = bx(s, c) - bw / 2;
 g.append('rect').attr('x', x).attr('width', bw).attr('y', y(v.a)).attr('height', Math.max(0, y(0) - y(v.a))).attr('rx', 3).style('fill', s.color).style('fill-opacity', 0.28);
 g.append('rect').attr('x', x).attr('width', bw).attr('y', y(v.m)).attr('height', Math.max(0, y(0) - y(v.m))).attr('rx', 3).style('fill', s.color).style('fill-opacity', 0.9);
+if (bw >= 12) cap(g.append('text').attr('x', x + bw / 2).attr('y', y(v.a) - 3).attr('text-anchor', 'middle')).style('fill', 'var(--color-fg)').style('font-size', bw >= 22 ? '10px' : '8px').style('pointer-events', 'none').text(fmtN(v.a));
 }
 const lb = g.append('g').attr('transform', `translate(${x0(c.id) + x0.bandwidth() / 2},${H - bottom + 17})`);
 cap(lb.append('text').attr('text-anchor', 'middle')).style('fill', 'var(--color-fg)').style('font-weight', c.total ? 'var(--cds-font-weight-medium)' : null).text(c.label);
@@ -3585,6 +3586,7 @@ if (showLab && y(0) - y(m) >= 14) cap(g.append('text').attr('x', bx + bw / 2).at
         const col = p.color || 'var(--fa-blue)', x = bx(p, c) - bw / 2;
         g.append('rect').attr('x', x).attr('width', bw).attr('y', y(v.a)).attr('height', Math.max(0, y(0) - y(v.a))).attr('rx', 3).style('fill', col).style('fill-opacity', 0.28);
         g.append('rect').attr('x', x).attr('width', bw).attr('y', y(v.m)).attr('height', Math.max(0, y(0) - y(v.m))).attr('rx', 3).style('fill', col).style('fill-opacity', 0.9);
+if (bw >= 12) cap(g.append('text').attr('x', x + bw / 2).attr('y', y(v.a) - 3).attr('text-anchor', 'middle')).style('fill', 'var(--color-fg)').style('font-size', bw >= 22 ? '10px' : '8px').style('pointer-events', 'none').text(fmtN(v.a));
       }
       const lb = g.append('g').attr('transform', `translate(${x0(c.id) + x0.bandwidth() / 2},${H - bottom + 17})`);
       cap(lb.append('text').attr('text-anchor', 'middle')).style('fill', 'var(--color-fg)').style('font-weight', c.total ? 'var(--cds-font-weight-medium)' : null).text(c.label);
