@@ -3747,14 +3747,26 @@ mj.tl = false;
 if (zs.every((z) => mj.zones.has(z))) zs.forEach((z) => mj.zones.delete(z)); else zs.forEach((z) => mj.zones.add(z));
     drawPlayerMap();
   }
-  function drawMjTable(D) {
+  // con una sola jugadora: columna extra con la media por jugadora y partido de todas las jugadoras de su equipo en los partidos con mapa de tiro seleccionados
+function mjAvgCol(D, one) {
+const td = faData('tiros'), jug = faData('jugadoras');
+if (td.status !== 'ok' || jug.status !== 'ok') return [];
+const e = one.equipo;
+const gids = new Set((e === team() ? D.withMap.map((g) => g.partido_id) : one.mapActas.map((r) => r.partido_id)));
+if (!gids.size) return [];
+const rows = td.data.filter((r) => r.equipo === e && gids.has(r.partido_id));
+const n = jug.data.filter((r) => r.equipo === e && gids.has(r.partido_id) && Number(r.min) > 0).length;
+if (!rows.length || !n) return [];
+return [{ id: '__avg', avg: true, label: 'Media jugadoras', Z: mtAgg(rows), dv: n }];
+}
+function drawMjTable(D) {
     const zl = document.getElementById('mj-zl');
     zl.replaceChildren();
     // con una sola jugadora, una columna por jornada (con mapa de tiro) y el total o la media por partido
 const one = D.P.length === 1 ? D.P[0] : null;
 const cols = one
 ? [...one.mapActas.slice().sort((a, b) => Number(a.jornada) - Number(b.jornada)).map((r) => ({ id: r.partido_id, game: r, p: one, Z: mtAgg(one.rows.filter((x) => x.partido_id === r.partido_id)), dv: 1 })),
-{ id: '__tot', total: true, p: one, Z: one.Z, dv: mj.agg === 'pp' ? (one.pgMap || 1) : 1 }]
+{ id: '__tot', total: true, p: one, Z: one.Z, dv: mj.agg === 'pp' ? (one.pgMap || 1) : 1 }, ...mjAvgCol(D, one)]
 : D.P.map((p) => ({ id: p.name, p, Z: p.Z, dv: mj.agg === 'pp' ? (p.pgMap || 1) : 1 }));
 if (D.P.length > 1) {
       const Zt = mtAgg(D.P.flatMap((p) => p.rows));
@@ -3778,7 +3790,8 @@ if (D.P.length > 1) {
     cols.forEach((c, ci) => {
       const h = document.createElement('th'); h.colSpan = 4; h.className = 'gh gs' + (ci % 2 ? ' ga' : '') + (c.total ? ' gt' : '');
       if (one && c.game) { const pf = String(c.game.resultado || '').split('-').map(Number); h.textContent = 'J' + c.game.jornada + (pf.length === 2 && pf[0] !== pf[1] ? (pf[0] > pf[1] ? ' (V)' : ' (D)') : '') + ' · ' + short(c.game.rival); }
-else if (one && c.total) h.textContent = mj.agg === 'pp' ? 'Por partido' : 'Total' + (cols.length > 2 ? ' (' + (cols.length - 1) + ' partidos)' : '');
+else if (one && c.avg) { h.textContent = c.label; h.title = 'Media por jugadora y partido de todas las jugadoras del equipo en los partidos con mapa de tiro'; }
+else if (one && c.total) h.textContent = mj.agg === 'pp' ? 'Por partido' : 'Total' + (cols.filter((x) => x.game).length > 1 ? ' (' + cols.filter((x) => x.game).length + ' partidos)' : '');
 else if (c.total) h.textContent = 'Seleccionadas (' + D.P.length + ')';
       else { const sw = document.createElement('span'); sw.className = 'fa-sw'; sw.style.cssText = 'display:inline-block;margin-right:6px;vertical-align:middle;background:' + (c.p.color || 'var(--fa-blue)'); h.append(sw, mjLabel(D, c.p)); }
       r1.append(h);
