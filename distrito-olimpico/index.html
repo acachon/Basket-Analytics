@@ -349,6 +349,10 @@ th button[data-tip]{text-decoration:underline dotted color-mix(in srgb,currentCo
 /* contraste suficiente del balance V–D (WCAG AA) */
 .fa-rec{color:#1c5c33}.fa-rec.neg{color:#9b2a20}
 @media (prefers-color-scheme: dark){.fa-rec{color:var(--color-ok)}.fa-rec.neg{color:var(--color-bad)}}
+.fa-mjcar{margin-bottom:var(--cds-gap-md)}
+.fa-mjcar .fa-carousel{align-items:stretch}
+@media (min-width:981px){.fa-mjcar .fa-carousel>.fa-card{flex-basis:calc((100% - var(--cds-gap-md)) / 2)}}
+#mj-sevo .fa-chart{min-height:340px}
 .fa-carousel:focus-visible,.fa-kpis:focus-visible,.fa-mt-tiles:focus-visible{outline:2px solid var(--s1);outline-offset:2px;border-radius:8px}
 
 /* ================= REDISEÑO ================= */
@@ -684,7 +688,19 @@ html.fa-nojs .rd-off.fa-card,html.fa-nojs section.rd-off{display:block!important
           <p class="fa-note" id="mj-map-sub" style="margin-top:0"></p>
           <div class="fa-mtbox fa-c-mj dash-skeleton" data-source="tiros jugadoras" style="min-height:300px"></div>
         </section>
-        <section class="fa-card" id="mj-cmp">
+<section class="fa-card" id="mj-sevo">
+<div class="fa-ttl"><h2 id="mj-sevo-t">Estadísticas de tiro</h2><button type="button" class="fa-info" aria-expanded="false" aria-controls="fa-note-mjsevo" title="Cómo usar esta gráfica">i</button></div>
+<p class="fa-note" id="fa-note-mjsevo" hidden>Suma de las jugadoras seleccionadas jornada a jornada: barras de aciertos y fallos (intentos) y línea con el % de acierto. Elige zonas en el mapa de tiro, en la tabla o con un atajo (es la misma selección en los tres sitios; sin ninguna, se cuentan todas). «Tiro libre» usa las actas.</p>
+<p class="fa-note" id="mj-sevo-sub" style="margin-top:0"></p>
+<div class="fa-mt-pre" id="mj-pre"></div>
+<div class="fa-leg2"><span><i class="fa-k fa-k-def"></i>Aciertos</span><span><i class="fa-k fa-k-mis"></i>Fallos</span><span><i class="fa-kl"></i>% de acierto</span><span><i class="fa-kl fa-kl-int"></i>% de intentos</span></div>
+<div class="fa-chart fa-c-mjsevo dash-skeleton" data-source="tiros jugadoras" style="min-height:340px"></div>
+</section>
+              </div>
+<div class="fa-cblock fa-mjcar" id="mj-cblock">
+<div class="fa-row fa-cnav2"><span class="fa-note" style="margin:0 auto 0 0">Comparativa y evolución de las jugadoras seleccionadas · desliza para ver más</span><span class="fa-carr-nav"><button type="button" class="fa-carr-btn" data-dir="-1" aria-label="Anterior">‹</button><button type="button" class="fa-carr-btn" data-dir="1" aria-label="Siguiente">›</button></span></div>
+<div class="fa-carousel">
+<section class="fa-card" id="mj-cmp">
           <div class="fa-row" style="flex-wrap:wrap;gap:8px"><div class="fa-ttl"><h2>Comparativa de tiro</h2><button type="button" class="fa-info" aria-expanded="false" aria-controls="fa-note-mjcmp" title="Cómo leer estas gráficas">i</button></div>
 <span class="fa-seg" id="mj-cmpmode" role="group" aria-label="Qué comparar"><button type="button" data-v="pct" aria-pressed="true">% de acierto</button><button type="button" data-v="vol" aria-pressed="false">Intentos</button></span></div>
           <p class="fa-note" id="fa-note-mjcmp" hidden="">Una barra por jugadora, con su color. «Por tipo de tiro» sale de las actas de los partidos elegidos (libres, tiros de 2, triples y el total de campo). «Por distancia» sale del mapa de tiro: corta = aro y pintura, media = media distancia, larga = triples. En «Intentos», la barra clara son los intentos y la oscura los aciertos; sigue el selector Totales / Por partido de la tabla de abajo. Pasa el cursor por cada grupo para ver aciertos/intentos.</p>
@@ -694,20 +710,21 @@ html.fa-nojs .rd-off.fa-card,html.fa-nojs section.rd-off{display:block!important
           <h3 class="fa-mj-h3">Por distancia</h3>
           <div class="fa-chart fa-c-mj2 dash-skeleton" data-source="tiros" style="min-height:210px"></div>
         </section>
-      </div>
-      <section class="fa-card" id="mj-evo" style="margin-bottom:var(--cds-gap-md)">
+<section class="fa-card" id="mj-evo">
         <div class="fa-row"><div class="fa-ttl"><h2 id="mj-evo-t">Evolución por jornada</h2><button type="button" class="fa-info" aria-expanded="false" aria-controls="fa-note-mjevo" title="Cómo leer esta gráfica">i</button></div><span class="fa-seg" id="mj-evok" role="group" aria-label="Tipo de tiro"><button type="button" data-v="tl" aria-pressed="false" title="Tiros libres">TL</button><button type="button" data-v="t2" aria-pressed="false" title="Tiros de 2">T2</button><button type="button" data-v="t3" aria-pressed="false" title="Triples">T3</button><button type="button" data-v="tc" aria-pressed="true" title="Tiros de campo (T2 + T3)">TC</button></span></div>
         <p class="fa-note" id="fa-note-mjevo" hidden="">Para cada jornada, una barra por jugadora (con su color): la parte clara son los intentos y la oscura los aciertos. La línea de cada jugadora es su % de acierto en esa jornada (escala de la derecha), para ver cómo evoluciona y compararlas. TC = tiros de campo (T2 + T3). Datos de las actas de los partidos elegidos; la última columna es el total o la media por partido, según el selector de la tabla de abajo. Pasa el cursor por una jornada para ver el detalle.</p>
         <div class="fa-leg2" id="mj-evo-leg"></div>
         <div class="fa-chart fa-c-mjevo dash-skeleton" data-source="jugadoras" style="min-height:300px"></div>
       </section>
-      <section class="fa-card" id="mj-zevo" style="margin-bottom:var(--cds-gap-md)">
+<section class="fa-card" id="mj-zevo">
         <div class="fa-row"><div class="fa-ttl"><h2 id="mj-zevo-t">Evolución por zonas</h2><button type="button" class="fa-info" aria-expanded="false" aria-controls="fa-note-mjzevo" title="Cómo leer esta gráfica">i</button></div><span class="fa-seg" id="mj-zevok" role="group" aria-label="Zonas de tiro"><button type="button" data-v="all" aria-pressed="true" title="Todos los tiros de campo">Todas</button><button type="button" data-v="c" aria-pressed="false" title="Aro y pintura">Corta</button><button type="button" data-v="m" aria-pressed="false" title="Media distancia">Media</button><button type="button" data-v="l" aria-pressed="false" title="Triples">Larga</button></span></div>
         <p class="fa-note" id="fa-note-mjzevo" hidden="">Igual que la gráfica anterior, pero con los tiros del mapa de tiro: una barra por jugadora en cada jornada (clara, intentos; oscura, aciertos) y una línea con su % de acierto. Muestra las zonas elegidas: Corta = aro y pintura, Media = media distancia, Larga = triples. Si eliges zonas sueltas en la tabla de abajo o en el mapa, la gráfica muestra justo esas (es la misma selección en los tres sitios). Solo partidos con mapa de tiro subido; la última columna sigue el selector Totales / Por partido de la tabla.</p>
         <div class="fa-leg2" id="mj-zevo-leg"></div>
         <div class="fa-chart fa-c-mjzevo dash-skeleton" data-source="tiros jugadoras" style="min-height:300px"></div>
       </section>
-      <section class="fa-card" id="mj-tab" style="margin-bottom:var(--cds-gap-md)">
+</div>
+</div>
+                  <section class="fa-card" id="mj-tab" style="margin-bottom:var(--cds-gap-md)">
         <div class="fa-row"><div class="fa-ttl"><h2>Tiros por zona y jugadora</h2><button type="button" class="fa-info" aria-expanded="false" aria-controls="fa-note-mjt" title="Cómo usar esta tabla">i</button></div><span class="fa-seg" id="mj-agg" role="group" aria-label="Totales o por partido"><button type="button" data-mode="tot" aria-pressed="true">Totales</button><button type="button" data-mode="pp" aria-pressed="false">Por partido</button></span></div>
         <p class="fa-note" id="fa-note-mjt" hidden="">Una columna por jugadora seleccionada: intentos (Int.), % sobre sus intentos (%Int), aciertos (Ac.) y % de acierto (%Ac). «Por partido» divide entre los partidos con mapa de tiro que jugó cada una; con varias, la última columna suma las seleccionadas (en «Por partido», la suma de sus medias). Toca una fila para destacar la zona en el mapa, o una cabecera para ordenar.</p>
         <div class="fa-mt-tw"><table class="fa-mt-zl fa-mt-zl2" id="mj-zl" data-source="tiros jugadoras"></table></div>
@@ -3150,7 +3167,7 @@ document.querySelectorAll('#mt-eqmode button').forEach((b) => b.addEventListener
   [['mt-who', 'who'], ['mt-mode', 'mode'], ['mt-evomode', 'evo']].forEach(([id, k]) => document.querySelectorAll('#' + id + ' button').forEach((b) => b.addEventListener('click', () => { mt[k] = b.dataset.v; drawMapaTiro(); })));
 
   // ---- Mapa de tiro de jugadoras (mapa de la jugadora elegida, comparativas y tabla por zonas con una columna por jugadora)
-  const mj = { who: null, mode: 'pct', cmp: 'pct', agg: 'tot', evo: 'tc', zones: new Set(), sort: { k: 'idx', dir: 1 } };
+  const mj = { who: null, mode: 'pct', cmp: 'pct', agg: 'tot', evo: 'tc', tl: false, zones: new Set(), sort: { k: 'idx', dir: 1 } };
   const MJ_ALL = '__todas';
   function mjData() {
     const td = faData('tiros'), jug = faData('jugadoras');
@@ -3183,7 +3200,7 @@ document.querySelectorAll('#mt-eqmode button').forEach((b) => b.addEventListener
     const D = mjData();
     const pick = document.getElementById('mj-pick'), tiles = document.getElementById('mj-tiles'), mapBox = sec.querySelector('.fa-c-mj');
     const cmp1 = sec.querySelector('.fa-c-mj1'), cmp2 = sec.querySelector('.fa-c-mj2'), zl = document.getElementById('mj-zl'), gl = document.getElementById('mj-games');
-    const clearAll = (st, msg) => { [mapBox, cmp1, cmp2, sec.querySelector('.fa-c-mjevo'), sec.querySelector('.fa-c-mjzevo')].forEach((b) => setState(b, st, msg)); document.getElementById('mj-zevo-leg').replaceChildren(); tiles.replaceChildren(); zl.replaceChildren(); pick.replaceChildren(); document.getElementById('mj-evo-leg').replaceChildren(); };
+    const clearAll = (st, msg) => { [mapBox, cmp1, cmp2, sec.querySelector('.fa-c-mjevo'), sec.querySelector('.fa-c-mjzevo'), sec.querySelector('.fa-c-mjsevo')].forEach((b) => setState(b, st, msg)); document.getElementById('mj-pre').replaceChildren(); document.getElementById('mj-sevo-sub').textContent = ''; document.getElementById('mj-zevo-leg').replaceChildren(); tiles.replaceChildren(); zl.replaceChildren(); pick.replaceChildren(); document.getElementById('mj-evo-leg').replaceChildren(); };
     if (D.status !== 'ok') { clearAll(D.status === 'loading' ? 'loading' : 'error', 'No se pudo cargar'); return; }
     if (sec.classList.contains('fa-folded') || rdOff(sec)) return;
     sec.querySelectorAll('#mj-mode button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === mj.mode)));
@@ -3240,9 +3257,10 @@ document.querySelectorAll('#mt-eqmode button').forEach((b) => b.addEventListener
     mjBars(cmp1, tipo, D);
     mjBars(cmp2, dist, D);
     drawMjTable(D);
-    drawMjEvo(D);
-    drawMjZEvo(D);
-  }
+drawMjEvo(D);
+drawMjZEvo(D);
+drawMjSEvo(D);
+}
   // barras agrupadas: una por jugadora en cada categoría (% de acierto, o intentos con los aciertos dentro)
   function mjBars(box, cats, D) {
     box.classList.remove('dash-skeleton'); box.replaceChildren();
@@ -3380,13 +3398,136 @@ document.querySelectorAll('#mt-eqmode button').forEach((b) => b.addEventListener
     }
   }
   document.querySelectorAll('#mj-evok button').forEach((b) => b.addEventListener('click', () => { mj.evo = b.dataset.v; drawPlayerMap(); }));
-  document.querySelectorAll('#mj-zevok button').forEach((b) => b.addEventListener('click', () => { const zs = (MJ_ZPRE.find(([k]) => k === b.dataset.v) || [])[2] || MT_ALL; mj.zones = zs.length === MT_ALL.length ? new Set() : new Set(zs); drawPlayerMap(); }));
-  function mjToggle(k) {
-    if (!mj.zones.size) mj.zones = new Set([k]); else if (mj.zones.has(k)) mj.zones.delete(k); else mj.zones.add(k);
+  document.querySelectorAll('#mj-zevok button').forEach((b) => b.addEventListener('click', () => { const zs = (MJ_ZPRE.find(([k]) => k === b.dataset.v) || [])[2] || MT_ALL; mj.tl = false; mj.zones = zs.length === MT_ALL.length ? new Set() : new Set(zs); drawPlayerMap(); }));
+  // «Estadísticas de tiro» de las jugadoras seleccionadas, sumadas: misma gráfica que la del equipo (zonas elegibles, por jornada)
+function drawMjSEvo(D) {
+const box = document.querySelector('.fa-c-mjsevo'), preBox = document.getElementById('mj-pre'), sub = document.getElementById('mj-sevo-sub'), titleEl = document.getElementById('mj-sevo-t');
+if (!box) return;
+const TL = mj.tl;
+const act = mj.zones.size ? mj.zones : new Set(MT_ALL);
+const zs = MT_ALL.filter((z) => act.has(z));
+const allZ = zs.length === MT_ALL.length;
+preBox.replaceChildren(...MT_PRE.map(([t, zl]) => {
+const b = document.createElement('button'); b.type = 'button'; b.textContent = t;
+const all = zl.length === MT_ALL.length;
+b.setAttribute('aria-pressed', String(!TL && (all ? (!mj.zones.size || mj.zones.size === MT_ALL.length) : zl.length === mj.zones.size && zl.every((z) => mj.zones.has(z)))));
+b.addEventListener('click', () => { mj.tl = false; mj.zones = all ? new Set() : new Set(zl); drawPlayerMap(); });
+return b;
+}).concat([(() => {
+const b = document.createElement('button'); b.type = 'button'; b.textContent = 'Tiro libre'; b.title = 'Tiros libres (de las actas)';
+b.setAttribute('aria-pressed', String(TL)); b.addEventListener('click', () => { mj.tl = true; drawPlayerMap(); });
+return b;
+})()]));
+const legI = document.querySelector('#mj-sevo .fa-kl-int');
+const zTxt = TL ? 'tiros libres' : allZ ? 'todos los tiros de campo' : zs.length === 1 ? MT_ZN[zs[0]] : zs.length + ' zonas';
+titleEl.textContent = 'Estadísticas de tiro · ' + zTxt;
+if (!D.P.length) { setState(box, 'empty', 'Toca jugadoras en la tabla de estadísticas de jugadoras para verlas aquí'); sub.textContent = ''; return; }
+sub.textContent = (D.P.length > 1 ? 'Suma de ' + D.P.length + ' jugadoras: ' : '') + D.P.map((p) => p.name).join(', ');
+const nn = (v) => Number(v) || 0;
+// por jornada: aciertos/intentos de las zonas elegidas (o libres), intentos de campo totales, y detalle por zona y jugadora
+const jornOf = new Map(); D.P.forEach((p) => p.actas.forEach((r) => jornOf.set(r.partido_id, Number(r.jornada))));
+const byJ = new Map();
+const cellOf = (j) => { if (!byJ.has(j)) byJ.set(j, { j, m: 0, a: 0, allA: 0, by: new Map(), pl: new Map() }); return byJ.get(j); };
+for (const p of D.P) {
+if (TL) { p.actas.forEach((r) => { const c = cellOf(Number(r.jornada)); const m = nn(r.tla), a = nn(r.tli); c.m += m; c.a += a; const o = c.pl.get(p.name) || { m: 0, a: 0 }; o.m += m; o.a += a; c.pl.set(p.name, o); }); continue; }
+const mg = new Set(p.mapActas.map((r) => r.partido_id));
+mg.forEach((id) => cellOf(jornOf.get(id)));
+p.rows.forEach((x) => { const j = jornOf.get(x.partido_id); if (j == null || !mg.has(x.partido_id)) return; const c = cellOf(j); c.allA += x.a;
+if (!act.has(x.zona)) return; c.m += x.m; c.a += x.a;
+const zo = c.by.get(x.zona) || { m: 0, a: 0 }; zo.m += x.m; zo.a += x.a; c.by.set(x.zona, zo);
+const po = c.pl.get(p.name) || { m: 0, a: 0 }; po.m += x.m; po.a += x.a; c.pl.set(p.name, po); });
+}
+const jorns = [...byJ.keys()].sort((a, b) => a - b);
+if (!jorns.length) { setState(box, 'empty', TL ? 'Sin partidos elegidos' : 'Ninguno de los partidos elegidos tiene mapa de tiro subido'); if (legI) legI.parentNode.style.display = 'none'; return; }
+const single = D.P.every((p) => p.equipo === team());
+const showI = !TL && !allZ;
+if (legI) legI.parentNode.style.display = showI ? '' : 'none';
+const pp = mj.agg === 'pp';
+const cols = jorns.map((j) => { const c = byJ.get(j); const g = single ? teamGames.find((x) => x.jornada === j) : null;
+return { id: 'J' + j, g, j, label: g ? xLab(g) : 'J' + j, sub: g ? short(g.rival) : '', m: c.m, a: c.a, pi: showI && c.allA ? c.a / c.allA : null, by: c.by, pl: c.pl }; });
+const sM = d3.sum(cols, (c) => c.m), sA = d3.sum(cols, (c) => c.a), sAll = d3.sum(jorns, (j) => byJ.get(j).allA), dv = pp ? cols.length : 1;
+const TOT = '__total';
+const tot = { id: TOT, total: true, label: pp ? 'Media' : 'Total', sub: pp ? (single ? 'por partido' : 'por jornada') : cols.length + (single ? ' partido' : ' jornada') + (cols.length > 1 ? 's' : ''), m: sM / dv, a: sA / dv, pctM: sM, pctA: sA, pi: showI && sAll ? sA / sAll : null, by: null };
+const items = [...cols, tot];
+const P = (c) => { const m = c.pctM != null ? c.pctM : c.m, a = c.pctA != null ? c.pctA : c.a; return a ? m / a : null; };
+box.classList.remove('dash-skeleton'); box.replaceChildren();
+const W = Math.max(260, box.clientWidth || 320), H = 340, top = 18, bottom = 44, right = 22;
+const yMax = d3.max(items, (c) => c.a) || 1;
+const y = d3.scaleLinear([0, yMax], [H - bottom, top]).nice();
+const yp = d3.scaleLinear([0, 1], [H - bottom, top]);
+const ticks = y.ticks(5);
+const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`);
+const meas = svg.append('g').style('font-size', 'var(--cds-font-size-caption)');
+let mw = 0; ticks.forEach((t) => { mw = Math.max(mw, meas.append('text').text(t).node().getComputedTextLength()); }); meas.remove();
+const left = Math.ceil(mw) + 10;
+const x = d3.scaleBand(items.map((c) => c.id), [left, W - right]).paddingInner(0.3).paddingOuter(0.15);
+const g = svg.append('g');
+shadeTotal(g, x, TOT, W, right, H, top, bottom);
+const cap = (s) => s.style('font-size', 'var(--cds-font-size-caption)');
+g.selectAll('line.gr').data(ticks).join('line').attr('x1', left).attr('x2', W - right).attr('y1', (d) => y(d)).attr('y2', (d) => y(d)).style('stroke', 'var(--cds-chart-grid)').style('stroke-width', 1);
+cap(g.selectAll('text.yt').data(ticks).join('text').attr('x', left - 8).attr('y', (d) => y(d)).attr('dy', '0.32em').attr('text-anchor', 'end')).style('fill', 'var(--color-fg-muted)').text((d) => fmtN(d));
+const bw = Math.min(40, x.bandwidth() * 0.6);
+const cx = (c) => x(c.id) + x.bandwidth() / 2;
+const labs = [];
+for (const c of items) {
+const x0 = cx(c) - bw / 2;
+g.append('rect').attr('x', x0).attr('width', bw).attr('y', y(c.a)).attr('height', Math.max(0, y(0) - y(c.a))).attr('rx', 3).style('fill', 'var(--fa-lgray)');
+g.append('rect').attr('x', x0).attr('width', bw).attr('y', y(c.m)).attr('height', Math.max(0, y(0) - y(c.m))).attr('rx', 3).style('fill', 'var(--fa-blue)');
+const darkH = y(0) - y(c.m), lightH = y(c.m) - y(c.a), p = P(c);
+let aIn = false;
+if (darkH >= 15) labs.push({ x: cx(c), y: y(c.m) + 12, t: fmtN(c.m), inv: true });
+else if (lightH >= 15) { labs.push({ x: cx(c), y: y(c.m) - 4, t: fmtN(c.m), bold: true }); aIn = true; }
+let iy = y(c.a) - 4;
+if (p != null && Math.abs(yp(p) - (iy - 4)) < 13) iy = (!aIn && lightH >= 28) ? y(c.a) + 12 : Math.min(y(c.a), yp(p)) - 12;
+labs.push({ x: cx(c), y: iy, t: fmtN(c.a) });
+const lb = g.append('g').attr('transform', `translate(${cx(c)},${H - bottom + 18})`);
+cap(lb.append('text').attr('text-anchor', 'middle')).style('fill', 'var(--color-fg)').style('font-weight', c.total ? 'var(--cds-font-weight-medium)' : null).text(c.label);
+cap(lb.append('text').attr('text-anchor', 'middle').attr('dy', '1.3em')).style('fill', 'var(--color-fg-muted)').text(c.total ? c.sub : rivLab(c.sub, x.step()));
+}
+g.append('line').attr('x1', left).attr('x2', W - right).attr('y1', y(0)).attr('y2', y(0)).style('stroke', 'var(--cds-chart-axis)').style('stroke-width', 1);
+const sepX = x(TOT) - x.step() * x.paddingInner() / 2;
+g.append('line').attr('x1', sepX).attr('x2', sepX).attr('y1', top - 6).attr('y2', H - bottom + 30).style('stroke', 'var(--cds-chart-reference)').style('stroke-dasharray', '4 4').style('stroke-width', 1);
+if (showI) {
+const lineI = items.filter((c) => !c.total && c.pi != null);
+g.append('path').datum(lineI).attr('d', d3.line().x(cx).y((c) => yp(c.pi))).style('fill', 'none').style('stroke', 'var(--fa-blue)').style('stroke-width', 2).style('stroke-dasharray', '5 4');
+for (const c of items.filter((c) => c.pi != null)) {
+g.append('circle').attr('cx', cx(c)).attr('cy', yp(c.pi)).attr('r', 3.5).style('fill', 'var(--fa-blue)').style('stroke', 'var(--color-panel, #fff)').style('stroke-width', 1.5);
+cap(g.append('text').attr('x', cx(c) + bw / 2 + 4).attr('y', yp(c.pi) + (P(c) != null && c.pi > P(c) ? -8 : 15))).style('fill', 'var(--fa-blue)').style('font-weight', 'var(--cds-font-weight-medium)').style('paint-order', 'stroke').style('stroke', 'var(--color-panel, #fff)').style('stroke-width', 3).text(Math.round(c.pi * 100) + '%');
+}
+}
+const line = items.filter((c) => !c.total && P(c) != null);
+g.append('path').datum(line).attr('d', d3.line().x(cx).y((c) => yp(P(c)))).style('fill', 'none').style('stroke', 'var(--fa-green)').style('stroke-width', 2);
+for (const c of items) {
+const p = P(c); if (p == null) continue;
+g.append('circle').attr('cx', cx(c)).attr('cy', yp(p)).attr('r', 4).style('fill', 'var(--fa-green)').style('stroke', 'var(--color-panel, #fff)').style('stroke-width', 1.5);
+cap(g.append('text').attr('x', cx(c) + bw / 2 + 4).attr('y', yp(p) + (c.pi != null && c.pi > p ? 15 : -7))).style('fill', 'var(--fa-green)').style('font-weight', 'var(--cds-font-weight-medium)').style('paint-order', 'stroke').style('stroke', 'var(--color-panel, #fff)').style('stroke-width', 3).text(Math.round(p * 100) + '%');
+}
+for (const l of labs) {
+const t = cap(g.append('text').attr('x', l.x).attr('y', l.y).attr('text-anchor', 'middle')).text(l.t);
+if (l.inv) t.style('fill', 'var(--color-panel, #fff)').style('font-weight', 'var(--cds-font-weight-medium)');
+else t.style('fill', 'var(--color-fg)').style('font-weight', l.bold ? 'var(--cds-font-weight-medium)' : null).style('paint-order', 'stroke').style('stroke', 'var(--color-panel, #fff)').style('stroke-width', 3);
+}
+// detalle por jornada al pasar el cursor: total, % y, con varias jugadoras o zonas, el desglose
+const show = (ev) => {
+const [px] = d3.pointer(ev, svg.node());
+const c = items.reduce((a, b) => (Math.abs(x(b.id) - px) < Math.abs(x(a.id) - px) ? b : a), items[0]);
+const lines = [[c.total ? (pp ? 'Media ' + c.sub : 'Total') : c.label + (c.sub ? ' · vs ' + c.sub : '') + (c.g && c.g.pf != null ? ' (' + c.g.pf + '-' + c.g.pc + ')' : ''), 'fa-tip-h', null],
+['Aciertos/intentos', null, fmtN(c.m) + '/' + fmtN(c.a)], ['% de acierto', null, mtPct(P(c))]];
+if (c.pi != null) lines.push(['% de intentos', null, mtPct(c.pi)]);
+if (!c.total && D.P.length > 1) cols.length && [...c.pl].forEach(([nm, v]) => { if (v.a) lines.push([nm, null, v.m + '/' + v.a + ' · ' + mtPct(v.m / v.a)]); });
+if (!c.total && c.by && zs.length > 1) for (const z of zs) { const v = c.by.get(z); if (v && v.a) lines.push([MT_ZN[z], null, v.m + '/' + v.a + ' · ' + mtPct(v.m / v.a)]); }
+mtTip(box, ev, lines);
+};
+svg.append('rect').attr('x', left).attr('y', 0).attr('width', W - right - left).attr('height', H).style('fill', 'transparent').on('pointermove', show).on('pointerdown', show).on('pointerleave', () => mtUntip(box));
+}
+function mjToggle(k) {
+mj.tl = false;
+if (!mj.zones.size) mj.zones = new Set([k]); else if (mj.zones.has(k)) mj.zones.delete(k); else mj.zones.add(k);
     drawPlayerMap();
   }
   function mjToggleGroup(zs) {
-    if (zs.every((z) => mj.zones.has(z))) zs.forEach((z) => mj.zones.delete(z)); else zs.forEach((z) => mj.zones.add(z));
+mj.tl = false;
+if (zs.every((z) => mj.zones.has(z))) zs.forEach((z) => mj.zones.delete(z)); else zs.forEach((z) => mj.zones.add(z));
     drawPlayerMap();
   }
   function drawMjTable(D) {
@@ -3433,7 +3574,7 @@ document.querySelectorAll('#mt-eqmode button').forEach((b) => b.addEventListener
       cols.forEach((c, ci) => MT_KINDS.forEach(([kind], ki) => { const td = tr.insertCell(); td.className = (!ki ? 'gs ' : '') + (ci % 2 ? 'ga ' : '') + (c.total && !ki ? 'gt' : ''); td.textContent = fmt(kind, val(c, kind, zs)); }));
     };
     const selZ = mj.zones.size ? MT_ALL.filter((z) => mj.zones.has(z)) : MT_ALL;
-    mk(mj.zones.size ? 'Total zonas seleccionadas (' + selZ.length + ')' : 'Total tiros de campo', selZ, 'tot', () => { mj.zones = new Set(); drawPlayerMap(); }, false, false);
+    mk(mj.zones.size ? 'Total zonas seleccionadas (' + selZ.length + ')' : 'Total tiros de campo', selZ, 'tot', () => { mj.tl = false; mj.zones = new Set(); drawPlayerMap(); }, false, false);
     if (mj.sort.k === 'idx') {
       let last = null;
       MT_ALL.forEach((z) => {
