@@ -412,10 +412,10 @@ html.fa-nojs .rd-off.fa-card,html.fa-nojs section.rd-off{display:block!important
   .rd-band h1{font-size:30px!important}.rd-crest{width:46px;height:46px}
   .rd-switch{margin-left:0;width:100%}.rd-switch select{max-width:none;width:100%}
   .rd-toolbar h2{font-size:22px}
-  table[data-rdg-show="1"] [data-rdg]:not([data-rdg="0"]):not([data-rdg="1"]),
-  table[data-rdg-show="2"] [data-rdg]:not([data-rdg="0"]):not([data-rdg="2"]),
-  table[data-rdg-show="3"] [data-rdg]:not([data-rdg="0"]):not([data-rdg="3"]),
-  table[data-rdg-show="4"] [data-rdg]:not([data-rdg="0"]):not([data-rdg="4"]){display:none}
+  table[data-rdg-off~="1"] [data-rdg="1"],
+table[data-rdg-off~="2"] [data-rdg="2"],
+table[data-rdg-off~="3"] [data-rdg="3"],
+table[data-rdg-off~="4"] [data-rdg="4"]{display:none}
 }
 
 /* selector de grupo y grupo sin datos */
@@ -454,7 +454,7 @@ html.fa-nojs .rd-off.fa-card,html.fa-nojs section.rd-off{display:block!important
 
   <section class="fa-card fa-foldsec fa-tfold" id="clasificacion">
     <div class="fa-row">
-      <div class="fa-ttl"><h2><button type="button" class="fa-fold" aria-expanded="true" aria-controls="fa-cla-body" title="Plegar / desplegar la tabla"><span class="fa-chev" aria-hidden="true">▾</span><span class="fa-gtt" id="fa-cla-t">Clasificación Grupo Par</span><span class="fa-fold-l">Ocultar</span></button></h2><button type="button" class="fa-info" aria-expanded="false" aria-controls="fa-note-cla" title="Cómo usar esta tabla">i</button><button type="button" class="fa-info fa-an" aria-expanded="false" aria-controls="fa-an-cla" title="Análisis del equipo"><svg viewBox="0 0 16 16" width="11" height="11" aria-hidden="true"><path d="M2 12l4-4 3 3 5-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></button></div>
+      <div class="fa-ttl"><h2><button type="button" class="fa-fold" aria-expanded="true" aria-controls="fa-cla-body" title="Plegar / desplegar la tabla"><span class="fa-chev" aria-hidden="true">▾</span><span class="fa-gtt" id="fa-cla-t">Grupo Par</span><span class="fa-fold-l">Ocultar</span></button></h2><button type="button" class="fa-info" aria-expanded="false" aria-controls="fa-note-cla" title="Cómo usar esta tabla">i</button><button type="button" class="fa-info fa-an" aria-expanded="false" aria-controls="fa-an-cla" title="Análisis del equipo"><svg viewBox="0 0 16 16" width="11" height="11" aria-hidden="true"><path d="M2 12l4-4 3 3 5-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></button></div>
       <span class="fa-seg fa-seg-eq" role="group" aria-label="Cómo ver las estadísticas de equipo">
         <button type="button" data-mode="tot" aria-pressed="false">Totales</button>
         <button type="button" data-mode="pp" aria-pressed="true">Por partido</button>
@@ -3898,10 +3898,11 @@ else if (c.total) h.textContent = 'Seleccionadas (' + D.P.length + ')';
     const wrap = table.closest('.fa-tablewrap');
     if (!bar && wrap) { bar = document.createElement('div'); bar.className = 'fa-seg rd-gbar'; bar.setAttribute('role', 'group'); bar.setAttribute('aria-label', 'Columnas a mostrar'); wrap.before(bar); }
     if (!bar) return;
-    const cur = Number(table.dataset.rdgShow || 1);
-    if (!rdBarBound.has(bar) || bar.childElementCount !== names.length) rdBarBound.add(bar), bar.replaceChildren(...names.map((nm, i) => { const b = document.createElement('button'); b.type = 'button'; b.textContent = nm.charAt(0) + nm.slice(1).toLowerCase(); b.addEventListener('click', () => { table.dataset.rdgShow = i + 1; rdGroups(table); }); return b; }));
-    [...bar.children].forEach((b, i) => b.setAttribute('aria-pressed', String(i + 1 === cur)));
-    table.dataset.rdgShow = cur;
+    const curSel = new Set((table.dataset.rdgSel || '1').split(','));
+    if (!rdBarBound.has(bar) || bar.childElementCount !== names.length) rdBarBound.add(bar), bar.replaceChildren(...names.map((nm, i) => { const b = document.createElement('button'); b.type = 'button'; b.textContent = nm.charAt(0) + nm.slice(1).toLowerCase(); b.addEventListener('click', () => { const sel = new Set((table.dataset.rdgSel || '1').split(',')); const k = String(i + 1); if (sel.has(k)) { if (sel.size > 1) sel.delete(k); } else sel.add(k); table.dataset.rdgSel = [...sel].join(','); rdGroups(table); }); return b; }));
+    [...bar.children].forEach((b, i) => b.setAttribute('aria-pressed', String(curSel.has(String(i + 1)))));
+    table.dataset.rdgSel = [...curSel].join(',');
+table.setAttribute('data-rdg-off', names.map((nm, i) => String(i + 1)).filter((k) => !curSel.has(k)).join(' '));
   }
   const rdGroupObs = new MutationObserver(() => document.querySelectorAll('.fa-std, .fa-ptab').forEach(rdGroups));
   document.querySelectorAll('.fa-std tbody, .fa-ptab tbody').forEach((tb) => rdGroupObs.observe(tb, { childList: true }));
@@ -3927,7 +3928,7 @@ else if (c.total) h.textContent = 'Seleccionadas (' + D.P.length + ')';
     const m = MET[dash.params().metrica] || MET.pts;
     const gName = window.FA_GRUPOS[window.__faG];
     document.getElementById('fa-gname').textContent = gName;
-    const claT = document.getElementById('fa-cla-t'); if (claT) claT.textContent = 'Clasificación ' + gName;
+    const claT = document.getElementById('fa-cla-t'); if (claT) claT.textContent = gName;
     document.querySelectorAll('#rd-grp button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.g === window.__faG)));
     const grpEmpty = par.status === 'ok' && Array.isArray(par.data) && !par.data.length;
     document.querySelector('.fa').classList.toggle('fa-gempty', grpEmpty);
