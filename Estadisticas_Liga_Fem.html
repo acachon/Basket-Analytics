@@ -132,6 +132,7 @@ html.fa-nojs .fa-static{display:block}
 .fa-std tbody tr{cursor:pointer}
 .fa-std tr.fa-sub{cursor:pointer}
 .fa-std tr.fa-suboff td{opacity:.45}
+.fa-std tr.fa-next{cursor:default}.fa-std tr.fa-next td{opacity:.65;font-style:italic}
 
 .fa-std tr.fa-sub td{color:var(--color-fg-muted);background:var(--color-bg);font-size:var(--cds-font-size-caption)}
 .fa-std tr.fa-sub td:first-child{text-align:center}
@@ -2531,7 +2532,19 @@ tip.hidden = false;
     subSort = k === 'pos' ? null : { k, dir: stDir };
     drawStandings();
   }));
-  function drawStandings() {
+  // Calendario FBM (primera fase, jornadas 8 a 10) para las filas de próximos partidos de la clasificación
+const FA_PROX = { par: [[8, "Ricopia Funbal Alcalá CBJA", "Colmenar Viejo A", "22/11"], [8, "Isaac Newton", "Fundal Alcobendas", "22/11"], [8, "Femenino Alcorcón", "Cesur Distrito Olímpico", "22/11"], [8, "Veritas Pozuelo", "Colegio Alameda de Osuna", "21/11"], [8, "C.B. Las Rozas", "Quiero Valcude Alcobendas", "21/11"], [9, "Quiero Valcude Alcobendas", "Colegio Alameda de Osuna", "29/11"], [9, "Ricopia Funbal Alcalá CBJA", "C.B. Las Rozas", "29/11"], [9, "Cesur Distrito Olímpico", "Veritas Pozuelo", "29/11"], [9, "Fundal Alcobendas", "Femenino Alcorcón", "29/11"], [9, "Colmenar Viejo A", "Isaac Newton", "28/11"], [10, "Isaac Newton", "Ricopia Funbal Alcalá CBJA", "13/12"], [10, "Colmenar Viejo A", "Femenino Alcorcón", "12/12"], [10, "Fundal Alcobendas", "Veritas Pozuelo", "13/12"], [10, "Cesur Distrito Olímpico", "C.B. Las Rozas", "13/12"], [10, "Colegio Alameda de Osuna", "Quiero Valcude Alcobendas", "13/12"]], impar: [[8, "Baloncesto Daganzo Isuzu Revein", "Jansen BT", "21/11"], [8, "Villalba", "Majadahonda", "22/11"], [8, "C.B. Getafe", "Liceo Francés", "21/11"], [8, "Baloncesto Rivas Sureste", "Saltium Alcorcón Basket", "21/11"], [8, "C.B. Coslada", "Club Baloncesto Zona Press", "21/11"], [9, "Club Baloncesto Zona Press", "Baloncesto Daganzo Isuzu Revein", "29/11"], [9, "Saltium Alcorcón Basket", "C.B. Coslada", "29/11"], [9, "Liceo Francés", "Baloncesto Rivas Sureste", "29/11"], [9, "Majadahonda", "C.B. Getafe", "29/11"], [9, "Jansen BT", "Villalba", "28/11"], [10, "Villalba", "Baloncesto Daganzo Isuzu Revein", "13/12"], [10, "Jansen BT", "C.B. Getafe", "12/12"], [10, "Majadahonda", "Baloncesto Rivas Sureste", "13/12"], [10, "Liceo Francés", "C.B. Coslada", "13/12"], [10, "Saltium Alcorcón Basket", "Club Baloncesto Zona Press", "13/12"]] };
+function proxRows(eq, games) {
+const done = new Set(games.map((g) => Number(g.jornada)));
+return (FA_PROX[window.__faG] || []).filter((f) => (f[1] === eq || f[2] === eq) && !done.has(f[0])).sort((a, b) => a[0] - b[0]).map((f) => {
+const home = f[1] === eq, tr = document.createElement('tr'); tr.className = 'fa-sub fa-next';
+tr.title = 'Próximo partido (calendario FBM)';
+const cells = ['', 'J' + f[0] + ' (' + (home ? 'c' : 'f') + ') ' + short(home ? f[2] : f[1]), f[3], ...new Array(24).fill('')];
+for (const c of cells) { const td = document.createElement('td'); td.textContent = c; tr.append(td); }
+return tr;
+});
+}
+function drawStandings() {
     const cla = faData('clasificacion'), est = faData('equipos');
     const eq = team();
     const sb = document.querySelector('.fa-std tbody');
@@ -2650,7 +2663,7 @@ tip.hidden = false;
       cell1.append(nm, ar); td1.append(cell1); tr.append(td1);
       const cells = cellsOf(r);
       for (const c of cells) { const td = document.createElement('td'); td.textContent = String(c); tr.append(td); }
-      return r.equipo === eq && expanded ? [tr, ...subRows] : [tr];
+      return r.equipo === eq && expanded ? [tr, ...subRows, ...proxRows(eq, teamGames)] : [tr];
     }));
     markGroups(sb, [5, 9, 14, 20]);
   }
