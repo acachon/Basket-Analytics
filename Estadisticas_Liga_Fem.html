@@ -393,7 +393,7 @@ html,body{overflow-x:clip}
 .rd-g.w .wl{background:rgba(60,203,127,.2);color:#7BE3A8}.rd-g.l .wl{background:rgba(242,96,82,.2);color:#FF9A90}
 .rd-g .r{font:700 21px var(--rd-num);grid-column:3;grid-row:1/3;text-align:right}
 .rd-g .v{font-size:13px;grid-column:1/3}
-.rd-g[aria-pressed="false"]{opacity:.42;border-style:dashed}
+.rd-g[aria-pressed="false"]{opacity:.42;border-style:dashed}.rd-g.rd-next{opacity:.7;border-style:dotted;cursor:default}.rd-g.rd-next .r{font-size:.8em;color:var(--muted,#667)}
 .rd-g:focus-visible{outline:2px solid #fff;outline-offset:2px}
 .rd-games + .fa-car-dots{display:none}
 .rd-band .fa-take{display:none}
@@ -3875,9 +3875,17 @@ else if (c.total) h.textContent = 'Seleccionadas (' + D.P.length + ')';
         b.querySelector('.r').textContent = g.pf + '-' + g.pc;
         b.querySelector('.v').textContent = 'vs ' + short(g.rival);
         b.addEventListener('click', () => toggleGame(g.partido_id));
-        return b;
-      }));
-      carDots(gb);
+return b;
+}).concat((FA_PROX[window.__faG] || []).filter((f) => (f[1] === eq || f[2] === eq) && !teamGames.some((g) => Number(g.jornada) === f[0])).sort((a, b) => a[0] - b[0]).map((f) => {
+const b = document.createElement('div'); b.className = 'rd-g rd-next';
+b.innerHTML = '<span class="j"></span><span class="wl"></span><span class="r"></span><span class="v"></span>';
+b.querySelector('.j').textContent = 'J' + f[0] + ' · ' + (f[1] === eq ? 'casa' : 'fuera');
+b.querySelector('.r').textContent = f[3];
+b.querySelector('.v').textContent = 'vs ' + short(f[1] === eq ? f[2] : f[1]);
+b.title = 'Próximo partido (fecha tentativa)';
+return b;
+})));
+carDots(gb);
     }
   }
   document.getElementById('rd-team')?.addEventListener('change', (e) => {
