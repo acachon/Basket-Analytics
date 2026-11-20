@@ -2601,7 +2601,7 @@ tip.hidden = false;
       tr.setAttribute('aria-selected', String(on));
       const dif = gm.pf - gm.pc;
       const has = st.t2i != null;
-      const cells = [on ? '☑' : '☐', gm.label + ' · vs ' + short(gm.rival) + ' (' + gm.lugar + ')', '', gm.ganado ? 'V' : '', gm.ganado ? '' : 'D',
+      const cells = [on ? '☑' : '☐', gm.label + ' (' + gm.lugar + ') ' + short(gm.rival), '', gm.ganado ? 'V' : '', gm.ganado ? '' : 'D',
         gm.pf, gm.pc, (dif > 0 ? '+' : '') + dif, st.val ?? '—',
         st.fr ?? '—', st.reb_of ?? '—', st.ast ?? '—', st.per ?? '—', valO(st) ?? '—',
         st.fc ?? '—', st.reb_def ?? '—', st.tap ?? '—', st.rec ?? '—', st.tap_rec ?? '—', valD(st) ?? '—',
