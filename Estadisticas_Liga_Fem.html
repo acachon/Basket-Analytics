@@ -412,6 +412,13 @@ html.fa-nojs .rd-off.fa-card,html.fa-nojs section.rd-off{display:block!important
 .fa .fa-chart{--cds-font-size-caption:12px}
 .fa-gh,.fa-table thead th.fa-gh{font-size:13px!important}
 .fa-std tr.fa-total td:nth-child(2){white-space:normal;line-height:1.25;overflow-wrap:anywhere}
+.rd-band .fa-eyebrow,.rd-upd{font-size:14px!important}
+.rd-grp button{font-size:14px}
+.rd-sub{font-size:15px}
+.rd-band h1{font-size:34px!important}
+.rd-band .fa-rec{font-size:16px}
+.rd-switch{font-size:13px}.rd-switch select{font-size:16px}
+.rd-g{min-width:170px}.rd-g .j{font-size:14px}.rd-g .wl{font-size:13px}.rd-g .v{font-size:15px}.rd-g .r{font-size:24px}
 .rd-gbar{display:inline-flex}
   .rd-band h1{font-size:30px!important}.rd-crest{width:46px;height:46px}
   .rd-switch{margin-left:0;width:100%}.rd-switch select{max-width:none;width:100%}
@@ -2601,7 +2608,7 @@ tip.hidden = false;
       tr.setAttribute('aria-selected', String(on));
       const dif = gm.pf - gm.pc;
       const has = st.t2i != null;
-      const cells = [on ? '☑' : '☐', gm.label + ' (' + gm.lugar + ') ' + short(gm.rival), '', gm.ganado ? 'V' : '', gm.ganado ? '' : 'D',
+      const cells = [on ? '☑' : '☐', gm.label + ' (' + (gm.lugar === 'casa' ? 'c' : 'f') + ') ' + short(gm.rival), '', gm.ganado ? 'V' : '', gm.ganado ? '' : 'D',
         gm.pf, gm.pc, (dif > 0 ? '+' : '') + dif, st.val ?? '—',
         st.fr ?? '—', st.reb_of ?? '—', st.ast ?? '—', st.per ?? '—', valO(st) ?? '—',
         st.fc ?? '—', st.reb_def ?? '—', st.tap ?? '—', st.rec ?? '—', st.tap_rec ?? '—', valD(st) ?? '—',
