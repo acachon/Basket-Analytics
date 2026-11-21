@@ -1140,6 +1140,7 @@ faCalc('clasificacion', {
   ];
   const MET = Object.fromEntries(METRICS.map((m) => [m.k, m]));
   const SHORT = {
+'Saltium Alcorcón Basket': 'Saltium', 'Baloncesto Daganzo Isuzu Revein': 'Daganzo', 'C.B. Getafe': 'Getafe', 'Baloncesto Rivas Sureste': 'Rivas', 'Jansen BT': 'Jansen', 'Club Baloncesto Zona Press': 'Zona Press', 'C.B. Coslada': 'Coslada', 'Liceo Francés': 'Liceo',
     'Fundal Alcobendas': 'Fundal', 'Veritas Pozuelo': 'Pozuelo', 'C.B. Las Rozas': 'Las Rozas',
     'Quiero Valcude Alcobendas': 'Valcude', 'Ricopia Funbal Alcalá CBJA': 'Alcalá', 'Isaac Newton': 'Isaac Newton',
     'Colegio Alameda de Osuna': 'Alameda', 'Colmenar Viejo A': 'Colmenar', 'Femenino Alcorcón': 'Alcorcón',
@@ -1402,8 +1403,8 @@ faCalc('clasificacion', {
       pct_tl: s0('tli') >= 5 ? 100 * s0('tla') / s0('tli') : null,
     };
   }
-  function playerAnalysis() {
-    const jug = faData('jugadoras');
+function playerAnalysis() {
+const jug = faL('jugadoras');
     if (jug.status !== 'ok') return null;
     const eq = team(), ids = gamesSel();
     const all = jug.data;
@@ -1482,7 +1483,17 @@ faCalc('clasificacion', {
   }
 
   // ---- Tabla de medias
-  let sortK = '_minTot', sortDir = -1, query = '', tableRows = [], liga = false, mode = 'tot';
+let sortK = '_minTot', sortDir = -1, query = '', tableRows = [], liga = false, mode = 'tot';
+const faLc = new Map();
+const faL = (nm) => {
+if (!liga) return faData(nm);
+const G = window.__faG, parts = [];
+try { for (const g of ['par', 'impar']) { window.__faG = g; const d = faData(nm); if (d.status === 'ok' && Array.isArray(d.data)) parts.push(d.data); } } finally { window.__faG = G; }
+if (!parts.length) return faData(nm);
+const c = faLc.get(nm);
+if (c && c.p.length === parts.length && c.p.every((x, i) => x === parts[i])) return c.out;
+const out = { status: 'ok', data: parts.flat() }; faLc.set(nm, { p: parts, out }); return out;
+};
   const MODE_NOTE = {
     pp: 'Media por partido jugado. ',
     pm: 'Por minuto jugado (total entre minutos totales); Min son los minutos totales. ',
@@ -1503,9 +1514,9 @@ faCalc('clasificacion', {
     liga = ligaBox.checked;
     if (!liga) { // al salir de «toda la liga» solo se conservan las jugadoras del equipo mostrado
       const mineP = topPlayers[team()] || [], keep = selected().filter((p) => mineP.includes(p));
-      if (keep.length !== selected().length) { dash.setParams({ jugadoras: keep }); return; }
-    }
-    buildAndDrawTable();
+if (keep.length !== selected().length) { dash.setParams({ jugadoras: keep }); return; }
+}
+if (window.__faMain) window.__faMain(); else buildAndDrawTable();
   });
   const pExpanded = new Set();   // jugadoras desplegadas (equipo|nombre)
   let pFollow = new Set();       // desplegadas cuyas jornadas siguen el orden de la tabla
@@ -1578,8 +1589,8 @@ return;
   }
   let dorsalOf = new Map(), perPG = new Map(), gameInfo = new Map();
   function buildIndexes() {
-    const jug = faData('jugadoras'), par = faData('partidos');
-    dorsalOf = new Map();
+const jug = faL('jugadoras'), par = faL('partidos');
+dorsalOf = new Map();
     if (jug.status === 'ok') {
       const cnt = new Map();
       for (const r of jug.data) {
@@ -2409,9 +2420,9 @@ tip.hidden = false;
     drawPlayerCharts();
   }));
   function drawPlayerCharts() {
-    drawPlayerMap();
-    const sec = document.getElementById('graficas-jug');
-    const jug = faData('jugadoras');
+drawPlayerMap();
+const sec = document.getElementById('graficas-jug');
+const jug = faL('jugadoras');
     const teamOf = new Map((jug.status === 'ok' ? jug.data : []).map((r) => [r.jugadora, r.equipo]));
     const leg = document.getElementById('fa-pl-leg');
     const names = selected().filter((p) => teamOf.has(p) && allPlayers.includes(p));
@@ -2430,8 +2441,8 @@ tip.hidden = false;
     if (sec.classList.contains('fa-folded') || rdOff(sec)) return;
     for (const id of Object.keys(plSel)) drawPlayerLines(document.querySelector('#' + id + ' .fa-c-pl'), id);
   }
-  function drawPlayerLines(box, cid) {
-    const jug = faData('jugadoras');
+function drawPlayerLines(box, cid) {
+const jug = faL('jugadoras');
     if (jug.status !== 'ok') { setState(box, jug.status === 'loading' ? 'loading' : 'error', 'No se pudo cargar'); return; }
     box.classList.remove('dash-skeleton');
     const shot = /^pl-t[l23]$/.test(cid), plp = cid === 'pl-pts', pfx = cid.slice(3), kind = plSel[cid];
@@ -3445,7 +3456,7 @@ document.querySelectorAll('#mt-eqmode button').forEach((b) => b.addEventListener
   const mj = { zj: null, who: null, mode: 'pct', cmp: 'pct', agg: 'tot', evo: 'tc', tl: false, zones: new Set(), sort: { k: 'idx', dir: 1 } };
   const MJ_ALL = '__todas';
   function mjData() {
-    const td = faData('tiros'), jug = faData('jugadoras');
+const td = faL('tiros'), jug = faL('jugadoras');
     if (td.status !== 'ok' || jug.status !== 'ok') return { status: td.status === 'ok' ? jug.status : td.status };
     const teamOf = new Map(jug.data.map((r) => [r.jugadora, r.equipo]));
     const names = selected().filter((p) => teamOf.has(p) && allPlayers.includes(p));
@@ -3812,7 +3823,7 @@ if (zs.every((z) => mj.zones.has(z))) zs.forEach((z) => mj.zones.delete(z)); els
   }
   // con una sola jugadora: columna extra con la media por jugadora y partido de todas las jugadoras de su equipo en los partidos con mapa de tiro seleccionados
 function mjAvgCol(D, one) {
-const td = faData('tiros'), jug = faData('jugadoras');
+const td = faL('tiros'), jug = faL('jugadoras');
 if (td.status !== 'ok' || jug.status !== 'ok') return [];
 const e = one.equipo;
 const gids = new Set((e === team() ? D.withMap.map((g) => g.partido_id) : one.mapActas.map((r) => r.partido_id)));
@@ -4022,10 +4033,10 @@ table.setAttribute('data-rdg-off', names.map((nm, i) => String(i + 1)).filter((k
     rec.hidden = false;
   }
 
-  dash.onData(() => {
-    const ser = faData('serie');
-    const par = faData('partidos');
-    const jug = faData('jugadoras');
+dash.onData(window.__faMain = () => {
+const ser = faL('serie');
+const par = faData('partidos');
+const jug = faL('jugadoras');
     const cla = faData('clasificacion');
     const m = MET[dash.params().metrica] || MET.pts;
     const gName = window.FA_GRUPOS[window.__faG];
