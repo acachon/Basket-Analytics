@@ -3407,10 +3407,10 @@ drawMtCmp();
   // tabla de zonas del equipo en modo «Comparar»: el equipo, la comparación elegida y la media del grupo (por partido)
 function mtCmpCols(D) {
 const R = mtcSeries(); if (R.status !== 'ok' || !R.tdRows[0].length) return null;
-const mk = (id, name, rows) => ({ id, g: { label: name + ' · por partido', cmp: true }, Z: mtAgg(rows), dv: R.units(rows) || 1 });
+const mk = (id, name, rows) => ({ id, g: { label: name, cmp: true }, Z: mtAgg(rows), dv: R.units(rows) || 1, dvT: 1 });
 const cols = [mk('eq', R.S[0].name, R.tdRows[0])];
 if (!R.grp) cols.push(mk('cmp', R.S[1].name, R.tdRows[1]));
-cols.push(mk('grp', VT ? 'Promedio' : 'Media grupo', R.tdGrp));
+{ const gc = mk('grp', VT ? 'Promedio' : 'Media grupo', R.tdGrp); gc.dvT = gc.dv / cols[0].dv; cols.push(gc); }
 return cols;
 }
 document.querySelectorAll('#mt-tview button').forEach((b) => b.addEventListener('click', () => { mt.tview = b.dataset.v; drawMapaTiro(); }));
@@ -3419,13 +3419,13 @@ function drawMapaTableC(D) {
 const zl = document.getElementById('mt-zl');
 zl.replaceChildren();
 const cmpCols = mt.tview === 'cmp' ? mtCmpCols(D) : null;
-const eqSeg = document.getElementById('mt-eqmode'); if (eqSeg) eqSeg.style.display = cmpCols ? 'none' : '';
+
 document.querySelectorAll('#mt-tview button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === (cmpCols ? 'cmp' : 'jor'))));
     const cols = cmpCols || [...D.withData.map((g) => ({ id: g.partido_id, g, Z: mtAgg(D.pick(g)) })), { id: '__tot', g: { label: 'Total', total: true }, Z: mtAgg(D.withData.flatMap((g) => D.pick(g))) }];
     cols.forEach((c) => { c.T = d3.sum([...c.Z.values()], (v) => v.a); });
     const val = (c, kind, zs) => {
       let m = 0, a = 0; zs.forEach((z) => { const v = c.Z.get(z); if (v) { m += v.m; a += v.a; } });
-      const dv = c.dv != null ? c.dv : (c.id === '__tot' ? totDiv(D.withData.length) : 1); a /= dv; m /= dv;
+      const dv = c.dv != null ? (eqMode === 'tot' ? c.dvT : c.dv) : (c.id === '__tot' ? totDiv(D.withData.length) : 1); a /= dv; m /= dv;
       return kind === 'i' ? a : kind === 'pi' ? (c.T ? a * dv / c.T : null) : kind === 'a' ? m : (a ? m / a : null);
     };
     const fmt = (kind, v) => (v == null ? '--' : kind === 'i' || kind === 'a' ? fmtN(v) : mtPct(v));
@@ -3438,7 +3438,7 @@ document.querySelectorAll('#mt-tview button').forEach((b) => b.setAttribute('ari
     h0.append(b0); r1.append(h0);
     cols.forEach((c, ci) => {
       const h = document.createElement('th'); h.colSpan = 4; h.className = 'gh gs' + (ci % 2 ? ' ga' : '') + (c.g.total ? ' gt' : '');
-      h.textContent = c.g.cmp ? c.g.label : c.g.total ? (eqMode === 'pp' ? 'Por partido' : 'Total' + (cols.length > 2 ? ' (' + (cols.length - 1) + ' partidos)' : '')) : xLab(c.g) + ' · ' + short(c.g.rival);
+      h.textContent = c.g.cmp ? c.g.label + (eqMode === 'pp' ? ' · por partido' : ' · total') : c.g.total ? (eqMode === 'pp' ? 'Por partido' : 'Total' + (cols.length > 2 ? ' (' + (cols.length - 1) + ' partidos)' : '')) : xLab(c.g) + ' · ' + short(c.g.rival);
       r1.append(h);
       MT_KINDS.forEach(([kind, lab, tt], ki) => {
         const k = c.id + '|' + kind, on = mt.sort.k === k;
