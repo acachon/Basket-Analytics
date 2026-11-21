@@ -749,17 +749,17 @@ table[data-rdg-off~="4"] [data-rdg="4"]{display:none}
 <h3 class="fa-mj-h3">Por distancia</h3>
 <div class="fa-chart fa-c-mtc2 dash-skeleton" data-source="tiros" style="min-height:210px"></div>
 </section>
-<section class="fa-card" id="mt-cevo">
-<div class="fa-row"><div class="fa-ttl"><h2 id="mt-cevo-t">Evolución por jornada</h2><button type="button" class="fa-info" aria-expanded="false" aria-controls="fa-note-mtcevo" title="Cómo leer esta gráfica">i</button></div><span class="fa-seg" id="mt-cevok" role="group" aria-label="Tipo de tiro"><button type="button" data-v="tl" aria-pressed="false">TL</button><button type="button" data-v="t2" aria-pressed="false">T2</button><button type="button" data-v="t3" aria-pressed="false">T3</button><button type="button" data-v="tc" aria-pressed="true">TC</button></span></div>
-<p class="fa-note" id="fa-note-mtcevo" hidden="">Para cada jornada, una barra del equipo y otra de la comparación (media del grupo o equipo elegido): la parte clara son los intentos por partido y la oscura los aciertos. La línea de cada uno es su % de acierto (escala de la derecha). La última columna es la media por partido de todas las jornadas.</p>
-<div class="fa-leg2" id="mt-cevo-leg"></div>
-<div class="fa-chart fa-c-mtcevo dash-skeleton" data-source="equipos_partido" style="min-height:300px"></div>
-</section>
 <section class="fa-card" id="mt-czevo">
 <div class="fa-row"><div class="fa-ttl"><h2 id="mt-czevo-t">Evolución por zonas</h2><button type="button" class="fa-info" aria-expanded="false" aria-controls="fa-note-mtczevo" title="Cómo leer esta gráfica">i</button></div><span class="fa-seg" id="mt-czevok" role="group" aria-label="Zonas"><button type="button" data-v="all" aria-pressed="true">Todas</button><button type="button" data-v="c" aria-pressed="false">Corta</button><button type="button" data-v="m" aria-pressed="false">Media</button><button type="button" data-v="l" aria-pressed="false">Larga</button></span></div>
 <p class="fa-note" id="fa-note-mtczevo" hidden="">Igual que la gráfica anterior, pero con los tiros del mapa de tiro y las zonas elegidas (Corta = aro y pintura, Media = media distancia, Larga = triples; también se eligen en el mapa o en la tabla de zonas). Solo cuentan los partidos con mapa de tiro subido.</p>
 <div class="fa-leg2" id="mt-czevo-leg"></div>
 <div class="fa-chart fa-c-mtczevo dash-skeleton" data-source="tiros equipos_partido" style="min-height:300px"></div>
+</section>
+<section class="fa-card" id="mt-cevo">
+<div class="fa-row"><div class="fa-ttl"><h2 id="mt-cevo-t">Evolución por jornada</h2><button type="button" class="fa-info" aria-expanded="false" aria-controls="fa-note-mtcevo" title="Cómo leer esta gráfica">i</button></div><span class="fa-seg" id="mt-cevok" role="group" aria-label="Tipo de tiro"><button type="button" data-v="tl" aria-pressed="false">TL</button><button type="button" data-v="t2" aria-pressed="false">T2</button><button type="button" data-v="t3" aria-pressed="false">T3</button><button type="button" data-v="tc" aria-pressed="true">TC</button></span></div>
+<p class="fa-note" id="fa-note-mtcevo" hidden="">Para cada jornada, una barra del equipo y otra de la comparación (media del grupo o equipo elegido): la parte clara son los intentos por partido y la oscura los aciertos. La línea de cada uno es su % de acierto (escala de la derecha). La última columna es la media por partido de todas las jornadas.</p>
+<div class="fa-leg2" id="mt-cevo-leg"></div>
+<div class="fa-chart fa-c-mtcevo dash-skeleton" data-source="equipos_partido" style="min-height:300px"></div>
 </section>
 </div>
 </div>
@@ -2994,7 +2994,8 @@ function drawStandings() {
     const withData = teamGames.filter((g) => ids.includes(g.partido_id) && hasShots.has(g.partido_id));
     const without = teamGames.filter((g) => ids.includes(g.partido_id) && !(VT ? VT.teamShots : hasShots).has(g.partido_id));
     const pick = (g) => td.data.filter((r) => r.partido_id === g.partido_id && (mt.who === 'eq' ? r.equipo === eq : r.equipo !== eq));
-    return { status: 'ok', withData, without, pick, allShots: hasShots.size };
+    const pickC = (g) => { refOk('mt'); const ref = REF.mt === team() ? REF_G : REF.mt, rj = td.data.filter((r) => +r.jornada === +g.jornada && (ref === REF_G || r.equipo === ref)); if (ref !== REF_G) return rj; const u = new Set(rj.map((r) => r.partido_id + '|' + r.equipo)).size || 1; return rj.map((r) => ({ ...r, m: r.m / u, a: r.a / u })); };
+return { status: 'ok', withData, without, pick, pickC, allShots: hasShots.size };
   }
   // ---- Comparativa de tiro del equipo: el equipo elegido frente a «Comparar con» (media del grupo o un equipo concreto)
 const mtc = { cmp: 'pct', evo: 'tc' };
@@ -3245,7 +3246,7 @@ sec.querySelectorAll('#mt-vw button').forEach((b) => b.setAttribute('aria-presse
     gl.textContent = D.withData.length
       ? 'Partidos con mapa de tiro: ' + names + (D.without.length ? ' · sin mapa de tiro subido: ' + D.without.map((g) => g.label).join(', ') : '')
       : '';
-    document.getElementById('mt-map-t').textContent = (rivals ? 'Tiros rivales' : 'Mapa de tiro') ;
+    document.getElementById('mt-map-t').textContent = 'Mapa de tiro · ' + (mt.vw === 'cmp' ? refLab('mt') : short(team())) ;
 document.getElementById('mt-map-sub').textContent = '';
 
     if (!D.withData.length) {
@@ -3485,10 +3486,11 @@ const jorns = [...new Set(games.map((g) => +g.jornada))].sort((a, b) => a - b);
 if (mt.zj != null && !jorns.includes(mt.zj)) mt.zj = null;
 jornPre(preBox, jorns, mt.zj, (j) => { mt.zj = j; drawMapaTiro(); });
 const J = mt.zj, gs = J == null ? games : games.filter((g) => +g.jornada === J);
-document.getElementById('mt-zj-t').textContent = 'Tiros por zona · ' + (J == null ? 'todas las jornadas' : 'J' + J + (gs[0] && gs[0].rival ? ' vs ' + short(gs[0].rival) : '')) + (rivals ? ' (rivales)' : '');
+const CMPV = mt.vw === 'cmp', PK = (g) => (CMPV ? D.pickC(g) : D.pick(g));
+document.getElementById('mt-zj-t').textContent = 'Tiros por zona · ' + (CMPV ? refLab('mt') : short(team())) + ' · ' + (J == null ? 'todas las jornadas' : 'J' + J + (gs[0] && gs[0].rival ? ' vs ' + short(gs[0].rival) : ''));
 if (!gs.length) { setState(box, 'empty', 'Ninguno de los partidos elegidos tiene mapa de tiro subido'); return; }
 const by = new Map();
-gs.forEach((g) => D.pick(g).forEach((r) => { const c = by.get(r.zona) || { m: 0, a: 0 }; c.m += r.m; c.a += r.a; by.set(r.zona, c); }));
+gs.forEach((g) => PK(g).forEach((r) => { const c = by.get(r.zona) || { m: 0, a: 0 }; c.m += r.m; c.a += r.a; by.set(r.zona, c); }));
 const one = J != null;
 drawZoneBars(box, { by, dv: one ? 1 : totDiv(gs.length), totLab: one ? 'Total' : totLab(), totSub: one ? 'J' + J : totSub(gs.length), sel: mt.tl ? null : mt.zones });
 }
@@ -3523,7 +3525,8 @@ drawZoneBars(box, { by, dv: pp ? n : 1, totLab: pp ? 'Media' : 'Total', totSub: 
     const ep = TL ? faData('equipos_partido') : null;
     if (TL && ep.status !== 'ok') { setState(box, ep.status === 'loading' ? 'loading' : 'error', 'No se pudo cargar'); return; }
     const games = TL ? teamGames.filter((g) => ids.includes(g.partido_id)) : D.withData;
-    const act = mt.zones.size ? mt.zones : new Set(MT_ALL);
+const CMPV = mt.vw === 'cmp', PK = (g) => (CMPV ? D.pickC(g) : D.pick(g)), vwName = CMPV ? refLab('mt') : short(team());
+const act = mt.zones.size ? mt.zones : new Set(MT_ALL);
     preBox.replaceChildren(...MT_PRE.map(([t, zs]) => {
       const b = document.createElement('button'); b.type = 'button'; b.textContent = t;
       const all = zs.length === MT_ALL.length;
@@ -3537,14 +3540,14 @@ drawZoneBars(box, { by, dv: pp ? n : 1, totLab: pp ? 'Media' : 'Total', totSub: 
     })()]));
     const legI = document.querySelector('#mt-evo .fa-kl-int'); if (legI) legI.parentNode.style.display = TL ? 'none' : '';
     const zs = MT_ALL.filter((z) => act.has(z));
-    const zTxt = TL ? 'tiros libres' : zs.length === MT_ALL.length ? 'todos los tiros de campo' : zs.length === 1 ? MT_ZN[zs[0]] : zs.length + ' zonas';
-    document.getElementById('mt-evo-t').textContent = 'Estadísticas de tiro · ' + zTxt + (mt.evo === 'cum' ? ' · acumulado' : '') + (rivals ? ' (rivales)' : '');
+    
+    document.getElementById('mt-evo-t').textContent = 'Estadísticas de tiro · ' + vwName + (mt.evo === 'cum' ? ' · acumulado' : '');
     // series por partido
     const per = games.map((g) => {
-      if (TL) { const r = ep.data.find((x) => x.partido_id === g.partido_id && (rivals ? x.equipo !== team() : x.equipo === team())) || {}; return { g, m: nz(r.tla), a: nz(r.tli), by: null, allA: null }; }
-      const rows = D.pick(g).filter((r) => act.has(r.zona));
+      if (TL) { let r; if (CMPV) { const ref = REF.mt === team() ? REF_G : REF.mt, jo = grpRef().jOf, rs = ep.data.filter((x) => jo.get(x.partido_id) === +g.jornada && (ref === REF_G || x.equipo === ref)); r = rs.length ? { tla: d3.sum(rs, (x) => nz(x.tla)) / (ref === REF_G ? rs.length : 1), tli: d3.sum(rs, (x) => nz(x.tli)) / (ref === REF_G ? rs.length : 1) } : {}; } else r = ep.data.find((x) => x.partido_id === g.partido_id && (rivals ? x.equipo !== team() : x.equipo === team())) || {}; return { g, m: nz(r.tla), a: nz(r.tli), by: null, allA: null }; }
+const rows = PK(g).filter((r) => act.has(r.zona));
       const by = new Map(); rows.forEach((r) => { const o = by.get(r.zona) || { m: 0, a: 0 }; o.m += r.m; o.a += r.a; by.set(r.zona, o); });
-      return { g, m: d3.sum(rows, (r) => r.m), a: d3.sum(rows, (r) => r.a), by, allA: d3.sum(D.pick(g), (r) => r.a) };
+      return { g, m: d3.sum(rows, (r) => r.m), a: d3.sum(rows, (r) => r.a), by, allA: d3.sum(PK(g), (r) => r.a) };
     });
     let cm = 0, ca = 0, cT = 0;
     const cols = per.map((p) => { cm += p.m; ca += p.a; cT += p.allA; return { pi: (mt.evo === 'cum' ? cT : p.allA) ? (mt.evo === 'cum' ? ca / cT : p.a / p.allA) : null, partido_id: p.g.partido_id, g: p.g, m: mt.evo === 'cum' ? cm : p.m, a: mt.evo === 'cum' ? ca : p.a, by: p.by, cm, ca }; });
@@ -3568,7 +3571,7 @@ const gUnits = d3.sum([...selJm], unitsJ);
 const gAvgA = gUnits ? d3.sum(gRows, (r) => r.a) / gUnits : null;
 const gPctJ = (j) => { const rs = gRowsAll.filter((r) => { const jj = jOfR(r); return mt.evo === 'cum' ? jj <= j : jj === j; }); const a = d3.sum(rs, (r) => r.a); return a ? d3.sum(rs, (r) => r.m) / a : null; };
 const gA0 = d3.sum(gRows, (r) => r.a), gAllP = gA0 ? d3.sum(gRows, (r) => r.m) / gA0 : null;
-const showGAvg = eqMode === 'pp' && mt.evo !== 'cum' && gAvgA != null;
+const showGAvg = eqMode === 'pp' && mt.evo !== 'cum' && gAvgA != null && !CMPV;
 box.classList.remove('dash-skeleton'); box.replaceChildren();
     const W = Math.max(260, box.clientWidth || 320), H = 340, top = 18, bottom = 44, right = 22;
     const yMax = Math.max(d3.max(items, (c) => c.a) || 1, showGAvg ? Math.max(gAvgA, ...cols.map((c) => avgAJ(c.g.jornada) || 0)) : 0);
