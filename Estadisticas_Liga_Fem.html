@@ -576,7 +576,7 @@ table[data-rdg-off~="4"] [data-rdg="4"]{display:none}
       <h2 style="font-size:var(--cds-font-size-heading);font-weight:var(--cds-font-weight-medium);margin:0"><button type="button" class="fa-fold" aria-expanded="true" aria-controls="fa-eq-body-wrap" title="Plegar / desplegar gráficas"><span class="fa-chev" aria-hidden="true">▾</span><span class="fa-gtt">Evolución por Jornada</span><span class="fa-fold-l">Ocultar</span></button></h2><span class="fa-seg" id="ge-eqmode" role="group" aria-label="Cómo ver las estadísticas"><button type="button" data-mode="tot" aria-pressed="false">Totales</button><button type="button" data-mode="pp" aria-pressed="true">Por partido</button></span>
       <label id="fa-ref-eq" class="fa-refsel" title="Qué pintan las líneas discontinuas de referencia: la media de todo el grupo o la de un equipo concreto"><span>Compara</span><select aria-label="Referencia de las líneas de media"><option value="__grp">Promedio</option><option value="Femenino Alcorcón">Femenino Alcorcón</option><option value="Colegio Alameda de Osuna">Colegio Alameda de Osuna</option><option value="Fundal Alcobendas">Fundal Alcobendas</option><option value="Cesur Distrito Olímpico">Cesur Distrito Olímpico</option><option value="Veritas Pozuelo">Veritas Pozuelo</option><option value="C.B. Las Rozas">C.B. Las Rozas</option><option value="Colmenar Viejo A">Colmenar Viejo A</option><option value="Isaac Newton">Isaac Newton</option><option value="Quiero Valcude Alcobendas">Quiero Valcude Alcobendas</option><option value="Ricopia Funbal Alcalá CBJA">Ricopia Funbal Alcalá CBJA</option></select></label><span class="fa-carr-nav fa-nonav"><button type="button" class="fa-carr-btn" data-dir="-1" aria-label="Anterior" disabled="">‹</button><button type="button" class="fa-carr-btn" data-dir="1" aria-label="Siguiente" disabled="">›</button></span>
     </div>
-    <div class="fa-fbody" id="fa-eq-body-wrap">
+    <div class="fa-fbody" id="fa-eq-body-wrap"><div class="fa-pl-leg" id="fa-ge-leg"></div>
       <div class="fa-cblock" data-first="1">
     <div class="fa-carousel" tabindex="0" role="region" aria-label="Carrusel: ▾EstadísticasOcultar — usa las flechas para desplazar">
       <section class="fa-card" id="eq-val">
@@ -802,7 +802,7 @@ table[data-rdg-off~="4"] [data-rdg="4"]{display:none}
       <h2 style="font-size:var(--cds-font-size-heading);font-weight:var(--cds-font-weight-medium);margin:0"><button type="button" class="fa-fold" aria-expanded="true" aria-controls="fa-gj-body-wrap" title="Plegar / desplegar gráficas"><span class="fa-chev" aria-hidden="true">▾</span><span class="fa-gtt">Evolución por Jornada</span><span class="fa-fold-l">Ocultar</span></button></h2><span class="fa-seg" id="gj-eqmode" role="group" aria-label="Cómo ver las estadísticas"><button type="button" data-mode="tot" aria-pressed="false">Totales</button><button type="button" data-mode="pp" aria-pressed="true">Por partido</button><button type="button" data-mode="pm" aria-pressed="false">Por minuto</button></span>
       <label class="fa-refsel" id="fa-gj-who"><span>Jugadora</span><select aria-label="Jugadora"></select></label><label class="fa-refsel" id="fa-ref-gj" title="Con quién se compara: otra jugadora de la tabla o el promedio de las listadas"><span>Compara</span><select aria-label="Referencia"></select></label><span class="fa-carr-nav fa-nonav"><button type="button" class="fa-carr-btn" data-dir="-1" aria-label="Anterior" disabled="">‹</button><button type="button" class="fa-carr-btn" data-dir="1" aria-label="Siguiente" disabled="">›</button></span>
     </div>
-    <div class="fa-fbody" id="fa-gj-body-wrap">
+    <div class="fa-fbody" id="fa-gj-body-wrap"><div class="fa-pl-leg" id="fa-gj-leg"></div>
       <div class="fa-cblock" data-first="1">
     <div class="fa-carousel" tabindex="0" role="region" aria-label="Carrusel: ▾EstadísticasOcultar — usa las flechas para desplazar">
       <section class="fa-card" id="gj-val">
@@ -2066,6 +2066,9 @@ if (document.getElementById('graficas-equipo').classList.contains('fa-folded') |
     drawJorCharts();
 }
 function drawJorCharts() {
+const C0 = gctx();
+const lg = document.getElementById(GJ ? 'fa-gj-leg' : 'fa-ge-leg');
+if (lg && C0.status === 'ok') lg.replaceChildren(...[[C0.who, C0.wc], [C0.lab, 'var(--fa-cmp)']].map(([t, c]) => { const li = document.createElement('span'); li.className = 'fa-li'; const sw = document.createElement('span'); sw.className = 'fa-sw'; sw.style.background = c; const nm = document.createElement('span'); nm.textContent = t; li.append(sw, nm); return li; }));
 drawTeamShot('.fa-c-tl', 'tla', 'tli', 'TL', 'Tiros libres');
 drawTeamShot('.fa-c-t2', 't2a', 't2i', 'T2', 'Tiros de 2', 'var(--fa-pink1)', '#0f2547');
 drawTeamShot('.fa-c-t3', 't3a', 't3i', 'T3', 'Tiros de 3', 'var(--fa-pink2)', '#fff');
@@ -2092,7 +2095,7 @@ const ep = faData('equipos_partido');
 if (ep.status !== 'ok') return { status: ep.status };
 const eq = team(), ids = gamesSel(), GR = grpRef(), jug = faData('jugadoras');
 return { status: 'ok', eq, ids, per: new Map(ep.data.filter((r) => r.equipo === eq).map((r) => [r.partido_id, r])), games: teamGames.filter((g) => ids.includes(g.partido_id)),
-ref: refFilter('eq', GR.rows), jOf: GR.jOf, lab: refLab('eq'), word: refWord('eq'), head: refHead('eq'), tip: REF.eq === REF_G ? 'Media del grupo' : refShort(REF.eq),
+ref: refFilter('eq', GR.rows), jOf: GR.jOf, lab: REF.eq === REF_G ? 'Promedio' : refLab('eq'), word: REF.eq === REF_G ? 'promedio' : refWord('eq'), head: REF.eq === REF_G ? 'Promedio: ' : refHead('eq'), tip: REF.eq === REF_G ? 'Promedio' : refShort(REF.eq), who: short(eq), wc: 'var(--fa-blue)',
 pl: jug.status === 'ok' ? jug.data.filter((r) => r.equipo === eq) : [] };
 };
 function drawTeamPair(sel, KEYS, noun) {
@@ -2167,7 +2170,7 @@ ptsJ.forEach((d) => g.append('circle').attr('cx', pxA(d.gm)).attr('cy', y(d.v)).
 if (avg[s0.k] != null) { const tx = x(TOT) + bx(s0.k); [['var(--color-panel, #fff)', 6, null], [s0.c, 3, '4 2']].forEach(([c0, w0, da]) => g.append('line').attr('x1', tx - 4).attr('x2', tx + bw + 4).attr('y1', y(avg[s0.k])).attr('y2', y(avg[s0.k])).style('stroke', c0).style('stroke-width', w0).style('stroke-dasharray', da).style('pointer-events', 'none')); }
 }
 const legBox = box.closest('.fa-card') && box.closest('.fa-card').querySelector('.fa-leg2');
-if (legBox && !legBox.querySelector('.fa-avg')) { const sp = document.createElement('span'); sp.className = 'fa-avg'; const ic = document.createElement('i'); ic.className = 'fa-kavg'; sp.append(ic, document.createTextNode('Media grupo')); legBox.append(sp); }
+if (legBox && !legBox.querySelector('.fa-avg')) { const sp = document.createElement('span'); sp.className = 'fa-avg'; const ic = document.createElement('i'); ic.className = 'fa-kavg'; sp.append(ic, document.createTextNode('Promedio')); legBox.append(sp); }
 if (legBox && legBox.querySelector('.fa-avg')) legBox.querySelector('.fa-avg').lastChild.textContent = C.lab;
 if (legBox && legBox.querySelector('.fa-avg')) legBox.querySelector('.fa-avg').hidden = eqMode !== 'pp';
 // tooltip por barra: quién cogió esos rebotes
@@ -2538,6 +2541,7 @@ document.querySelectorAll('#gj-eqmode button').forEach((b) => b.setAttribute('ar
 const jug = faL('jugadoras'), par = faL('partidos'), boxes = [...sec.querySelectorAll('.fa-chart')];
 if (jug.status !== 'ok' || par.status !== 'ok') { boxes.forEach((b) => setState(b, jug.status === 'error' || par.status === 'error' ? 'error' : 'loading', 'No se pudo cargar')); return; }
 const { list, subj } = plPick('fa-gj-who', 'fa-ref-gj', GJS, drawPlayerJor);
+const nm = (l) => l.name + (liga ? ' · ' + short(l.eq) : '');
 if (!subj) { boxes.forEach((b) => setState(b, 'empty', 'Sin jugadoras en la tabla')); return; }
 const ids = gamesSel(), info = new Map(par.data.map((q) => [q.partido_id, q]));
 const pm = GJS.mode === 'pm';
@@ -2548,7 +2552,7 @@ const games = par.data.filter((q) => (q.local === subj.eq || q.visitante === sub
 return { partido_id: q.partido_id, jornada: j, rival: home ? q.visitante : q.local, lugar: home ? 'casa' : 'fuera', pf, pc, ganado: pf > pc, label: j != null ? 'J' + j : q.partido_id }; }).sort((a, b) => (a.jornada ?? 1e3) - (b.jornada ?? 1e3));
 const nmRef = avg ? 'Promedio' : rl.name;
 GJ = { status: 'ok', eq: subj.eq, ids, per: new Map(mine.map((r) => [r.partido_id, rate(r)])), pm, raw: new Map(mine.map((r) => [r.partido_id, withVal(r)])), mins: d3.sum(mine, (r) => nz(r.min)), games, ref: (avg ? list : [rl]).flatMap(rowsOf).map(rate), jOf: new Map(par.data.map((q) => [q.partido_id, Number(q.jornada)])),
-lab: nmRef, word: avg ? 'promedio' : rl.name, head: nmRef + ': ', tip: nmRef, pl: [] };
+lab: nmRef, who: nm(subj), wc: 'var(--color-fg)', word: avg ? 'promedio' : rl.name, head: nmRef + ': ', tip: nmRef, pl: [] };
 const sv = eqMode; eqMode = GJS.mode === 'tot' ? 'tot' : 'pp';
 try { drawJorCharts(); } finally { GJ = null; eqMode = sv; }
 }
