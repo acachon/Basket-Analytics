@@ -2528,8 +2528,8 @@ if (!subj) { boxes.forEach((b) => setState(b, 'empty', 'Sin jugadoras en la tabl
 const ids = gamesSel(), info = new Map(par.data.map((q) => [q.partido_id, q]));
 const rowsOf = (l) => jug.data.filter((r) => r.jugadora === l.name && r.equipo === l.eq && info.has(r.partido_id) && (l.eq === team() ? ids.includes(r.partido_id) : true));
 const mine = rowsOf(subj), rl = list.find((l) => l.key === GJS.ref), avg = !rl;
-const games = mine.map((r) => { const q = info.get(r.partido_id), home = q.local === subj.eq, j = q.jornada == null ? null : Number(q.jornada), pf = Number(home ? q.pts_local : q.pts_visitante), pc = Number(home ? q.pts_visitante : q.pts_local);
-return { partido_id: r.partido_id, jornada: j, rival: home ? q.visitante : q.local, lugar: home ? 'casa' : 'fuera', pf, pc, ganado: pf > pc, label: j != null ? 'J' + j : r.partido_id }; }).sort((a, b) => (a.jornada ?? 1e3) - (b.jornada ?? 1e3));
+const games = par.data.filter((q) => (q.local === subj.eq || q.visitante === subj.eq) && (subj.eq !== team() || ids.includes(q.partido_id))).map((q) => { const home = q.local === subj.eq, j = q.jornada == null ? null : Number(q.jornada), pf = Number(home ? q.pts_local : q.pts_visitante), pc = Number(home ? q.pts_visitante : q.pts_local);
+return { partido_id: q.partido_id, jornada: j, rival: home ? q.visitante : q.local, lugar: home ? 'casa' : 'fuera', pf, pc, ganado: pf > pc, label: j != null ? 'J' + j : q.partido_id }; }).sort((a, b) => (a.jornada ?? 1e3) - (b.jornada ?? 1e3));
 const nmRef = avg ? 'Promedio' : rl.name;
 GJ = { status: 'ok', eq: subj.eq, ids, per: new Map(mine.map((r) => [r.partido_id, r])), games, ref: (avg ? list : [rl]).flatMap(rowsOf), jOf: new Map(par.data.map((q) => [q.partido_id, Number(q.jornada)])),
 lab: nmRef, word: avg ? 'promedio' : rl.name, head: nmRef + ': ', tip: nmRef, pl: [] };
