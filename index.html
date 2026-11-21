@@ -98,7 +98,7 @@
 #graficas-equipo>.fa-row>h2,#graficas-cmp>.fa-row>h2,#mapa-tiro>.fa-row>h2{flex:1 0 100%}
 .fa-row>.fa-refsel{margin-left:auto}
 .fa-pl-leg2{margin-top:10px}
-@media (max-width:700px){#fa-gj-who{margin-left:0!important}}
+@media (max-width:700px){.fa-row>.fa-refsel{margin-left:0!important}}
 
 .fa-foldsec.fa-card .fa-card{background:var(--color-bg);box-shadow:none}
 .fa-foldsec.fa-card>.fa-row{padding-top:0}
@@ -709,6 +709,7 @@ table[data-rdg-off~="4"] [data-rdg="4"]{display:none}
 </section>
 </div>
 </div>
+<div class="fa-pl-leg fa-pl-leg2" id="fa-ct-leg2"><span class="fa-li"><span class="fa-sw" style="background: var(--fa-blue);"></span><span>Fundal</span></span><span class="fa-li"><span class="fa-sw" style="background: var(--fa-cmp);"></span><span>Media grupo</span></span></div>
 <div class="fa-cblock fa-cblock2">
 <div class="fa-row fa-cnav2 fa-nonav"><span class="fa-carr-nav"><button type="button" class="fa-carr-btn" data-dir="-1" aria-label="Anterior" disabled="">‹</button><button type="button" class="fa-carr-btn" data-dir="1" aria-label="Siguiente" disabled="">›</button></span></div>
 <div class="fa-carousel" tabindex="0" role="region" aria-label="Carrusel: ▾Comparativa equiposOcultar (2) — usa las flechas para desplazar">
@@ -941,7 +942,8 @@ table[data-rdg-off~="4"] [data-rdg="4"]{display:none}
       </section>
     </div>
       </div>
-      <div class="fa-cblock fa-cblock2">
+      <div class="fa-pl-leg fa-pl-leg2" id="fa-pl-leg2">Sin jugadoras en la tabla de estadísticas.</div>
+<div class="fa-cblock fa-cblock2">
         <div class="fa-row fa-cnav2 fa-nonav"><span class="fa-carr-nav"><button type="button" class="fa-carr-btn" data-dir="-1" aria-label="Anterior" disabled="">‹</button><button type="button" class="fa-carr-btn" data-dir="1" aria-label="Siguiente" disabled="">›</button></span></div>
     <div class="fa-carousel" tabindex="0" role="region" aria-label="Carrusel: ▾Comparativa jugadorasOcultar (2) — usa las flechas para desplazar">
       <section class="fa-card" id="pl-pts">
@@ -1983,6 +1985,7 @@ document.querySelectorAll('#ct-eqmode button').forEach((b) => b.setAttribute('ar
 refOk('ct');
 const leg = document.getElementById('fa-ct-leg');
 leg.replaceChildren(...[[short(team()), 'var(--fa-blue)'], [refLab('ct'), 'var(--fa-cmp)']].map(([n, c]) => { const li = document.createElement('span'); li.className = 'fa-li'; const sw = document.createElement('span'); sw.className = 'fa-sw'; sw.style.background = c; const nm = document.createElement('span'); nm.textContent = n; li.append(sw, nm); return li; }));
+legTwin(leg, 'fa-ct-leg2');
 if (sec.classList.contains('fa-folded') || rdOff(sec)) return;
 for (const id of Object.keys(CT_SEL)) drawCmpLines(document.querySelector('#' + id + ' .fa-c-ct'), id);
 }
@@ -2089,6 +2092,8 @@ drawTeamCmp();
 if (document.getElementById('graficas-equipo').classList.contains('fa-folded') || rdOff('graficas-equipo')) return;
     drawJorCharts();
 }
+// copia de la leyenda encima del segundo carrusel
+function legTwin(lg, id) { const t = document.getElementById(id); if (lg && t) t.replaceChildren(...[...lg.childNodes].map((c) => c.cloneNode(true))); }
 function drawJorCharts() {
 const C0 = gctx();
 const lg = document.getElementById(GJ ? 'fa-gj-leg' : 'fa-ge-leg');
@@ -2612,6 +2617,8 @@ const leg = document.getElementById('fa-pl-leg');
 const PP = plPick('fa-pl-who', 'fa-ref-pl', CPS, drawPlayerCharts);
 leg.replaceChildren(...(PP.subj ? [[PP.subj.name + (liga ? ' · ' + short(PP.subj.eq) : ''), 'var(--color-fg)'], [PP.avg ? 'Promedio' : PP.rl.name, 'var(--fa-cmp)']] : []).map(([nm2, c]) => { const li = document.createElement('span'); li.className = 'fa-li'; const sw = document.createElement('span'); sw.className = 'fa-sw'; sw.style.background = c; const nm = document.createElement('span'); nm.textContent = nm2; li.append(sw, nm); return li; }));
 if (!PP.subj) leg.textContent = 'Sin jugadoras en la tabla de estadísticas.';
+legTwin(leg, 'fa-pl-leg2');
+
     if (sec.classList.contains('fa-folded') || rdOff(sec)) return;
     for (const id of Object.keys(plSel)) drawPlayerLines(document.querySelector('#' + id + ' .fa-c-pl'), id);
   }
