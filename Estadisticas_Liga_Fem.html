@@ -58,10 +58,11 @@
 @keyframes fa-jfl{0%,60%{box-shadow:0 0 0 3px var(--fa-green)}100%{box-shadow:0 0 0 0 transparent}}
 .fa-jm.fa-jflash{animation:fa-jfl 1.8s ease-out}
 
-.fa-jmode{display:inline-flex;border:1px solid var(--color-border-line);border-radius:999px;overflow:hidden;margin-left:auto}
-.fa-jmode button{all:unset;box-sizing:border-box;cursor:pointer;padding:5px 15px;font-size:15px;font-weight:600;color:var(--color-fg-muted)}
-.fa-jmode button[aria-pressed="true"]{background:var(--fa-green);color:#fff}
-.fa-jmode button:focus-visible{outline:2px solid var(--fa-green);outline-offset:-2px}
+.fa-jmode{margin-left:auto}
+#temporada .fa-tbody>.fa-row{flex-wrap:nowrap;gap:10px;align-items:center}
+#temporada .fa-search{flex:1;min-width:0}
+#temporada .fa-check{margin-left:0;white-space:nowrap;flex:none}
+.fa-pall{margin-right:5px;font-size:1.15em}
 #jornadas>.fa-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 #jornadas.fa-folded .fa-jmode{display:none}
 .fa-jh em.fa-jd{font-style:normal;font-weight:500;font-size:15px;color:var(--color-fg-muted)}
@@ -543,7 +544,7 @@ table[data-rdg-off~="4"] [data-rdg="4"]{display:none}
 <section class="fa-card fa-foldsec fa-tfold" id="jornadas">
 <div class="fa-row">
 <div class="fa-ttl"><h2><button type="button" class="fa-fold" id="fa-jor-fold" aria-expanded="true" aria-controls="fa-jor-body" title="Plegar / desplegar las jornadas"><span class="fa-chev" aria-hidden="true">▾</span><span class="fa-gtt">Jornadas</span><span class="fa-fold-l">Ocultar</span></button></h2></div>
-<div class="fa-jmode" role="group" aria-label="Vista de jornadas"><button type="button" data-m="grupo" aria-pressed="true">Grupo</button><button type="button" data-m="equipo" aria-pressed="false">Equipo</button></div>
+<span class="fa-seg fa-jmode" role="group" aria-label="Vista de jornadas"><button type="button" data-m="grupo" aria-pressed="true">Grupo</button><button type="button" data-m="equipo" aria-pressed="false">Equipo</button></span>
 </div>
 <div class="fa-jbody" id="fa-jor-body"></div>
 </section>
@@ -766,12 +767,11 @@ table[data-rdg-off~="4"] [data-rdg="4"]{display:none}
     <div class="fa-tbody" id="fa-jt-body">
     <p class="fa-note fa-tnote" id="fa-note-jug" hidden=""></p>
     <div class="fa-analysis" id="fa-an-jug" hidden=""></div>
-    <div class="fa-row" style="justify-content:flex-start">
+    <div class="fa-seg rd-gbar" role="group" aria-label="Columnas a mostrar"><button type="button" aria-pressed="true">Generales</button><button type="button" aria-pressed="false">Ataque</button><button type="button" aria-pressed="false">Defensa</button><button type="button" aria-pressed="false">Tiro</button></div><div class="fa-row" style="justify-content:flex-start">
       <input class="fa-select fa-search" type="search" placeholder="Buscar jugadora" aria-label="Buscar jugadora">
       <label class="fa-check"><input type="checkbox" class="fa-liga"> Toda la liga</label>
-      <button class="fa-link fa-none" type="button">Quitar selección</button>
-    </div>
-    <div class="fa-seg rd-gbar" role="group" aria-label="Columnas a mostrar"><button type="button" aria-pressed="true">Generales</button><button type="button" aria-pressed="false">Ataque</button><button type="button" aria-pressed="false">Defensa</button><button type="button" aria-pressed="false">Tiro</button></div><div class="fa-tablewrap">
+          </div>
+    <div class="fa-tablewrap">
       <table class="fa-table fa-ptab" data-source="serie jugadoras partidos" data-rdg-show="1" data-rdg-sel="1" data-rdg-off="2 3 4">
         <thead><tr class="fa-hr1"><th rowspan="2" class="fa-pstick" data-rdg="0"><button type="button" data-k="dorsal">Nº</button></th><th rowspan="2" data-rdg="0" class="fa-stick2"><button type="button" data-k="jugadora">Jugadora</button></th><th rowspan="2" data-rdg="0"><button type="button" data-k="pj" data-tip="1">PJ</button></th><th rowspan="2" data-rdg="0"><button type="button" data-k="min" class="fa-minh" data-tip="1">Min</button></th><th colspan="3" class="fa-gh" data-rdg="1">Generales</th><th colspan="5" class="fa-gh" data-rdg="2">Ataque</th><th colspan="6" class="fa-gh" data-rdg="3">Defensa</th><th colspan="7" class="fa-gh" data-rdg="4">Tiro</th></tr><tr class="fa-hr2"><th class="fa-gs" data-rdg="1"><button type="button" data-k="pts" data-tip="1">Pts</button></th><th data-rdg="1"><button type="button" data-k="mas_menos" data-tip="1">+/-</button></th><th data-rdg="1"><button type="button" data-k="val" data-tip="1">Val</button></th><th class="fa-gs" data-rdg="2"><button type="button" data-k="fr" data-tip="1">FR</button></th><th data-rdg="2"><button type="button" data-k="reb_of" data-tip="1">RO</button></th><th data-rdg="2"><button type="button" data-k="ast" data-tip="1">Ast</button></th><th data-rdg="2"><button type="button" data-k="per" data-tip="1">Pér</button></th><th data-rdg="2"><button type="button" data-k="valo" title="Valoración de ataque" data-tip="1">ValO</button></th><th class="fa-gs" data-rdg="3"><button type="button" data-k="fc" data-tip="1">FC</button></th><th data-rdg="3"><button type="button" data-k="reb_def" data-tip="1">RD</button></th><th data-rdg="3"><button type="button" data-k="tap" title="Tapones realizados" data-tip="1">TapC</button></th><th data-rdg="3"><button type="button" data-k="rec" data-tip="1">Rec</button></th><th data-rdg="3"><button type="button" data-k="tap_rec" title="Tapones recibidos" data-tip="1">TapR</button></th><th data-rdg="3"><button type="button" data-k="vald" title="Valoración de defensa" data-tip="1">ValD</button></th><th class="fa-gs" data-rdg="4"><button type="button" data-k="t2" data-tip="1">T2</button></th><th data-rdg="4"><button type="button" data-k="pct_t2" data-tip="1">%T2</button></th><th data-rdg="4"><button type="button" data-k="t3" data-tip="1">T3</button></th><th data-rdg="4"><button type="button" data-k="pct_t3" data-tip="1">%T3</button></th><th data-rdg="4"><button type="button" data-k="tl" data-tip="1">TL</button></th><th data-rdg="4"><button type="button" data-k="pct_tl" data-tip="1">%TL</button></th><th data-rdg="4"><button type="button" data-k="ts" data-tip="1">TS%</button></th></tr></thead>
         <tbody></tbody>
@@ -1242,7 +1242,6 @@ faCalc('clasificacion', {
     sel.append(og);
   }
   sel.addEventListener('change', () => dash.setParams({ metrica: sel.value }));
-  document.querySelector('.fa-none').addEventListener('click', () => dash.setParams({ jugadoras: [] }));
 
   // ---- Botones de información
   document.querySelectorAll('.fa-info:not(.fa-an)').forEach((b) => b.addEventListener('click', () => {
@@ -1511,16 +1510,21 @@ faCalc('clasificacion', {
   const pExpanded = new Set();   // jugadoras desplegadas (equipo|nombre)
   let pFollow = new Set();       // desplegadas cuyas jornadas siguen el orden de la tabla
   const pk = (eq, j) => eq + '|' + j;
-  document.querySelector('#temporada tbody').addEventListener('click', (e) => {
+document.querySelector('#temporada thead').addEventListener('click', (e) => {
+const pa = e.target.closest('.fa-pall'); if (!pa) return;
+pExpanded.clear();
+dash.setParams({ jugadoras: pa.dataset.all === '1' ? [] : JSON.parse(pa.dataset.names || '[]') });
+});
+document.querySelector('#temporada tbody').addEventListener('click', (e) => {
     const tr = e.target.closest('tr[data-key]');
     if (!tr) return;
     const name = tr.dataset.key, eqT = tr.dataset.team, key = pk(eqT, name);
     const sel = selected().includes(name);
-    if (e.target.closest('.fa-pchk')) {
-      if (sel) { pExpanded.delete(key); toggle(name); }
-      else { pExpanded.add(key); pFollow.delete(key); toggle(name); }
-      return;
-    }
+if (e.target.closest('.fa-pchk')) {
+if (sel) pExpanded.delete(key);
+toggle(name);
+return;
+}
     if (!sel) { pExpanded.add(key); pFollow.delete(key); toggle(name); return; }
     if (pExpanded.has(key)) pExpanded.delete(key); else { pExpanded.add(key); pFollow.delete(key); }
     drawTable();
@@ -1634,8 +1638,9 @@ faCalc('clasificacion', {
     });
     document.querySelectorAll('#temporada th button').forEach((b) => {
       const th = b.parentElement; const k = b.dataset.k;
-      th.setAttribute('aria-sort', k === sortK ? (sortDir > 0 ? 'ascending' : 'descending') : 'none');
-    });
+th.setAttribute('aria-sort', k === sortK ? (sortDir > 0 ? 'ascending' : 'descending') : 'none');
+});
+{ const th0 = document.querySelector('#temporada th.fa-pstick'); if (th0) { let pa = th0.querySelector('.fa-pall'); if (!pa) { pa = document.createElement('span'); pa.className = 'fa-pchk fa-pall'; th0.prepend(pa); } const vis = [...new Set(view.filter((r) => liga || r.equipo === team()).map((r) => r.jugadora))]; const all = vis.length > 0 && vis.every((nm) => s.includes(nm)); pa.textContent = all ? '☑' : '☐'; pa.title = all ? 'Quitar la selección de todas' : 'Seleccionar todas'; pa.dataset.names = JSON.stringify(vis); pa.dataset.all = all ? '1' : '0'; } }
     // Fila de total: seleccionadas visibles o, si no hay, todas las visibles
     const selRows = view.filter((r) => (liga || r.equipo === team()) && s.includes(r.jugadora));
     const base = selRows.length ? selRows : view;
@@ -3992,9 +3997,10 @@ carDots(gb);
     [...table.tBodies].forEach((tb) => [...tb.rows].forEach((tr) => { if (tr.cells.length === total) [...tr.cells].forEach((c, i) => c.setAttribute('data-rdg', map[i])); }));
     let bar = table.closest('section')?.querySelector('.rd-gbar');
     const wrap = table.closest('.fa-tablewrap');
-    if (!bar && wrap) { bar = document.createElement('div'); bar.className = 'fa-seg rd-gbar'; bar.setAttribute('role', 'group'); bar.setAttribute('aria-label', 'Columnas a mostrar'); wrap.before(bar); }
+if (!bar && wrap) { bar = document.createElement('div'); bar.className = 'fa-seg rd-gbar'; bar.setAttribute('role', 'group'); bar.setAttribute('aria-label', 'Columnas a mostrar'); const anc = table.classList.contains('fa-ptab') ? table.closest('.fa-tbody')?.querySelector(':scope > .fa-row') : null; (anc || wrap).before(bar); }
     if (!bar) return;
-    const curSel = new Set((table.dataset.rdgSel || '1').split(','));
+{ const anc2 = table.classList.contains('fa-ptab') ? table.closest('.fa-tbody')?.querySelector(':scope > .fa-row') : null; if (anc2 && bar.nextElementSibling !== anc2) anc2.before(bar); }
+const curSel = new Set((table.dataset.rdgSel || '1').split(','));
     if (!rdBarBound.has(bar) || bar.childElementCount !== names.length) rdBarBound.add(bar), bar.replaceChildren(...names.map((nm, i) => { const b = document.createElement('button'); b.type = 'button'; b.textContent = nm.charAt(0) + nm.slice(1).toLowerCase(); b.addEventListener('click', () => { const sel = new Set((table.dataset.rdgSel || '1').split(',')); const k = String(i + 1); if (sel.has(k)) { if (sel.size > 1) sel.delete(k); } else sel.add(k); table.dataset.rdgSel = [...sel].join(','); rdGroups(table); }); return b; }));
     [...bar.children].forEach((b, i) => b.setAttribute('aria-pressed', String(curSel.has(String(i + 1)))));
     table.dataset.rdgSel = [...curSel].join(',');
