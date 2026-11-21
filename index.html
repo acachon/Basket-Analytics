@@ -68,6 +68,8 @@
 .fa-jm-d{padding:6px 10px 0;font-size:14px;color:var(--color-fg-muted);text-align:center;background:var(--color-bg)}
 .fa-jm-d+.fa-jm-h{padding-top:4px}
 .fa-teammode .fa-jh small{display:none}
+
+.fa-jwho{margin:2px 2px 0;font-size:18px;font-weight:700;letter-spacing:-.01em}
 </style>
 <style>
 :root{
@@ -4270,7 +4272,7 @@ if (openJ == null || !by.has(openJ)) openJ = js[0];
 body.replaceChildren();
 sec.classList.toggle('fa-teammode', eqm);
 if (!js.length) { body.append(el('p', 'fa-jnote', 'Todavía no hay jornadas con actas en este grupo.')); return; }
-if (eqm) body.append(el('p', 'fa-jnote fa-jwho', 'Partidos de ' + (team || 'tu equipo') + ' (el equipo elegido arriba)'));
+body.append(el('h3', 'fa-jwho', eqm ? (team || 'Equipo') : ((window.FA_GRUPOS || {})[window.__faG] || 'Grupo')));
 let shown = 0;
 for (const j of js) {
 const all = by.get(j).slice().sort((a, b) => String(a.partido_id).localeCompare(String(b.partido_id)));
