@@ -2567,6 +2567,8 @@ const PM_K = ['pts', 't2a', 't2i', 't3a', 't3i', 'tla', 'tli', 'reb_of', 'reb_de
 function plPick(whoId, refId, S, redraw) {
 const list = plView.map((r) => ({ key: r.equipo + '|' + r.jugadora, name: r.jugadora, eq: r.equipo }));
 const keys = list.map((l) => l.key);
+// por defecto: Jimena Cachón comparada con Irene Fernández (solo la primera vez)
+if (!S.init && list.length) { S.init = true; const pa = list.find((l) => l.eq === DEFAULT_TEAM && l.name === 'Jimena Cachón'), pb = list.find((l) => l.eq === DEFAULT_TEAM && l.name === 'Irene Fernández'); if (pa && pb) { S.who = pa.key; S.ref = pb.key; } }
 if (!keys.includes(S.who)) S.who = (list.find((l) => liga || l.eq === team()) || list[0] || { key: null }).key;
 if (S.ref !== '__avg' && (!keys.includes(S.ref) || S.ref === S.who)) S.ref = '__avg';
 const nm = (l) => l.name + (liga ? ' · ' + short(l.eq) : '');
@@ -3261,6 +3263,7 @@ const list = plView.map((r) => ({ eq: r.equipo, name: r.jugadora, k: r.equipo + 
 const lab = document.getElementById('fa-mt-who');
 if (!list.length) { if (lab) lab.querySelector('select').replaceChildren(); return null; }
 const kOf = (l) => (liga ? l.name + ' · ' + short(l.eq) : l.name), keys = new Map(list.map((l) => [l.k, kOf(l)]));
+if (!MTP.init) { MTP.init = true; const pa = list.find((l) => l.eq === DEFAULT_TEAM && l.name === 'Jimena Cachón'); if (pa) MTP.who = pa.k; }
 if (!keys.has(MTP.who)) MTP.who = (list.find((l) => liga || l.eq === team()) || list[0]).k;
 if (lab) { const s = lab.querySelector('select'); s.replaceChildren(...list.map((l) => { const o = document.createElement('option'); o.value = l.k; o.textContent = kOf(l); return o; })); s.value = MTP.who; s.onchange = () => { MTP.who = s.value; drawMapaTiro(); }; }
 const subj = list.find((l) => l.k === MTP.who);
@@ -3295,7 +3298,7 @@ const MT_SAVED = {}; let mtSide = 'eq';
 function mtSwap(to) {
 if (to === mtSide) return;
 MT_SAVED[mtSide] = { mt: { ...mt, zones: new Set(mt.zones), sort: { ...mt.sort } }, mtc: { ...mtc }, ref: REF.mt };
-const s = MT_SAVED[to] || { mt: { zj: null, vw: 'eq', who: 'eq', mode: 'pct', evo: 'game', tview: 'jor', tl: false, zones: new Set(), sort: { k: 'idx', dir: 1 } }, mtc: { cmp: 'pct', evo: 'tc' }, ref: REF_G };
+const s = MT_SAVED[to] || { mt: { zj: null, vw: 'eq', who: 'eq', mode: 'pct', evo: 'game', tview: 'jor', tl: false, zones: new Set(), sort: { k: 'idx', dir: 1 } }, mtc: { cmp: 'pct', evo: 'tc' }, ref: to === 'pl' ? 'Irene Fernández' : REF_G };
 Object.keys(mt).forEach((k) => delete mt[k]); Object.assign(mt, s.mt); Object.assign(mtc, s.mtc); REF.mt = s.ref; mtSide = to;
 }
 function mtPlace() {
