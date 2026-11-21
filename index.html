@@ -89,15 +89,18 @@
 
 .fa-fold .fa-fold-l{display:none!important}
 #mt-vw button{padding:4px 7px!important;font-size:12px!important;min-height:30px}
-#mj-njor2{display:none}
-@media (max-width:700px){#mj-njor{display:none}#mj-njor2{display:inline}}
-.fa-fold{cursor:pointer}#mapa-jug{display:none!important}#mapa-tiro:not([data-pl="1"]) #fa-mt-who,#mapa-tiro:not([data-pl="1"]) #mt-njor{display:none}#mapa-tiro[data-pl="1"] #mt-who{display:none}#mapa-tiro[data-pl="1"]>.fa-row>#fa-ref-mt{margin-left:0}#mapa-tiro>.fa-row>#fa-mt-who{margin-left:auto}#fa-mt-who,#fa-mt-who select{color:var(--color-fg)!important}#fa-mt-who select{max-width:150px}#mapa-tiro>.fa-row{flex-wrap:wrap;gap:8px}#mapa-tiro>.fa-row>h2{flex:1 0 100%}#graficas-jug>.fa-row>h2{flex:1 0 100%}#graficas-jug>.fa-row>.fa-refsel{margin-left:0}#graficas-jug>.fa-row>#fa-pl-who{margin-left:auto}#fa-pl-who,#fa-pl-who select{color:var(--color-fg)!important}#fa-pl-who select,#fa-ref-pl select{max-width:150px}#graficas-gj>.fa-row>h2{flex:1 0 100%}#graficas-gj>.fa-row>.fa-refsel{margin-left:0}#graficas-gj>.fa-row>#fa-gj-who{margin-left:auto}#fa-gj-who,#fa-gj-who select{color:var(--color-fg)!important}#fa-gj-who select,#fa-ref-gj select{max-width:150px}
+
+.fa-fold{cursor:pointer}#mapa-tiro:not([data-pl="1"]) #fa-mt-who,#mapa-tiro:not([data-pl="1"]) #mt-njor{display:none}#mapa-tiro[data-pl="1"] #mt-who{display:none}#mapa-tiro[data-pl="1"]>.fa-row>#fa-ref-mt{margin-left:0}#mapa-tiro>.fa-row>#fa-mt-who{margin-left:auto}#fa-mt-who,#fa-mt-who select{color:var(--color-fg)!important}#fa-mt-who select{max-width:150px}#mapa-tiro>.fa-row{flex-wrap:wrap;gap:8px}#mapa-tiro>.fa-row>h2{flex:1 0 100%}#graficas-jug>.fa-row>h2{flex:1 0 100%}#graficas-jug>.fa-row>.fa-refsel{margin-left:0}#graficas-jug>.fa-row>#fa-pl-who{margin-left:auto}#fa-pl-who,#fa-pl-who select{color:var(--color-fg)!important}#fa-pl-who select,#fa-ref-pl select{max-width:150px}#graficas-gj>.fa-row>h2{flex:1 0 100%}#graficas-gj>.fa-row>.fa-refsel{margin-left:0}#graficas-gj>.fa-row>#fa-gj-who{margin-left:auto}#fa-gj-who,#fa-gj-who select{color:var(--color-fg)!important}#fa-gj-who select,#fa-ref-gj select{max-width:150px}
 .fa-refsel,.fa-refsel span{color:var(--color-fg-muted)!important;font-weight:400!important}
 .fa-refsel[id^="fa-ref-"]>span{color:var(--fa-cmp)!important;font-weight:400!important}
 .fa-refsel select{color:var(--color-fg)!important;font-weight:400!important;background:var(--color-bg)!important;border-radius:var(--cds-radius)!important;min-height:32px;padding:5px 8px!important}
 #graficas-equipo>.fa-row>h2,#graficas-cmp>.fa-row>h2,#mapa-tiro>.fa-row>h2{flex:1 0 100%}
 .fa-row>.fa-refsel{margin-left:auto}
 .fa-pl-leg2{margin-top:10px}
+.fa-mj-h3{font-size:13px;font-weight:600;color:var(--color-fg-muted);margin:10px 0 2px}
+.fa-mjcar{margin-bottom:var(--cds-gap-md)}
+.fa-mjcar .fa-carousel{align-items:stretch}
+@media (min-width:981px){.fa-mjcar .fa-carousel>.fa-card{flex-basis:calc((100% - var(--cds-gap-md)) / 2)}}
 @media (max-width:700px){.fa-row>.fa-refsel{margin-left:0!important}}
 
 .fa-foldsec.fa-card .fa-card{background:var(--color-bg);box-shadow:none}
@@ -431,20 +434,10 @@ th button[data-tip]{text-decoration:underline dotted color-mix(in srgb,currentCo
 .fa-tfold.fa-folded>.fa-row{margin-bottom:0}
 
 /* ===== Mapa de tiro de jugadoras ===== */
-.fa-mj-pick{margin:0 0 var(--cds-gap-sm);min-height:0}
-.fa-mj-h3{font-size:13px;font-weight:600;color:var(--color-fg-muted);margin:10px 0 2px}
-#mj-cmp .fa-chart{min-height:210px}
-#mj-cmp .fa-pl-leg{margin:2px 0 4px}
-#mj-evo-leg,#mj-zevo-leg{flex-wrap:wrap;gap:4px 14px}
-#mj-evo-leg .fa-mj-hint,#mj-zevo-leg .fa-mj-hint{flex-basis:100%}
 
 /* contraste suficiente del balance V–D (WCAG AA) */
 .fa-rec{color:#1c5c33}.fa-rec.neg{color:#9b2a20}
 @media (prefers-color-scheme: dark){.fa-rec{color:var(--color-ok)}.fa-rec.neg{color:var(--color-bad)}}
-.fa-mjcar{margin-bottom:var(--cds-gap-md)}
-.fa-mjcar .fa-carousel{align-items:stretch}
-@media (min-width:981px){.fa-mjcar .fa-carousel>.fa-card{flex-basis:calc((100% - var(--cds-gap-md)) / 2)}}
-#mj-sevo .fa-chart{min-height:340px}
 #mt-cmp .fa-chart{min-height:210px}
 #mt-cmp .fa-pl-leg{margin:2px 0 4px}
 #mt-cevo-leg,#mt-czevo-leg{flex-wrap:wrap;gap:4px 14px}
@@ -974,79 +967,7 @@ table[data-rdg-off~="4"] [data-rdg="4"]{display:none}
 
 
   <!-- Sección antigua (selector de estadística + 2 gráficas de líneas): retirada de la vista; su contenido ya está en las gráficas de equipo y de jugadoras seleccionadas. Se mantiene oculta porque el resumen y los análisis comparten su código. -->
-  <section id="mapa-jug" class="fa-card fa-foldsec rd-off">
-    <div class="fa-row" style="margin-bottom:var(--cds-gap-sm)">
-      <h2 style="font-size:var(--cds-font-size-heading);font-weight:var(--cds-font-weight-medium);margin:0"><button type="button" class="fa-fold" aria-expanded="true" aria-controls="fa-mj-body-wrap" title="Plegar / desplegar el mapa de tiro de jugadoras"><span class="fa-chev" aria-hidden="true">▾</span><span class="fa-gtt">Mapa de tiro</span><span class="fa-fold-l">Ocultar</span></button></h2>
-    </div>
-    <div class="fa-fbody" id="fa-mj-body-wrap">
-      <div class="fa-mt-ctl">
-        <span class="fa-note" id="mj-games" style="margin:0"></span>
-      </div>
-      <div class="fa-mt-tiles" id="mj-tiles" data-source="tiros jugadoras" tabindex="0" role="region" aria-label="Carrusel: ▾Mapa de tiroOcultar — usa las flechas para desplazar"></div>
-      <div class="fa-mt-grid">
-        <section class="fa-card" id="mj-map">
-          <div class="fa-row" style="flex-wrap:wrap;gap:8px"><div class="fa-ttl"><h2 id="mj-map-t">Mapa de tiro</h2><button type="button" class="fa-info" aria-expanded="false" aria-controls="fa-note-mjmap" title="Leyenda y explicación">i</button></div><span class="fa-njor" id="mj-njor"></span></div><div class="fa-row fa-segrow"><span class="fa-seg" id="mj-mode" role="group" aria-label="Color del mapa"><button type="button" data-v="pct" aria-pressed="true">%Acierto</button><button type="button" data-v="vol" aria-pressed="false">Nº Tiros</button></span><span class="fa-njor" id="mj-njor2"></span></div>
-          <p class="fa-note" id="fa-note-mjmap" hidden="">Elige arriba la jugadora (o «Todas» para sumar las seleccionadas). Mismos colores que el mapa del equipo: rojo bajo el 35% en aro y pintura, el 20% en media distancia y el 15% en triples; verde desde el 60%, el 45% y el 30%. Toca zonas del mapa o filas de la tabla para destacarlas; las tarjetas cuentan solo las zonas elegidas. Solo partidos con mapa de tiro subido.</p>
-          <div class="fa-chips fa-mj-pick" id="mj-pick" role="group" aria-label="Jugadora del mapa de tiro"></div>
-          <p class="fa-note" id="mj-map-sub" style="margin-top:0"></p>
-          <div class="fa-mtbox fa-c-mj dash-skeleton" data-source="tiros jugadoras" style="min-height:300px"></div>
-        </section>
-<div class="fa-cblock fa-zcar" id="mj-zcar">
-<div class="fa-row fa-cnav2 fa-nonav"><span class="fa-note" style="margin:0 auto 0 0">Por jornadas · por zonas · desliza</span><span class="fa-carr-nav"><button type="button" class="fa-carr-btn" data-dir="-1" aria-label="Anterior" disabled="">‹</button><button type="button" class="fa-carr-btn" data-dir="1" aria-label="Siguiente" disabled="">›</button></span></div>
-<div class="fa-carousel" tabindex="0" role="region" aria-label="Carrusel de gráficas de tiro">
-<section class="fa-card" id="mj-sevo">
-<div class="fa-ttl"><h2 id="mj-sevo-t">Estadísticas de tiro</h2><button type="button" class="fa-info" aria-expanded="false" aria-controls="fa-note-mjsevo" title="Cómo usar esta gráfica">i</button></div>
-<p class="fa-note" id="fa-note-mjsevo" hidden="">Suma de las jugadoras seleccionadas jornada a jornada: barras de aciertos y fallos (intentos) y línea con el % de acierto. Elige zonas en el mapa de tiro, en la tabla o con un atajo (es la misma selección en los tres sitios; sin ninguna, se cuentan todas). «Tiro libre» usa las actas.</p>
-<p class="fa-note" id="mj-sevo-sub" style="margin-top:0"></p>
-<div class="fa-mt-pre" id="mj-pre"></div>
-<div class="fa-leg2"><span><i class="fa-k fa-k-def"></i>Aciertos</span><span><i class="fa-k fa-k-mis"></i>Fallos</span><span><i class="fa-kl"></i>% de acierto</span><span><i class="fa-kl fa-kl-int"></i>% de intentos</span></div>
-<div class="fa-chart fa-c-mjsevo dash-skeleton" data-source="tiros jugadoras" style="min-height:340px"></div>
-</section>
-<section class="fa-card" id="mj-zj">
-<div class="fa-ttl"><h2 id="mj-zj-t">Tiros por zona</h2><button type="button" class="fa-info" aria-expanded="false" aria-controls="fa-note-mjzj" title="Cómo usar esta gráfica">i</button></div>
-<p class="fa-note" id="fa-note-mjzj" hidden="">Los mismos tiros de campo repartidos por zona: barras de aciertos y fallos (intentos), punto verde con el % de acierto y, al final, el total. Elige una jornada o «Todas» (con «Todas» sigue el modo Totales / Por partido). Las zonas que no estén elegidas en el mapa se ven atenuadas. Pasa el cursor para ver el detalle y el % que supone cada zona sobre los intentos.</p>
-<p class="fa-note" id="mj-zj-sub" style="margin-top:0"></p>
-<div class="fa-mt-pre" id="mj-jpre"></div>
-<div class="fa-leg2"><span><i class="fa-k fa-k-def"></i>Aciertos</span><span><i class="fa-k fa-k-mis"></i>Fallos</span><span><i class="fa-kl"></i>% de acierto</span></div>
-<div class="fa-chart fa-c-mjzj dash-skeleton" data-source="tiros jugadoras" style="min-height:350px"></div>
-</section>
-</div>
-</div>
-              </div>
-<div class="fa-cblock fa-mjcar" id="mj-cblock">
-<div class="fa-row fa-cnav2 fa-nonav"><span style="margin-left:auto"></span><span class="fa-carr-nav"><button type="button" class="fa-carr-btn" data-dir="-1" aria-label="Anterior" disabled="">‹</button><button type="button" class="fa-carr-btn" data-dir="1" aria-label="Siguiente" disabled="">›</button></span></div>
-<div class="fa-carousel" tabindex="0" role="region" aria-label="Carrusel: ▾Mapa de tiroOcultar (2) — usa las flechas para desplazar">
-<section class="fa-card" id="mj-cmp">
-          <div class="fa-row" style="flex-wrap:wrap;gap:8px"><div class="fa-ttl"><h2>Comparativa de tiro</h2><button type="button" class="fa-info" aria-expanded="false" aria-controls="fa-note-mjcmp" title="Cómo leer estas gráficas">i</button></div>
-<span class="fa-seg" id="mj-cmpmode" role="group" aria-label="Qué comparar"><button type="button" data-v="pct" aria-pressed="true">%Acierto</button><button type="button" data-v="vol" aria-pressed="false">Nº Tiros</button></span></div>
-          <p class="fa-note" id="fa-note-mjcmp" hidden="">Una barra por jugadora, con su color. «Por tipo de tiro» sale de las actas de los partidos elegidos (libres, tiros de 2, triples y el total de campo). «Por distancia» sale del mapa de tiro: corta = aro y pintura, media = media distancia, larga = triples. En «Intentos», la barra clara son los intentos y la oscura los aciertos; sigue el selector Totales / Por partido de la tabla de abajo. Pasa el cursor por cada grupo para ver aciertos/intentos.</p>
-          <div class="fa-pl-leg" id="mj-leg"></div>
-          <h3 class="fa-mj-h3">Por tipo de tiro</h3>
-          <div class="fa-chart fa-c-mj1 dash-skeleton" data-source="jugadoras" style="min-height:210px"></div>
-          <h3 class="fa-mj-h3">Por distancia</h3>
-          <div class="fa-chart fa-c-mj2 dash-skeleton" data-source="tiros" style="min-height:210px"></div>
-        </section>
-<section class="fa-card" id="mj-evo">
-        <div class="fa-row"><div class="fa-ttl"><h2 id="mj-evo-t">Evolución por jornada</h2><button type="button" class="fa-info" aria-expanded="false" aria-controls="fa-note-mjevo" title="Cómo leer esta gráfica">i</button></div><span class="fa-seg" id="mj-evok" role="group" aria-label="Tipo de tiro"><button type="button" data-v="tl" aria-pressed="false" title="Tiros libres">TL</button><button type="button" data-v="t2" aria-pressed="false" title="Tiros de 2">T2</button><button type="button" data-v="t3" aria-pressed="false" title="Triples">T3</button><button type="button" data-v="tc" aria-pressed="true" title="Tiros de campo (T2 + T3)">TC</button></span></div>
-        <p class="fa-note" id="fa-note-mjevo" hidden="">Para cada jornada, una barra por jugadora (con su color): la parte clara son los intentos y la oscura los aciertos. La línea de cada jugadora es su % de acierto en esa jornada (escala de la derecha), para ver cómo evoluciona y compararlas. TC = tiros de campo (T2 + T3). Datos de las actas de los partidos elegidos; la última columna es el total o la media por partido, según el selector de la tabla de abajo. Pasa el cursor por una jornada para ver el detalle.</p>
-        <div class="fa-leg2" id="mj-evo-leg"></div>
-        <div class="fa-chart fa-c-mjevo dash-skeleton" data-source="jugadoras" style="min-height:300px"></div>
-      </section>
-<section class="fa-card" id="mj-zevo">
-        <div class="fa-row"><div class="fa-ttl"><h2 id="mj-zevo-t">Evolución por zonas</h2><button type="button" class="fa-info" aria-expanded="false" aria-controls="fa-note-mjzevo" title="Cómo leer esta gráfica">i</button></div><span class="fa-seg" id="mj-zevok" role="group" aria-label="Zonas de tiro"><button type="button" data-v="all" aria-pressed="true" title="Todos los tiros de campo">Todas</button><button type="button" data-v="c" aria-pressed="false" title="Aro y pintura">Corta</button><button type="button" data-v="m" aria-pressed="false" title="Media distancia">Media</button><button type="button" data-v="l" aria-pressed="false" title="Triples">Larga</button></span></div>
-        <p class="fa-note" id="fa-note-mjzevo" hidden="">Igual que la gráfica anterior, pero con los tiros del mapa de tiro: una barra por jugadora en cada jornada (clara, intentos; oscura, aciertos) y una línea con su % de acierto. Muestra las zonas elegidas: Corta = aro y pintura, Media = media distancia, Larga = triples. Si eliges zonas sueltas en la tabla de abajo o en el mapa, la gráfica muestra justo esas (es la misma selección en los tres sitios). Solo partidos con mapa de tiro subido; la última columna sigue el selector Totales / Por partido de la tabla.</p>
-        <div class="fa-leg2" id="mj-zevo-leg"></div>
-        <div class="fa-chart fa-c-mjzevo dash-skeleton" data-source="tiros jugadoras" style="min-height:300px"></div>
-      </section>
-</div>
-</div>
-                  <section class="fa-card" id="mj-tab" style="margin-bottom:var(--cds-gap-md)">
-        <div class="fa-row"><div class="fa-ttl"><h2>Tiros por zona y jugadora</h2><button type="button" class="fa-info" aria-expanded="false" aria-controls="fa-note-mjt" title="Cómo usar esta tabla">i</button></div><span class="fa-seg" id="mj-agg" role="group" aria-label="Totales o por partido"><button type="button" data-mode="tot" aria-pressed="true">Totales</button><button type="button" data-mode="pp" aria-pressed="false">Por partido</button></span></div>
-        <p class="fa-note" id="fa-note-mjt" hidden="">Una columna por jugadora seleccionada: intentos (Int.), % sobre sus intentos (%Int), aciertos (Ac.) y % de acierto (%Ac). «Por partido» divide entre los partidos con mapa de tiro que jugó cada una; con varias, la última columna suma las seleccionadas (en «Por partido», la suma de sus medias). Toca una fila para destacar la zona en el mapa, o una cabecera para ordenar.</p>
-        <div class="fa-mt-tw"><table class="fa-mt-zl fa-mt-zl2" id="mj-zl" data-source="tiros jugadoras"></table></div>
-      </section>
-    </div>
-  </section>
+  
 
   <section id="graficas" hidden="" aria-hidden="true">
     <h2 style="font-size:var(--cds-font-size-heading);font-weight:var(--cds-font-weight-medium);margin:0 0 var(--cds-gap-sm)">Evolución de las jugadoras seleccionadas</h2>
@@ -1293,7 +1214,7 @@ faCalc('clasificacion', {
   const f0 = new Intl.NumberFormat('es-ES', { maximumFractionDigits: 1 });
   const fp = new Intl.NumberFormat('es-ES', { style: 'percent', maximumFractionDigits: 1 });
   const fp0 = new Intl.NumberFormat('es-ES', { style: 'percent', maximumFractionDigits: 0 });
-  const mmss = (m) => { const s = Math.round(m * 60); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); };
+  
   let cMode = 'pp'; // cómo se ven las gráficas: pp, pm o tot (sigue a la tabla de estadísticas de jugadoras)
   const f2c = new Intl.NumberFormat('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   const fmtVal = (m, v) => {
@@ -1322,8 +1243,8 @@ const teams = cla.status === 'ok' ? cla.data.map((r) => r.equipo) : [];
     dash.setParams({ equipo: eq || '—', partidos: null, vista: 'tot' });
   }
   document.querySelectorAll('#rd-grp button').forEach((b) => b.addEventListener('click', () => faSetGroup(b.dataset.g)));
-  // nombre del rival bajo la jornada; si no cabe se recorta con «…»
-  const rivLab = (r, w) => { const n = short(r), max = Math.max(4, Math.floor(w / 6.3)); return n.length > max ? n.slice(0, max - 1).trimEnd() + '…' : n; };
+  
+  
   // última columna de las gráficas del equipo: «Total» (Totales) o «Media» por partido (Por partido), según la tabla de clasificación
   const fmtN = (v) => (Number.isInteger(v) ? String(v) : GJ && GJ.pm ? (Math.round(v * 100) / 100).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : (Math.round(v * 10) / 10).toLocaleString('es-ES', { minimumFractionDigits: 1, maximumFractionDigits: 1 }));
   const totDiv = (n) => (eqMode === 'pp' ? n : 1);
@@ -1978,14 +1899,14 @@ CT_SEL[card.id] = b.dataset.k;
 card.querySelectorAll('.fa-pick2 button').forEach((x) => { x.setAttribute('aria-pressed', String(x === b)); });
 drawTeamCmp();
 }));
-document.querySelectorAll('#ct-eqmode button').forEach((b) => b.addEventListener('click', () => { const t = document.querySelector('.fa-seg-eq button[data-mode="' + b.dataset.mode + '"]'); if (t) t.click(); }));
+['ct', 'ge', 'mt'].forEach((k) => document.querySelectorAll('#' + k + '-eqmode button').forEach((b) => b.addEventListener('click', () => { const t = document.querySelector('.fa-seg-eq button[data-mode="' + b.dataset.mode + '"]'); if (t) t.click(); })));
 function drawTeamCmp() {
 const sec = document.getElementById('graficas-cmp'); if (!sec) return;
 refSelect('ct', '#graficas-cmp > .fa-row', drawTeamCmp);
 document.querySelectorAll('#ct-eqmode button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.mode === eqMode)));
 refOk('ct');
 const leg = document.getElementById('fa-ct-leg');
-leg.replaceChildren(...[[short(team()), 'var(--fa-blue)'], [refLab('ct'), 'var(--fa-cmp)']].map(([n, c]) => { const li = document.createElement('span'); li.className = 'fa-li'; const sw = document.createElement('span'); sw.className = 'fa-sw'; sw.style.background = c; const nm = document.createElement('span'); nm.textContent = n; li.append(sw, nm); return li; }));
+leg.replaceChildren(...[[short(team()), 'var(--fa-blue)'], [refLab('ct'), 'var(--fa-cmp)']].map(legLi));
 legTwin(leg, 'fa-ct-leg2');
 if (sec.classList.contains('fa-folded') || rdOff(sec)) return;
 for (const id of Object.keys(CT_SEL)) drawCmpLines(document.querySelector('#' + id + ' .fa-c-ct'), id);
@@ -2095,10 +2016,11 @@ if (document.getElementById('graficas-equipo').classList.contains('fa-folded') |
 }
 // copia de la leyenda encima del segundo carrusel
 function legTwin(lg, id) { const t = document.getElementById(id); if (lg && t) t.replaceChildren(...[...lg.childNodes].map((c) => c.cloneNode(true))); }
+const legLi = ([t, c]) => { const li = document.createElement('span'); li.className = 'fa-li'; const sw = document.createElement('span'); sw.className = 'fa-sw'; sw.style.background = c; const nm = document.createElement('span'); nm.textContent = t; li.append(sw, nm); return li; };
 function drawJorCharts() {
 const C0 = gctx();
 const lg = document.getElementById(GJ ? 'fa-gj-leg' : 'fa-ge-leg');
-if (lg && C0.status === 'ok') lg.replaceChildren(...[[C0.who, C0.wc], [C0.lab, 'var(--fa-cmp)']].map(([t, c]) => { const li = document.createElement('span'); li.className = 'fa-li'; const sw = document.createElement('span'); sw.className = 'fa-sw'; sw.style.background = c; const nm = document.createElement('span'); nm.textContent = t; li.append(sw, nm); return li; }));
+if (lg && C0.status === 'ok') lg.replaceChildren(...[[C0.who, C0.wc], [C0.lab, 'var(--fa-cmp)']].map(legLi));
 { const lg2 = document.getElementById(GJ ? 'fa-gj-leg2' : 'fa-ge-leg2'); if (lg && lg2) lg2.replaceChildren(...[...lg.children].map((c) => c.cloneNode(true))); }
 drawTeamShot('.fa-c-tl', 'tla', 'tli', 'TL', 'Tiros libres');
 drawTeamShot('.fa-c-t2', 't2a', 't2i', 'T2', 'Tiros de 2', 'var(--fa-pink1)', '#0f2547');
@@ -2171,7 +2093,7 @@ const y = d3.scaleLinear([minV, maxV], [H - bottom, top]).nice();
     let mw = 0; ticks.forEach((t) => { mw = Math.max(mw, meas.append('text').text(t).node().getComputedTextLength()); }); meas.remove();
     const left = Math.ceil(mw) + 10;
     const x = d3.scaleBand(games.map((g) => g.partido_id), [left, W - right]).paddingInner(0.3).paddingOuter(0.15);
-    const xi = d3.scaleBand(KEYS.map((s0) => s0.k), [0, x.bandwidth()]).padding(0.08);
+    
     const g = svg.append('g');
     shadeTotal(g, x, TOT, W, right, H, top, bottom);
     g.selectAll('line.gr').data(ticks).join('line').attr('x1', left).attr('x2', W - right).attr('y1', (d) => y(d)).attr('y2', (d) => y(d))
@@ -2614,11 +2536,11 @@ if (document.getElementById('mapa-tiro').dataset.pl === '1') drawMapaTiro();
 drawPlayerJor();
 const sec = document.getElementById('graficas-jug');
 const jug = faL('jugadoras');
-    const teamOf = new Map((jug.status === 'ok' ? jug.data : []).map((r) => [r.jugadora, r.equipo]));
+    
     document.querySelectorAll('#pl-eqmode button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.mode === CPS.mode)));
 const leg = document.getElementById('fa-pl-leg');
 const PP = plPick('fa-pl-who', 'fa-ref-pl', CPS, drawPlayerCharts);
-leg.replaceChildren(...(PP.subj ? [[PP.subj.name + (liga ? ' · ' + short(PP.subj.eq) : ''), 'var(--color-fg)'], [PP.avg ? 'Promedio' : PP.rl.name, 'var(--fa-cmp)']] : []).map(([nm2, c]) => { const li = document.createElement('span'); li.className = 'fa-li'; const sw = document.createElement('span'); sw.className = 'fa-sw'; sw.style.background = c; const nm = document.createElement('span'); nm.textContent = nm2; li.append(sw, nm); return li; }));
+leg.replaceChildren(...(PP.subj ? [[PP.subj.name + (liga ? ' · ' + short(PP.subj.eq) : ''), 'var(--color-fg)'], [PP.avg ? 'Promedio' : PP.rl.name, 'var(--fa-cmp)']] : []).map(legLi));
 if (!PP.subj) leg.textContent = 'Sin jugadoras en la tabla de estadísticas.';
 legTwin(leg, 'fa-pl-leg2');
 
@@ -3000,7 +2922,7 @@ const partial = selIds.length < teamGames.length;
   const MT_ML = { media_larga_fondo_izq: mtWedge(200, 145), media_larga_45_izq: mtWedge(145, 110), media_larga_frontal: mtWedge(110, 70), media_larga_45_der: mtWedge(70, 35), media_larga_fondo_der: mtWedge(35, -20) };
   const MT_MC = { media_corta_fondo_izq: 'M-5,-5H151.5V200H-5Z', media_corta_fondo_der: 'M298.5,-5H455V200H298.5Z' };
   const MT_LAB = { aro: [225, 58], pintura: [225, 145], media_corta_fondo_izq: [113, 88], media_corta_fondo_der: [337, 88], media_larga_fondo_izq: [52, 92], media_larga_fondo_der: [398, 92], media_larga_45_izq: [112, 178], media_larga_45_der: [338, 178], media_larga_frontal: [225, 222], triple_45_izq: [62, 310], triple_45_der: [388, 310], triple_frontal: [225, 330], triple_esquina_izq: [13, 45], triple_esquina_der: [437, 45] };
-  const mtCss = (n, f) => (getComputedStyle(document.documentElement).getPropertyValue(n).trim() || f);
+  
   // umbrales por tipo de zona: [rojo hasta, verde desde]; entre medias, naranja y amarillo pálido
   const MT_TH = { 'Aro y pintura': [0.35, 0.60], 'Media distancia': [0.20, 0.45], 'Triples': [0.15, 0.30] };
   // misma escala de colores en todas las zonas; solo se desplazan las fronteras (t = 0 en el límite del rojo, t = 1 en el del verde)
@@ -3310,8 +3232,7 @@ const sp = document.createElement('span'); sp.textContent = 'Jugadora'; const s 
 }
 { const wl = document.getElementById('fa-mt-who'), rl = document.getElementById('fa-ref-mt'); if (wl && rl && rl.parentNode === wl.parentNode && wl.nextElementSibling !== rl) wl.parentNode.insertBefore(wl, rl); }
 const pl = rdTab === 'jugadoras';
-if (pl) { const an = document.getElementById('mapa-jug'); if (an && sec.nextElementSibling !== an) an.parentNode.insertBefore(sec, an); }
-else { const an = document.getElementById('graficas-cmp'); if (an && an.nextElementSibling !== sec) an.after(sec); }
+{ const an = document.getElementById(pl ? 'graficas-jug' : 'graficas-cmp'); if (an && an.nextElementSibling !== sec) an.after(sec); }
 sec.dataset.pl = pl ? '1' : '0';
 mtSwap(pl ? 'pl' : 'eq');
 }
@@ -3587,29 +3508,8 @@ gs.forEach((g) => PK(g).forEach((r) => { const c = by.get(r.zona) || { m: 0, a: 
 const one = J != null;
 drawZoneBars(box, { by, dv: one ? 1 : totDiv(gs.length), totLab: one ? 'Total' : totLab(), totSub: one ? 'J' + J : totSub(gs.length), sel: mt.tl ? null : mt.zones });
 }
-function drawMjZJ(D) {
-const PL = mj.who === MJ_ALL ? D.P : D.P.filter((p) => p.name === mj.who);
-const box = document.querySelector('.fa-c-mjzj'), preBox = document.getElementById('mj-jpre'), sub = document.getElementById('mj-zj-sub');
-if (!box) return;
-if (!PL.length) { setState(box, 'empty', 'Toca jugadoras en la tabla de estadísticas de jugadoras para verlas aquí'); preBox.replaceChildren(); sub.textContent = ''; return; }
-const jornOf = new Map(); PL.forEach((p) => p.actas.forEach((r) => jornOf.set(r.partido_id, Number(r.jornada))));
-const jorns = [...new Set(PL.flatMap((p) => p.mapActas.map((r) => jornOf.get(r.partido_id))).filter((j) => j != null))].sort((a, b) => a - b);
-if (mj.zj != null && !jorns.includes(mj.zj)) mj.zj = null;
-jornPre(preBox, jorns, mj.zj, (j) => { mj.zj = j; drawPlayerMap(); });
-const J = mj.zj, single = PL.every((p) => p.equipo === team());
-const gm = J != null && single ? teamGames.find((x) => x.jornada === J) : null;
-document.getElementById('mj-zj-t').textContent = 'Tiros por zona · ' + (J == null ? 'todas las jornadas' : 'J' + J + (gm ? ' vs ' + short(gm.rival) : ''));
-sub.textContent = (PL.length > 1 ? 'Suma de las ' + PL.length + ' jugadoras seleccionadas: ' : '') + PL.map((p) => p.name).join(', ');
-if (!jorns.length) { setState(box, 'empty', 'Ninguno de los partidos elegidos tiene mapa de tiro subido'); return; }
-const by = new Map();
-for (const p of PL) {
-const mg = new Set(p.mapActas.map((r) => r.partido_id));
-p.rows.forEach((x) => { if (!mg.has(x.partido_id)) return; const j = jornOf.get(x.partido_id); if (j == null || (J != null && j !== J)) return;
-const c = by.get(x.zona) || { m: 0, a: 0, det: new Map() }; c.m += x.m; c.a += x.a; const d = c.det.get(p.name) || { m: 0, a: 0 }; d.m += x.m; d.a += x.a; c.det.set(p.name, d); by.set(x.zona, c); });
-}
-const n = J == null ? jorns.length : 1, pp = mj.agg === 'pp' && n > 1;
-drawZoneBars(box, { by, dv: pp ? n : 1, totLab: pp ? 'Media' : 'Total', totSub: pp ? (single ? 'por partido' : 'por jornada') : J != null ? 'J' + J : n + (single ? ' partido' : ' jornada') + (n > 1 ? 's' : ''), sel: mj.tl ? null : mj.zones, multi: PL.length > 1 });
-}
+
+
 
   function drawMapaEvoC(D) {
     const box = document.querySelector('.fa-c-mtevo'), preBox = document.getElementById('mt-pre');
@@ -3756,468 +3656,13 @@ if (gq != null) add('% de acierto ' + (REF.mt === REF_G ? (VT ? 'del promedio' :
     };
     svg.append('rect').attr('x', left).attr('y', 0).attr('width', W - right - left).attr('height', H).style('fill', 'transparent').on('pointermove', show).on('pointerdown', show).on('pointerleave', () => { tip.hidden = true; });
   }
-  document.querySelectorAll('#ge-eqmode button').forEach((b) => b.addEventListener('click', () => { const t = document.querySelector('.fa-seg-eq button[data-mode="' + b.dataset.mode + '"]'); if (t) t.click(); }));
+  
 document.querySelectorAll('#pl-eqmode button').forEach((b) => b.addEventListener('click', () => { CPS.mode = b.dataset.mode; drawPlayerCharts(); }));
 document.querySelectorAll('#gj-eqmode button').forEach((b) => b.addEventListener('click', () => { GJS.mode = b.dataset.mode; drawPlayerJor(); }));
-document.querySelectorAll('#mt-eqmode button').forEach((b) => b.addEventListener('click', () => { const t = document.querySelector('.fa-seg-eq button[data-mode="' + b.dataset.mode + '"]'); if (t) t.click(); }));
+
   [['mt-who', 'who'], ['mt-mode', 'mode'], ['mt-evomode', 'evo']].forEach(([id, k]) => document.querySelectorAll('#' + id + ' button').forEach((b) => b.addEventListener('click', () => { mt[k] = b.dataset.v; if (k === 'mode') mtc.cmp = b.dataset.v; drawMapaTiro(); })));
 
   // ---- Mapa de tiro de jugadoras (mapa de la jugadora elegida, comparativas y tabla por zonas con una columna por jugadora)
-  const mj = { zj: null, who: null, mode: 'pct', cmp: 'pct', agg: 'tot', evo: 'tc', tl: false, zones: new Set(), sort: { k: 'idx', dir: 1 } };
-  const MJ_ALL = '__todas';
-  function mjData() {
-const td = faL('tiros'), jug = faL('jugadoras');
-    if (td.status !== 'ok' || jug.status !== 'ok') return { status: td.status === 'ok' ? jug.status : td.status };
-    const teamOf = new Map(jug.data.map((r) => [r.jugadora, r.equipo]));
-    const names = selected().filter((p) => teamOf.has(p) && allPlayers.includes(p));
-    const eq = team(), ids = gamesSel();
-    const inScope = (r) => (r.equipo === eq ? ids.includes(r.partido_id) : true);
-    // el mapa de tiro trae «Apellido Apellido»; se enlaza con las actas por partido, equipo y dorsal
-    const byDorsal = new Map(jug.data.map((r) => [r.partido_id + '|' + r.equipo + '|' + String(r.dorsal), r.jugadora]));
-    const shots = td.data.map((r) => ({ ...r, nombre: byDorsal.get(r.partido_id + '|' + r.equipo + '|' + String(r.dorsal)) }))
-      .filter((r) => r.nombre && names.includes(r.nombre) && teamOf.get(r.nombre) === r.equipo && inScope(r));
-    const mapGames = new Map(); td.data.forEach((r) => { if (!mapGames.has(r.equipo)) mapGames.set(r.equipo, new Set()); mapGames.get(r.equipo).add(r.partido_id); });
-    const P = names.map((name) => {
-      const e = teamOf.get(name);
-      const actas = jug.data.filter((r) => r.jugadora === name && r.equipo === e && inScope(r));
-      const mg = mapGames.get(e) || new Set();
-      const rows = shots.filter((r) => r.nombre === name);
-      return { name, equipo: e, color: colorOf(name), rows, Z: mtAgg(rows), actas, pgActas: actas.length, pgMap: actas.filter((r) => mg.has(r.partido_id)).length, mapActas: actas.filter((r) => mg.has(r.partido_id)) };
-    });
-    const eqMap = mapGames.get(eq) || new Set();
-    const sel = teamGames.filter((g) => ids.includes(g.partido_id));
-    return { status: 'ok', P, names, teamOf, multi: new Set(names.map((n) => teamOf.get(n))).size > 1 || names.some((n) => teamOf.get(n) !== eq),
-      withMap: sel.filter((g) => eqMap.has(g.partido_id)), withoutMap: sel.filter((g) => !eqMap.has(g.partido_id)) };
-  }
-  const mjLabel = (D, p) => { const d = dorsalOf.get(p.equipo + '|' + p.name); return (d && d !== 'X' ? d + ' · ' : '') + p.name + (D.multi ? ' (' + short(p.equipo) + ')' : ''); };
-  function drawPlayerMap() {
-    const sec = document.getElementById('mapa-jug');
-    if (!sec) return;
-    const D = mjData();
-    const pick = document.getElementById('mj-pick'), tiles = document.getElementById('mj-tiles'), mapBox = sec.querySelector('.fa-c-mj');
-    const cmp1 = sec.querySelector('.fa-c-mj1'), cmp2 = sec.querySelector('.fa-c-mj2'), zl = document.getElementById('mj-zl'), gl = document.getElementById('mj-games');
-    const clearAll = (st, msg) => { [mapBox, cmp1, cmp2, sec.querySelector('.fa-c-mjevo'), sec.querySelector('.fa-c-mjzevo'), sec.querySelector('.fa-c-mjsevo'), sec.querySelector('.fa-c-mjzj')].forEach((b) => b && setState(b, st, msg)); const jp = document.getElementById('mj-jpre'); if (jp) jp.replaceChildren(); document.getElementById('mj-pre').replaceChildren(); document.getElementById('mj-sevo-sub').textContent = ''; document.getElementById('mj-zevo-leg').replaceChildren(); tiles.replaceChildren(); zl.replaceChildren(); pick.replaceChildren(); document.getElementById('mj-evo-leg').replaceChildren(); };
-    if (D.status !== 'ok') { clearAll(D.status === 'loading' ? 'loading' : 'error', 'No se pudo cargar'); return; }
-    if (sec.classList.contains('fa-folded') || rdOff(sec)) return;
-    sec.querySelectorAll('#mj-mode button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === mj.mode)));
-    sec.querySelectorAll('#mj-cmpmode button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === mj.cmp)));
-    sec.querySelectorAll('#mj-agg button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.mode === mj.agg)));
-    gl.textContent = D.withMap.length ? 'Partidos con mapa de tiro: ' + D.withMap.map((g) => g.label).join(', ') + (D.withoutMap.length ? ' · sin mapa de tiro subido: ' + D.withoutMap.map((g) => g.label).join(', ') : '') : '';
-    if (!D.P.length) { clearAll('empty', 'Toca jugadoras en la tabla de estadísticas de jugadoras para compararlas aquí'); document.getElementById('mj-map-t').textContent = 'Mapa de tiro';document.getElementById('mj-map-sub').textContent = ''; { const nj = document.getElementById('mj-njor'); if (nj) nj.textContent = ''; } return; }
-    // selector de jugadora del mapa
-    if (mj.who !== MJ_ALL && !D.names.includes(mj.who)) mj.who = D.names[0];
-    if (D.P.length < 2 && mj.who === MJ_ALL) mj.who = D.names[0];
-    const chip = (v, label, color) => {
-      const b = document.createElement('button'); b.type = 'button'; b.className = 'fa-chip';
-      b.setAttribute('aria-pressed', String(mj.who === v));
-      const sw = document.createElement('span'); sw.className = 'fa-sw'; sw.style.background = color || 'var(--color-fg-muted)';
-      b.append(sw, label); b.addEventListener('click', () => { mj.who = v; drawPlayerMap(); }); return b;
-    };
-    pick.replaceChildren(...D.P.map((p) => chip(p.name, mjLabel(D, p), p.color)), ...(D.P.length > 1 ? [chip(MJ_ALL, 'Todas (' + D.P.length + ')', null)] : []));
-    const leg = document.getElementById('mj-leg');
-    leg.replaceChildren(...D.P.map((p) => { const li = document.createElement('span'); li.className = 'fa-li'; const sw = document.createElement('span'); sw.className = 'fa-sw'; sw.style.background = p.color || 'var(--fa-blue)'; const nm = document.createElement('span'); nm.textContent = mjLabel(D, p); li.append(sw, nm); return li; }));
-    const cur = mj.who === MJ_ALL ? null : D.P.find((p) => p.name === mj.who);
-    const rows0 = cur ? cur.rows : D.P.flatMap((p) => p.rows);
-const zjOk = mj.zj != null && rows0.some((r) => Number(r.jornada) === mj.zj);
-const rows = zjOk ? rows0.filter((r) => Number(r.jornada) === mj.zj) : rows0;
-const Z = mtAgg(rows), totA = d3.sum([...Z.values()], (v) => v.a), maxA = d3.max([...Z.values()], (v) => v.a) || 1;
-    document.getElementById('mj-map-t').textContent = 'Mapa de tiro de ' + (cur ? cur.name : 'las seleccionadas');
-    const gamesTxt = cur ? cur.pgMap + ' partido' + (cur.pgMap === 1 ? '' : 's') + ' con mapa de tiro' : 'Suma de ' + D.P.length + ' jugadoras';
-document.getElementById('mj-map-sub').textContent = '';
-{ const k = zjOk ? 1 : new Set(rows0.map((r) => r.jornada)).size, tx = k ? k + (k === 1 ? ' Jornada' : ' Jornadas') : ''; ['mj-njor', 'mj-njor2'].forEach((id) => { const nj = document.getElementById(id); if (nj) nj.textContent = tx; }); }
-    // tarjetas (dentro de las zonas elegidas)
-    const sum = (Zm, f) => { let m = 0, a = 0; for (const [k, v] of Zm) if (f(k) && (!mj.zones.size || mj.zones.has(k))) { m += v.m; a += v.a; } return { m, a }; };
-    const tile = (l, w) => {
-      const d = document.createElement('div'); d.className = 'fa-mt-tile';
-      d.innerHTML = '<div class="l"></div><div class="r"><div><div class="b"></div><div class="s" title="% de acierto">%Ac</div></div><div><div class="b"></div><div class="s" title="Peso de los intentos sobre el total">%Int</div></div></div><div class="s"></div>';
-      d.children[0].textContent = l; const bs = d.querySelectorAll('.b');
-      bs[0].textContent = w.a ? mtPct(w.m / w.a) : '--'; bs[1].textContent = totA ? mtPct(w.a / totA) : '--';
-      d.lastChild.textContent = 'A/I: ' + w.m + '/' + w.a; return d;
-    };
-    tiles.replaceChildren(tile('Total tiros de campo', sum(Z, () => true)), ...['Aro y pintura', 'Media distancia', 'Triples'].map((g) => tile(g, sum(Z, (k) => MT_GRP(k) === g))));
-    carDots(tiles);
-    // mapa
-    if (!totA) setState(mapBox, 'empty', (cur ? cur.name : 'Las seleccionadas') + ': sin tiros en los partidos con mapa de tiro');
-    else {
-      mapBox.classList.remove('dash-skeleton');
-      mtCourt(mapBox, { max: '620px', Z, vol: mj.mode === 'vol', maxA, totA, labels: true, active: mj.zones.size ? mj.zones : null, onClick: mjToggle,
-        tipLines: (k, v) => [[MT_ZN[k], 'fa-tip-h'], ...(v && v.a ? [['Aciertos/intentos', null, v.m + '/' + v.a], ['% de acierto', null, mtPct(v.m / v.a)], ['Del total de intentos', null, mtPct(v.a / totA)]] : [['Sin tiros', null, null]]),
-          ...(!cur && v && v.a ? mtPlayers(rows.map((r) => ({ ...r, jugadora: r.nombre })), k) : []), [mj.zones.has(k) ? 'Clic: quitar de la selección' : 'Clic: destacar esta zona', 'fa-tip-h', null]] });
-    }
-    // comparativas
-    const nn = (v) => Number(v) || 0;
-    const per = (p, src) => (mj.agg === 'pp' ? (src === 'actas' ? p.pgActas : p.pgMap) || 1 : 1);
-    const tipo = [['Libres', 'tla', 'tli'], ['T2', 't2a', 't2i'], ['T3', 't3a', 't3i'], ['Campo', null, null]].map(([lab, ka, ki]) => ({ lab, vals: D.P.map((p) => {
-      const m = ka ? d3.sum(p.actas, (r) => nn(r[ka])) : d3.sum(p.actas, (r) => nn(r.t2a) + nn(r.t3a));
-      const a = ki ? d3.sum(p.actas, (r) => nn(r[ki])) : d3.sum(p.actas, (r) => nn(r.t2i) + nn(r.t3i));
-      return { p, m, a, d: per(p, 'actas') };
-    }) }));
-    const dist = [['Corta', 'Aro y pintura'], ['Media', 'Media distancia'], ['Larga', 'Triples']].map(([lab, g]) => ({ lab, sub: g, vals: D.P.map((p) => { let m = 0, a = 0; for (const [k, v] of p.Z) if (MT_GRP(k) === g) { m += v.m; a += v.a; } return { p, m, a, d: per(p, 'map') }; }) }));
-    mjBars(cmp1, tipo, D);
-    mjBars(cmp2, dist, D);
-    drawMjTable(D);
-drawMjEvo(D);
-drawMjZEvo(D);
-drawMjSEvo(D);
-drawMjZJ(D);
-}
-  // barras agrupadas: una por jugadora en cada categoría (% de acierto, o intentos con los aciertos dentro)
-  function mjBars(box, cats, D) {
-    box.classList.remove('dash-skeleton'); box.replaceChildren();
-    const pct = mj.cmp === 'pct';
-    const W = Math.max(260, box.clientWidth || 320), H = 210, top = 20, bottom = 30, right = 6;
-    const vmax = pct ? 1 : (d3.max(cats, (c) => d3.max(c.vals, (v) => v.a / v.d)) || 1);
-    const y = d3.scaleLinear([0, vmax], [H - bottom, top]); if (!pct) y.nice();
-    const ticks = pct ? [0, 0.25, 0.5, 0.75, 1] : y.ticks(4);
-    const tf = (t) => (pct ? Math.round(t * 100) + '%' : fmtN(t));
-    const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`);
-    const meas = svg.append('g').style('font-size', 'var(--cds-font-size-caption)');
-    let mw = 0; ticks.forEach((t) => { mw = Math.max(mw, meas.append('text').text(tf(t)).node().getComputedTextLength()); }); meas.remove();
-    const left = Math.ceil(mw) + 8;
-    const x0 = d3.scaleBand(cats.map((c) => c.lab), [left, W - right]).paddingInner(0.22).paddingOuter(0.08);
-    const x1 = d3.scaleBand(D.P.map((p) => p.name), [0, x0.bandwidth()]).paddingInner(0.12);
-    const g = svg.append('g');
-    const cap = (s) => s.style('font-size', 'var(--cds-font-size-caption)');
-    g.selectAll('line.gr').data(ticks).join('line').attr('x1', left).attr('x2', W - right).attr('y1', (d) => y(d)).attr('y2', (d) => y(d)).style('stroke', 'var(--cds-chart-grid)').style('stroke-width', 1);
-    cap(g.selectAll('text.yt').data(ticks).join('text').attr('x', left - 6).attr('y', (d) => y(d)).attr('dy', '0.32em').attr('text-anchor', 'end')).style('fill', 'var(--color-fg-muted)').text(tf);
-    const bw = Math.min(34, x1.bandwidth());
-    const showLab = bw >= 10, lfs = bw >= 22 ? '11px' : bw >= 15 ? '9px' : '8px';
-    for (const c of cats) {
-      for (const v of c.vals) {
-        const bx = x0(c.lab) + x1(v.p.name) + (x1.bandwidth() - bw) / 2, col = v.p.color || 'var(--fa-blue)';
-        if (pct) {
-          const p = v.a ? v.m / v.a : null;
-          if (p == null) { cap(g.append('text').attr('x', bx + bw / 2).attr('y', y(0) - 4).attr('text-anchor', 'middle')).style('fill', 'var(--color-fg-muted)').text('–'); continue; }
-          g.append('rect').attr('x', bx).attr('width', bw).attr('y', y(p)).attr('height', Math.max(0, y(0) - y(p))).attr('rx', 3).style('fill', col);
-          if (showLab) cap(g.append('text').attr('x', bx + bw / 2).attr('y', y(p) - 4).attr('text-anchor', 'middle')).style('fill', 'var(--color-fg)').style('font-size', lfs).text(Math.round(p * 100) + '%');
-        } else {
-          const a = v.a / v.d, m = v.m / v.d;
-          g.append('rect').attr('x', bx).attr('width', bw).attr('y', y(a)).attr('height', Math.max(0, y(0) - y(a))).attr('rx', 3).style('fill', col).style('fill-opacity', 0.3);
-          g.append('rect').attr('x', bx).attr('width', bw).attr('y', y(m)).attr('height', Math.max(0, y(0) - y(m))).attr('rx', 3).style('fill', col);
-          if (showLab) cap(g.append('text').attr('x', bx + bw / 2).attr('y', y(a) - 4).attr('text-anchor', 'middle')).style('fill', 'var(--color-fg)').style('font-size', lfs).text(Math.round(a));
-if (showLab && y(0) - y(m) >= 14) cap(g.append('text').attr('x', bx + bw / 2).attr('y', (y(m) + y(0)) / 2).attr('dy', '0.35em').attr('text-anchor', 'middle')).style('fill', 'var(--color-panel, #fff)').style('font-size', lfs).style('pointer-events', 'none').text(fmtN(m));
-        }
-      }
-      cap(g.append('text').attr('x', x0(c.lab) + x0.bandwidth() / 2).attr('y', H - bottom + 18).attr('text-anchor', 'middle')).style('fill', 'var(--color-fg)').text(c.lab);
-      // zona de la categoría: detalle por jugadora al pasar el cursor
-      g.append('rect').attr('x', x0(c.lab) - x0.step() * x0.paddingInner() / 2).attr('width', x0.step()).attr('y', 0).attr('height', H).style('fill', 'transparent')
-        .on('pointermove pointerdown', (ev) => mtTip(box, ev, [[c.lab + (c.sub ? ' · ' + c.sub : ''), 'fa-tip-h', null], ...c.vals.map((v) => [v.p.name, null, (mj.agg === 'pp' ? fmtN(v.m / v.d) + '/' + fmtN(v.a / v.d) + ' por partido' : v.m + '/' + v.a) + ' · ' + (v.a ? mtPct(v.m / v.a) : '--')])]))
-        .on('pointerleave', () => mtUntip(box));
-    }
-    g.append('line').attr('x1', left).attr('x2', W - right).attr('y1', y(0)).attr('y2', y(0)).style('stroke', 'var(--cds-chart-axis)').style('stroke-width', 1);
-  }
-
-  const MJ_EVO = { tl: ['tla', 'tli', 'Tiros libres'], t2: ['t2a', 't2i', 'Tiros de 2'], t3: ['t3a', 't3i', 'Triples'], tc: [null, null, 'Tiros de campo'] };
-  function drawMjEvo(D) {
-    document.querySelectorAll('#mj-evok button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === mj.evo)));
-    const [ka, ki, lab] = MJ_EVO[mj.evo];
-    const nn = (v) => Number(v) || 0;
-    mjEvoChart(D, document.querySelector('.fa-c-mjevo'), document.getElementById('mj-evo-leg'), document.getElementById('mj-evo-t'), 'Evolución por jornada · ' + lab, lab,
-      (p) => p.actas.map((r) => ({ jornada: Number(r.jornada), m: ka ? nn(r[ka]) : nn(r.t2a) + nn(r.t3a), a: ki ? nn(r[ki]) : nn(r.t2i) + nn(r.t3i) })), 'Sin partidos elegidos');
-  }
-  // atajos de zonas (los mismos grupos que la tabla): fijan la selección compartida con la tabla y el mapa
-  const MJ_ZPRE = [['all', 'Todas', MT_ALL], ['c', 'Corta', MT_ALL.filter((z) => MT_GRP(z) === 'Aro y pintura')], ['m', 'Media', MT_ALL.filter((z) => MT_GRP(z) === 'Media distancia')], ['l', 'Larga', MT_ALL.filter((z) => MT_GRP(z) === 'Triples')]];
-  function drawMjZEvo(D) {
-    const act = mj.zones.size ? mj.zones : new Set(MT_ALL);
-    const same = (zs) => zs.length === act.size && zs.every((z) => act.has(z));
-    const pre = MJ_ZPRE.find(([, , zs]) => same(zs));
-    document.querySelectorAll('#mj-zevok button').forEach((b) => b.setAttribute('aria-pressed', String(!!pre && b.dataset.v === pre[0])));
-    const lab = pre ? (pre[0] === 'all' ? 'Todos los tiros de campo' : { c: 'Corta (aro y pintura)', m: 'Media distancia', l: 'Larga (triples)' }[pre[0]]) : (act.size === 1 ? MT_ZN[[...act][0]] : act.size + ' zonas seleccionadas');
-    mjEvoChart(D, document.querySelector('.fa-c-mjzevo'), document.getElementById('mj-zevo-leg'), document.getElementById('mj-zevo-t'), 'Evolución por zonas · ' + lab, lab,
-      (p) => p.mapActas.map((r) => { let m = 0, a = 0; p.rows.forEach((x) => { if (x.partido_id === r.partido_id && act.has(x.zona)) { m += x.m; a += x.a; } }); return { jornada: Number(r.jornada), m, a }; }), 'Ninguno de los partidos elegidos tiene mapa de tiro subido');
-  }
-  function mjEvoChart(D, box, leg, titleEl, title, lab, gamesOf, emptyMsg) {
-    if (!D.P.length) { setState(box, 'empty', 'Toca jugadoras en la tabla de estadísticas de jugadoras para compararlas aquí'); leg.replaceChildren(); return; }
-    titleEl.textContent = title;
-    const G = new Map(D.P.map((p) => [p.name, gamesOf(p)]));
-    const jorns = [...new Set(D.P.flatMap((p) => G.get(p.name).map((r) => r.jornada)))].sort((a, b) => a - b);
-    if (!jorns.length) { setState(box, 'empty', emptyMsg); leg.replaceChildren(); return; }
-    // rival bajo la jornada si todas son del equipo elegido
-    const single = D.P.every((p) => p.equipo === team());
-    const TOT = '__tot', pp = mj.agg === 'pp';
-    const cols = [...jorns.map((j) => { const g = single ? teamGames.find((x) => x.jornada === j) : null; return { id: 'J' + j, j, label: g ? xLab(g) : 'J' + j, sub: g ? short(g.rival) : '', lug: lugTxt(g) }; }),
-      { id: TOT, total: true, label: pp ? 'Media' : 'Total', sub: pp ? 'por partido' : jorns.length + ' jornada' + (jorns.length > 1 ? 's' : '') }];
-    const cell = (p, c) => {
-      const all = G.get(p.name), rs = c.total ? all : all.filter((r) => r.jornada === c.j);
-      if (!rs.length) return null;
-      const dv = c.total && pp ? rs.length : 1, sm = d3.sum(rs, (r) => r.m), sa = d3.sum(rs, (r) => r.a);
-      return { m: sm / dv, a: sa / dv, pm: sm, pa: sa };
-    };
-    const V = new Map(); D.P.forEach((p) => cols.forEach((c) => V.set(p.name + '|' + c.id, cell(p, c))));
-    leg.replaceChildren(...D.P.map((p) => { const sp = document.createElement('span'); const i = document.createElement('i'); i.className = 'fa-k'; i.style.background = p.color || 'var(--fa-blue)'; sp.append(i, mjLabel(D, p)); return sp; }));
-    box.classList.remove('dash-skeleton'); box.replaceChildren();
-    const W = Math.max(280, box.clientWidth || 320), H = Math.round(Math.min(430, Math.max(300, W * 1.5))), top = 18, bottom = 42;
-    const yMax = d3.max([...V.values()].filter(Boolean), (v) => v.a) || 1;
-    const y = d3.scaleLinear([0, yMax], [H - bottom, top]).nice();
-    const yp = d3.scaleLinear([0, 1], [H - bottom, top]);
-    const ticks = y.ticks(5), pticks = [0, 0.25, 0.5, 0.75, 1];
-    const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`);
-    const meas = svg.append('g').style('font-size', 'var(--cds-font-size-caption)');
-    let mw = 0; ticks.forEach((t) => { mw = Math.max(mw, meas.append('text').text(fmtN(t)).node().getComputedTextLength()); });
-    const pw = meas.append('text').text('100%').node().getComputedTextLength(); meas.remove();
-    const left = Math.ceil(mw) + 10, right = Math.ceil(pw) + 10;
-    const x0 = d3.scaleBand(cols.map((c) => c.id), [left, W - right]).paddingInner(0.22).paddingOuter(0.1);
-    const x1 = d3.scaleBand(D.P.map((p) => p.name), [0, x0.bandwidth()]).paddingInner(0.12);
-    const g = svg.append('g');
-    shadeTotal(g, x0, TOT, W, right, H, top, bottom);
-    const cap = (sl) => sl.style('font-size', 'var(--cds-font-size-caption)');
-    g.selectAll('line.gr').data(ticks).join('line').attr('x1', left).attr('x2', W - right).attr('y1', (d) => y(d)).attr('y2', (d) => y(d)).style('stroke', 'var(--cds-chart-grid)').style('stroke-width', 1);
-    cap(g.selectAll('text.yt').data(ticks).join('text').attr('x', left - 8).attr('y', (d) => y(d)).attr('dy', '0.32em').attr('text-anchor', 'end')).style('fill', 'var(--color-fg-muted)').text((d) => fmtN(d));
-    cap(g.selectAll('text.pt').data(pticks).join('text').attr('x', W - right + 8).attr('y', (d) => yp(d)).attr('dy', '0.32em').attr('text-anchor', 'start')).style('fill', 'var(--color-fg-muted)').text((d) => Math.round(d * 100) + '%');
-    const bw = Math.min(28, x1.bandwidth());
-    const bx = (p, c) => x0(c.id) + x1(p.name) + x1.bandwidth() / 2;
-    for (const c of cols) {
-      for (const p of D.P) {
-        const v = V.get(p.name + '|' + c.id); if (!v) continue;
-        const col = p.color || 'var(--fa-blue)', x = bx(p, c) - bw / 2;
-        g.append('rect').attr('x', x).attr('width', bw).attr('y', y(v.a)).attr('height', Math.max(0, y(0) - y(v.a))).attr('rx', 3).style('fill', col).style('fill-opacity', 0.28);
-        g.append('rect').attr('x', x).attr('width', bw).attr('y', y(v.m)).attr('height', Math.max(0, y(0) - y(v.m))).attr('rx', 3).style('fill', col).style('fill-opacity', 0.9);
-if (bw >= 12) cap(g.append('text').attr('x', x + bw / 2).attr('y', y(v.a) - 3).attr('text-anchor', 'middle')).style('fill', 'var(--color-fg)').style('font-size', bw >= 22 ? '10px' : '8px').style('pointer-events', 'none').text(Math.round(v.a));
-      }
-      const lb = g.append('g').attr('transform', `translate(${x0(c.id) + x0.bandwidth() / 2},${H - bottom + 17})`);
-      cap(lb.append('text').attr('text-anchor', 'middle')).style('fill', 'var(--color-fg)').style('font-weight', c.total ? 'var(--cds-font-weight-medium)' : null).text(c.label);
-      if (c.sub) cap(lb.append('text').attr('text-anchor', 'middle').attr('dy', '1.3em')).style('fill', 'var(--color-fg-muted)').text(c.total ? (x0.step() < 80 && !pp ? jorns.length + ' j.' : c.sub) : (c.lug || ''));
-    }
-    g.append('line').attr('x1', left).attr('x2', W - right).attr('y1', y(0)).attr('y2', y(0)).style('stroke', 'var(--cds-chart-axis)').style('stroke-width', 1);
-    const sepX = x0(TOT) - x0.step() * x0.paddingInner() / 2;
-    g.append('line').attr('x1', sepX).attr('x2', sepX).attr('y1', top - 6).attr('y2', H - bottom + 30).style('stroke', 'var(--cds-chart-reference)').style('stroke-dasharray', '4 4').style('stroke-width', 1);
-    // líneas de % de acierto (jornadas unidas; el total como punto aparte)
-    for (const p of D.P) {
-      const col = p.color || 'var(--fa-blue)';
-      const pts = cols.filter((c) => !c.total).map((c) => ({ c, v: V.get(p.name + '|' + c.id) })).filter((o) => o.v && o.v.pa > 0);
-      g.append('path').datum(pts).attr('d', d3.line().x((o) => bx(p, o.c)).y((o) => yp(o.v.pm / o.v.pa))).style('fill', 'none').style('stroke', col).style('stroke-width', 2);
-      const tv = V.get(p.name + '|' + TOT);
-      const all = tv && tv.pa > 0 ? [...pts, { c: cols[cols.length - 1], v: tv }] : pts;
-      g.selectAll(null).data(all).join('circle').attr('cx', (o) => bx(p, o.c)).attr('cy', (o) => yp(o.v.pm / o.v.pa)).attr('r', 4).style('fill', col).style('stroke', 'var(--color-panel, #fff)').style('stroke-width', 1.5);
-    }
-    // detalle por jornada al pasar el cursor
-    for (const c of cols) {
-      g.append('rect').attr('x', x0(c.id) - x0.step() * x0.paddingInner() / 2).attr('width', x0.step()).attr('y', 0).attr('height', H).style('fill', 'transparent')
-        .on('pointermove pointerdown', (ev) => mtTip(box, ev, [[(c.total ? (pp ? 'Media por partido' : 'Total') : c.label + (c.sub ? ' · vs ' + c.sub : '')) + ' · ' + lab, 'fa-tip-h', null],
-          ...D.P.map((p) => { const v = V.get(p.name + '|' + c.id); return [p.name, null, !v ? 'no jugó' : fmtN(v.m) + '/' + fmtN(v.a) + ' · ' + (v.pa ? mtPct(v.pm / v.pa) : '--')]; })]))
-        .on('pointerleave', () => mtUntip(box));
-    }
-  }
-  document.querySelectorAll('#mj-evok button').forEach((b) => b.addEventListener('click', () => { mj.evo = b.dataset.v; drawPlayerMap(); }));
-  document.querySelectorAll('#mj-zevok button').forEach((b) => b.addEventListener('click', () => { const zs = (MJ_ZPRE.find(([k]) => k === b.dataset.v) || [])[2] || MT_ALL; mj.tl = false; mj.zones = zs.length === MT_ALL.length ? new Set() : new Set(zs); drawPlayerMap(); }));
-  // «Estadísticas de tiro» de las jugadoras seleccionadas, sumadas: misma gráfica que la del equipo (zonas elegibles, por jornada)
-function drawMjSEvo(D) {
-// sigue al mapa de al lado: la jugadora elegida en su selector o, con «Todas», el conjunto de seleccionadas
-const PL = mj.who === MJ_ALL ? D.P : D.P.filter((p) => p.name === mj.who);
-const box = document.querySelector('.fa-c-mjsevo'), preBox = document.getElementById('mj-pre'), sub = document.getElementById('mj-sevo-sub'), titleEl = document.getElementById('mj-sevo-t');
-if (!box) return;
-const TL = mj.tl;
-const act = mj.zones.size ? mj.zones : new Set(MT_ALL);
-const zs = MT_ALL.filter((z) => act.has(z));
-const allZ = zs.length === MT_ALL.length;
-preBox.replaceChildren(...MT_PRE.map(([t, zl]) => {
-const b = document.createElement('button'); b.type = 'button'; b.textContent = t;
-const all = zl.length === MT_ALL.length;
-b.setAttribute('aria-pressed', String(!TL && (all ? (!mj.zones.size || mj.zones.size === MT_ALL.length) : zl.length === mj.zones.size && zl.every((z) => mj.zones.has(z)))));
-b.addEventListener('click', () => { mj.tl = false; mj.zones = all ? new Set() : new Set(zl); drawPlayerMap(); });
-return b;
-}).concat([(() => {
-const b = document.createElement('button'); b.type = 'button'; b.textContent = 'Tiro libre'; b.title = 'Tiros libres (de las actas)';
-b.setAttribute('aria-pressed', String(TL)); b.addEventListener('click', () => { mj.tl = true; drawPlayerMap(); });
-return b;
-})()]));
-const legI = document.querySelector('#mj-sevo .fa-kl-int');
-const zTxt = TL ? 'tiros libres' : allZ ? 'todos los tiros de campo' : zs.length === 1 ? MT_ZN[zs[0]] : zs.length + ' zonas';
-titleEl.textContent = 'Estadísticas de tiro · ' + zTxt;
-if (!PL.length) { setState(box, 'empty', 'Toca jugadoras en la tabla de estadísticas de jugadoras para verlas aquí'); sub.textContent = ''; return; }
-sub.textContent = (PL.length > 1 ? 'Suma de las ' + PL.length + ' jugadoras seleccionadas: ' : '') + PL.map((p) => p.name).join(', ');
-const nn = (v) => Number(v) || 0;
-// por jornada: aciertos/intentos de las zonas elegidas (o libres), intentos de campo totales, y detalle por zona y jugadora
-const jornOf = new Map(); PL.forEach((p) => p.actas.forEach((r) => jornOf.set(r.partido_id, Number(r.jornada))));
-const byJ = new Map();
-const cellOf = (j) => { if (!byJ.has(j)) byJ.set(j, { j, m: 0, a: 0, allA: 0, by: new Map(), pl: new Map() }); return byJ.get(j); };
-for (const p of PL) {
-if (TL) { p.actas.forEach((r) => { const c = cellOf(Number(r.jornada)); const m = nn(r.tla), a = nn(r.tli); c.m += m; c.a += a; const o = c.pl.get(p.name) || { m: 0, a: 0 }; o.m += m; o.a += a; c.pl.set(p.name, o); }); continue; }
-const mg = new Set(p.mapActas.map((r) => r.partido_id));
-mg.forEach((id) => cellOf(jornOf.get(id)));
-p.rows.forEach((x) => { const j = jornOf.get(x.partido_id); if (j == null || !mg.has(x.partido_id)) return; const c = cellOf(j); c.allA += x.a;
-if (!act.has(x.zona)) return; c.m += x.m; c.a += x.a;
-const zo = c.by.get(x.zona) || { m: 0, a: 0 }; zo.m += x.m; zo.a += x.a; c.by.set(x.zona, zo);
-const po = c.pl.get(p.name) || { m: 0, a: 0 }; po.m += x.m; po.a += x.a; c.pl.set(p.name, po); });
-}
-const jorns = [...byJ.keys()].sort((a, b) => a - b);
-if (!jorns.length) { setState(box, 'empty', TL ? 'Sin partidos elegidos' : 'Ninguno de los partidos elegidos tiene mapa de tiro subido'); if (legI) legI.parentNode.style.display = 'none'; return; }
-const single = PL.every((p) => p.equipo === team());
-const showI = !TL && !allZ;
-if (legI) legI.parentNode.style.display = showI ? '' : 'none';
-const pp = mj.agg === 'pp';
-const cols = jorns.map((j) => { const c = byJ.get(j); const g = single ? teamGames.find((x) => x.jornada === j) : null;
-return { id: 'J' + j, g, j, label: g ? xLab(g) : 'J' + j, sub: g ? short(g.rival) : '', lug: lugTxt(g), m: c.m, a: c.a, pi: showI && c.allA ? c.a / c.allA : null, by: c.by, pl: c.pl }; });
-const sM = d3.sum(cols, (c) => c.m), sA = d3.sum(cols, (c) => c.a), sAll = d3.sum(jorns, (j) => byJ.get(j).allA), dv = pp ? cols.length : 1;
-const TOT = '__total';
-const tot = { id: TOT, total: true, label: pp ? 'Media' : 'Total', sub: pp ? (single ? 'por partido' : 'por jornada') : cols.length + (single ? ' partido' : ' jornada') + (cols.length > 1 ? 's' : ''), m: sM / dv, a: sA / dv, pctM: sM, pctA: sA, pi: showI && sAll ? sA / sAll : null, by: null };
-const items = [...cols, tot];
-const P = (c) => { const m = c.pctM != null ? c.pctM : c.m, a = c.pctA != null ? c.pctA : c.a; return a ? m / a : null; };
-box.classList.remove('dash-skeleton'); box.replaceChildren();
-const W = Math.max(260, box.clientWidth || 320), H = 340, top = 18, bottom = 44, right = 22;
-const yMax = d3.max(items, (c) => c.a) || 1;
-const y = d3.scaleLinear([0, yMax], [H - bottom, top]).nice();
-const yp = d3.scaleLinear([0, 1], [H - bottom, top]);
-const ticks = y.ticks(5);
-const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`);
-const meas = svg.append('g').style('font-size', 'var(--cds-font-size-caption)');
-let mw = 0; ticks.forEach((t) => { mw = Math.max(mw, meas.append('text').text(t).node().getComputedTextLength()); }); meas.remove();
-const left = Math.ceil(mw) + 10;
-const x = d3.scaleBand(items.map((c) => c.id), [left, W - right]).paddingInner(0.3).paddingOuter(0.15);
-const g = svg.append('g');
-shadeTotal(g, x, TOT, W, right, H, top, bottom);
-const cap = (s) => s.style('font-size', 'var(--cds-font-size-caption)');
-g.selectAll('line.gr').data(ticks).join('line').attr('x1', left).attr('x2', W - right).attr('y1', (d) => y(d)).attr('y2', (d) => y(d)).style('stroke', 'var(--cds-chart-grid)').style('stroke-width', 1);
-cap(g.selectAll('text.yt').data(ticks).join('text').attr('x', left - 8).attr('y', (d) => y(d)).attr('dy', '0.32em').attr('text-anchor', 'end')).style('fill', 'var(--color-fg-muted)').text((d) => fmtN(d));
-const bw = Math.min(40, x.bandwidth() * 0.6);
-const cx = (c) => x(c.id) + x.bandwidth() / 2;
-const labs = [];
-for (const c of items) {
-const x0 = cx(c) - bw / 2;
-g.append('rect').attr('x', x0).attr('width', bw).attr('y', y(c.a)).attr('height', Math.max(0, y(0) - y(c.a))).attr('rx', 3).style('fill', 'var(--fa-lgray)');
-g.append('rect').attr('x', x0).attr('width', bw).attr('y', y(c.m)).attr('height', Math.max(0, y(0) - y(c.m))).attr('rx', 3).style('fill', 'var(--fa-blue)');
-const darkH = y(0) - y(c.m), lightH = y(c.m) - y(c.a), p = P(c);
-let aIn = false;
-if (darkH >= 15) labs.push({ x: cx(c), y: y(c.m) + 12, t: fmtN(c.m), inv: true });
-else if (lightH >= 15) { labs.push({ x: cx(c), y: y(c.m) - 4, t: fmtN(c.m), bold: true }); aIn = true; }
-let iy = y(c.a) - 4;
-if (p != null && Math.abs(yp(p) - (iy - 4)) < 13) iy = (!aIn && lightH >= 28) ? y(c.a) + 12 : Math.min(y(c.a), yp(p)) - 12;
-labs.push({ x: cx(c), y: iy, t: fmtN(c.a) });
-const lb = g.append('g').attr('transform', `translate(${cx(c)},${H - bottom + 18})`);
-cap(lb.append('text').attr('text-anchor', 'middle')).style('fill', 'var(--color-fg)').style('font-weight', c.total ? 'var(--cds-font-weight-medium)' : null).text(c.label);
-cap(lb.append('text').attr('text-anchor', 'middle').attr('dy', '1.3em')).style('fill', 'var(--color-fg-muted)').text(c.total ? c.sub : (c.lug || ''));
-}
-g.append('line').attr('x1', left).attr('x2', W - right).attr('y1', y(0)).attr('y2', y(0)).style('stroke', 'var(--cds-chart-axis)').style('stroke-width', 1);
-const sepX = x(TOT) - x.step() * x.paddingInner() / 2;
-g.append('line').attr('x1', sepX).attr('x2', sepX).attr('y1', top - 6).attr('y2', H - bottom + 30).style('stroke', 'var(--cds-chart-reference)').style('stroke-dasharray', '4 4').style('stroke-width', 1);
-if (showI) {
-const lineI = items.filter((c) => !c.total && c.pi != null);
-g.append('path').datum(lineI).attr('d', d3.line().x(cx).y((c) => yp(c.pi))).style('fill', 'none').style('stroke', 'var(--fa-blue)').style('stroke-width', 2).style('stroke-dasharray', '5 4');
-for (const c of items.filter((c) => c.pi != null)) {
-g.append('circle').attr('cx', cx(c)).attr('cy', yp(c.pi)).attr('r', 3.5).style('fill', 'var(--fa-blue)').style('stroke', 'var(--color-panel, #fff)').style('stroke-width', 1.5);
-cap(g.append('text').attr('x', cx(c) + bw / 2 + 4).attr('y', yp(c.pi) + (P(c) != null && c.pi > P(c) ? -8 : 15))).style('fill', 'var(--fa-blue)').style('font-weight', 'var(--cds-font-weight-medium)').style('paint-order', 'stroke').style('stroke', 'var(--color-panel, #fff)').style('stroke-width', 3).text(Math.round(c.pi * 100) + '%');
-}
-}
-const line = items.filter((c) => !c.total && P(c) != null);
-g.append('path').datum(line).attr('d', d3.line().x(cx).y((c) => yp(P(c)))).style('fill', 'none').style('stroke', 'var(--fa-green)').style('stroke-width', 2);
-for (const c of items) {
-const p = P(c); if (p == null) continue;
-g.append('circle').attr('cx', cx(c)).attr('cy', yp(p)).attr('r', 4).style('fill', 'var(--fa-green)').style('stroke', 'var(--color-panel, #fff)').style('stroke-width', 1.5);
-cap(g.append('text').attr('x', cx(c) + bw / 2 + 4).attr('y', yp(p) + (c.pi != null && c.pi > p ? 15 : -7))).style('fill', 'var(--fa-green)').style('font-weight', 'var(--cds-font-weight-medium)').style('paint-order', 'stroke').style('stroke', 'var(--color-panel, #fff)').style('stroke-width', 3).text(Math.round(p * 100) + '%');
-}
-for (const l of labs) {
-const t = cap(g.append('text').attr('x', l.x).attr('y', l.y).attr('text-anchor', 'middle')).text(l.t);
-if (l.inv) t.style('fill', 'var(--color-panel, #fff)').style('font-weight', 'var(--cds-font-weight-medium)');
-else t.style('fill', 'var(--color-fg)').style('font-weight', l.bold ? 'var(--cds-font-weight-medium)' : null).style('paint-order', 'stroke').style('stroke', 'var(--color-panel, #fff)').style('stroke-width', 3);
-}
-// detalle por jornada al pasar el cursor: total, % y, con varias jugadoras o zonas, el desglose
-const show = (ev) => {
-const [px] = d3.pointer(ev, svg.node());
-const c = items.reduce((a, b) => (Math.abs(x(b.id) - px) < Math.abs(x(a.id) - px) ? b : a), items[0]);
-const lines = [[c.total ? (pp ? 'Media ' + c.sub : 'Total') : c.label + (c.sub ? ' · vs ' + c.sub : '') + (c.g && c.g.pf != null ? ' (' + c.g.pf + '-' + c.g.pc + ')' : ''), 'fa-tip-h', null],
-['Aciertos/intentos', null, fmtN(c.m) + '/' + fmtN(c.a)], ['% de acierto', null, mtPct(P(c))]];
-if (c.pi != null) lines.push(['% de intentos', null, mtPct(c.pi)]);
-if (!c.total && PL.length > 1) cols.length && [...c.pl].forEach(([nm, v]) => { if (v.a) lines.push([nm, null, v.m + '/' + v.a + ' · ' + mtPct(v.m / v.a)]); });
-if (!c.total && c.by && zs.length > 1) for (const z of zs) { const v = c.by.get(z); if (v && v.a) lines.push([MT_ZN[z], null, v.m + '/' + v.a + ' · ' + mtPct(v.m / v.a)]); }
-mtTip(box, ev, lines);
-};
-svg.append('rect').attr('x', left).attr('y', 0).attr('width', W - right - left).attr('height', H).style('fill', 'transparent').on('pointermove', show).on('pointerdown', show).on('pointerleave', () => mtUntip(box));
-}
-function mjToggle(k) {
-mj.tl = false;
-if (!mj.zones.size) mj.zones = new Set([k]); else if (mj.zones.has(k)) mj.zones.delete(k); else mj.zones.add(k);
-    drawPlayerMap();
-  }
-  function mjToggleGroup(zs) {
-mj.tl = false;
-if (zs.every((z) => mj.zones.has(z))) zs.forEach((z) => mj.zones.delete(z)); else zs.forEach((z) => mj.zones.add(z));
-    drawPlayerMap();
-  }
-  // con una sola jugadora: columna extra con la media por jugadora y partido de todas las jugadoras de su equipo en los partidos con mapa de tiro seleccionados
-function mjAvgCol(D, one) {
-const td = faL('tiros'), jug = faL('jugadoras');
-if (td.status !== 'ok' || jug.status !== 'ok') return [];
-const e = one.equipo;
-const gids = new Set((e === team() ? D.withMap.map((g) => g.partido_id) : one.mapActas.map((r) => r.partido_id)));
-if (!gids.size) return [];
-const rows = td.data.filter((r) => r.equipo === e && gids.has(r.partido_id));
-const n = jug.data.filter((r) => r.equipo === e && gids.has(r.partido_id) && Number(r.min) > 0).length;
-if (!rows.length || !n) return [];
-return [{ id: '__avg', avg: true, label: 'Media jugadoras', Z: mtAgg(rows), dv: n }];
-}
-function drawMjTable(D) {
-    const zl = document.getElementById('mj-zl');
-    zl.replaceChildren();
-    // con una sola jugadora, una columna por jornada (con mapa de tiro) y el total o la media por partido
-const one = D.P.length === 1 ? D.P[0] : null;
-const cols = one
-? [...one.mapActas.slice().sort((a, b) => Number(a.jornada) - Number(b.jornada)).map((r) => ({ id: r.partido_id, game: r, p: one, Z: mtAgg(one.rows.filter((x) => x.partido_id === r.partido_id)), dv: 1 })),
-{ id: '__tot', total: true, p: one, Z: one.Z, dv: mj.agg === 'pp' ? (one.pgMap || 1) : 1 }, ...mjAvgCol(D, one)]
-: D.P.map((p) => ({ id: p.name, p, Z: p.Z, dv: mj.agg === 'pp' ? (p.pgMap || 1) : 1 }));
-if (D.P.length > 1) {
-      const Zt = mtAgg(D.P.flatMap((p) => p.rows));
-      // en «Por partido», el total suma las medias de cada jugadora
-      if (mj.agg === 'pp') { Zt.clear(); D.P.forEach((p) => { const dv = p.pgMap || 1; for (const [k, v] of p.Z) { const o = Zt.get(k) || { m: 0, a: 0, tipo: v.tipo }; o.m += v.m / dv; o.a += v.a / dv; Zt.set(k, o); } }); }
-      cols.push({ id: '__tot', total: true, Z: Zt, dv: 1 });
-    }
-    cols.forEach((c) => { c.T = d3.sum([...c.Z.values()], (v) => v.a); });
-    const val = (c, kind, zs) => {
-      let m = 0, a = 0; zs.forEach((z) => { const v = c.Z.get(z); if (v) { m += v.m; a += v.a; } });
-      const T = c.T / c.dv; a /= c.dv; m /= c.dv;
-      return kind === 'i' ? a : kind === 'pi' ? (T ? a / T : null) : kind === 'a' ? m : (a ? m / a : null);
-    };
-    const fmt = (kind, v) => (v == null ? '--' : kind === 'i' || kind === 'a' ? fmtN(v) : mtPct(v));
-    const sortBy = (k) => { mj.sort = mj.sort.k === k ? { k, dir: -mj.sort.dir } : { k, dir: -1 }; drawMjTable(D); };
-    const th = zl.createTHead(); const r1 = th.insertRow(), r2 = th.insertRow();
-    const h0 = document.createElement('th'); h0.rowSpan = 2; h0.className = 'fa-stick';
-    const b0 = document.createElement('button'); b0.type = 'button'; b0.textContent = 'Zona' + (mj.sort.k === 'idx' ? ' ▲' : ''); b0.title = 'Orden del mapa: aro y pintura, media distancia, triples';
-    b0.addEventListener('click', () => { mj.sort = { k: 'idx', dir: 1 }; drawMjTable(D); });
-    h0.append(b0); r1.append(h0);
-    cols.forEach((c, ci) => {
-      const h = document.createElement('th'); h.colSpan = 4; h.className = 'gh gs' + (ci % 2 ? ' ga' : '') + (c.total ? ' gt' : '');
-      if (one && c.game) { const pf = String(c.game.resultado || '').split('-').map(Number); h.textContent = 'J' + c.game.jornada + (pf.length === 2 && pf[0] !== pf[1] ? (pf[0] > pf[1] ? ' (V)' : ' (D)') : '') + ' · ' + short(c.game.rival); }
-else if (one && c.avg) { h.textContent = c.label; h.title = 'Media por jugadora y partido de todas las jugadoras del equipo en los partidos con mapa de tiro'; }
-else if (one && c.total) h.textContent = mj.agg === 'pp' ? 'Por partido' : 'Total' + (cols.filter((x) => x.game).length > 1 ? ' (' + cols.filter((x) => x.game).length + ' partidos)' : '');
-else if (c.total) h.textContent = 'Seleccionadas (' + D.P.length + ')';
-      else { const sw = document.createElement('span'); sw.className = 'fa-sw'; sw.style.cssText = 'display:inline-block;margin-right:6px;vertical-align:middle;background:' + (c.p.color || 'var(--fa-blue)'); h.append(sw, mjLabel(D, c.p)); }
-      r1.append(h);
-      MT_KINDS.forEach(([kind, lab, tt], ki) => {
-        const k = c.id + '|' + kind, on = mj.sort.k === k;
-        const t = document.createElement('th'); t.className = (!ki ? 'gs ' : '') + (ci % 2 ? 'ga ' : '') + (c.total && !ki ? 'gt' : '');
-        const btn = document.createElement('button'); btn.type = 'button'; btn.title = tt; btn.textContent = lab + (on ? (mj.sort.dir > 0 ? ' ▲' : ' ▼') : '');
-        btn.setAttribute('aria-pressed', String(on)); btn.addEventListener('click', () => sortBy(k));
-        t.append(btn); r2.append(t);
-      });
-    });
-    const tb = zl.createTBody();
-    const mk = (label, zs, cls, onClick, sel, indent) => {
-      const tr = tb.insertRow(); tr.className = cls + (sel ? ' sel' : '');
-      const c0 = tr.insertCell(); c0.textContent = mtAb(label); c0.title = label; if (indent) { c0.style.paddingLeft = '16px'; c0.style.color = 'var(--color-fg-muted)'; }
-      tr.addEventListener('click', onClick);
-      cols.forEach((c, ci) => MT_KINDS.forEach(([kind], ki) => { const td = tr.insertCell(); td.className = (!ki ? 'gs ' : '') + (ci % 2 ? 'ga ' : '') + (c.total && !ki ? 'gt' : ''); td.textContent = fmt(kind, val(c, kind, zs)); }));
-    };
-    const selZ = mj.zones.size ? MT_ALL.filter((z) => mj.zones.has(z)) : MT_ALL;
-    mk(mj.zones.size ? 'Total zonas seleccionadas (' + selZ.length + ')' : 'Total tiros de campo', selZ, 'tot', () => { mj.tl = false; mj.zones = new Set(); drawPlayerMap(); }, false, false);
-    if (mj.sort.k === 'idx') {
-      let last = null;
-      MT_ALL.forEach((z) => {
-        const g = MT_GRP(z);
-        if (g !== last) { last = g; const zs = MT_ALL.filter((x) => MT_GRP(x) === g); mk(g, zs, 'g', () => mjToggleGroup(zs), zs.every((x) => mj.zones.has(x)), false); tb.lastChild.querySelector('td').style.fontWeight = 'var(--cds-font-weight-medium)'; }
-        mk(MT_ZN[z], [z], '', () => mjToggle(z), mj.zones.has(z), true);
-      });
-    } else {
-      const [cid, kind] = mj.sort.k.split('|'); const col = cols.find((c) => c.id === cid) || cols[cols.length - 1];
-      const zs = MT_ALL.map((z, i) => ({ z, i, v: val(col, kind, [z]) }));
-      zs.sort((p, q) => (p.v == null) - (q.v == null) || (p.v == null ? 0 : (p.v - q.v) * mj.sort.dir) || p.i - q.i);
-      zs.forEach(({ z }) => mk(MT_ZN[z], [z], '', () => mjToggle(z), mj.zones.has(z), false));
-    }
-  }
-  document.querySelectorAll('#mj-mode button').forEach((b) => b.addEventListener('click', () => { mj.mode = b.dataset.v; mj.cmp = b.dataset.v; drawPlayerMap(); }));
-  document.querySelectorAll('#mj-cmpmode button').forEach((b) => b.addEventListener('click', () => { mj.cmp = b.dataset.v; mj.mode = b.dataset.v; drawPlayerMap(); }));
-  document.querySelectorAll('#mj-agg button').forEach((b) => b.addEventListener('click', () => { mj.agg = b.dataset.mode; drawPlayerMap(); }));
-  let mjRW = 0;
-  window.addEventListener('resize', () => { const w = document.querySelector('.fa-c-mj1'); if (w && Math.abs(w.clientWidth - mjRW) > 4) { mjRW = w.clientWidth; drawPlayerMap(); } });
-
   // puntos de un carrusel horizontal (solo se ven en móvil); se crean junto a la caja
   const carBound = new WeakSet();
   function carDots(box) {
@@ -4335,7 +3780,7 @@ table.setAttribute('data-rdg-off', names.map((nm, i) => String(i + 1)).filter((k
   document.querySelectorAll('.fa-std tbody, .fa-ptab tbody').forEach((tb) => rdGroupObs.observe(tb, { childList: true }));
   document.querySelectorAll('.fa-std, .fa-ptab').forEach(rdGroups);
 
-  const kpiBound = new WeakSet();
+  
   function renderKpis(eq, games, todos, jug) {
     const rec = document.getElementById('fa-rec');
     if (!rec) return;
