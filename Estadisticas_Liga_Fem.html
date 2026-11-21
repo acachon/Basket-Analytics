@@ -610,7 +610,12 @@ table[data-rdg-off~="4"] [data-rdg="4"]{display:none}
     <div class="fa-fbody" id="fa-eq-body-wrap"><div class="fa-pl-leg" id="fa-ge-leg"></div>
       <div class="fa-cblock" data-first="1">
     <div class="fa-carousel" tabindex="0" role="region" aria-label="Carrusel: ▾EstadísticasOcultar — usa las flechas para desplazar">
-      <section class="fa-card" id="eq-val">
+      <section class="fa-card" id="eq-min">
+<div class="fa-ttl"><h2>Min/Jugador y +/-</h2></div>
+<div class="fa-leg2"><span><i class="fa-k fa-k-def"></i>Min/Jugador</span><span><i class="fa-k fa-k-of"></i>+/-</span></div>
+<div class="fa-chart fa-c-min dash-skeleton" data-source="equipos_partido jugadoras partidos"></div>
+</section>
+<section class="fa-card" id="eq-val">
         <div class="fa-ttl"><h2>Valoración de ataque y defensa</h2></div>
         <div class="fa-leg2"><span><i class="fa-k fa-k-def"></i>ValD (defensa)</span><span><i class="fa-k fa-k-of"></i>ValO (ataque)</span></div>
         <div class="fa-chart fa-c-val dash-skeleton" data-source="equipos_partido jugadoras"></div>
@@ -836,7 +841,12 @@ table[data-rdg-off~="4"] [data-rdg="4"]{display:none}
     <div class="fa-fbody" id="fa-gj-body-wrap"><div class="fa-pl-leg" id="fa-gj-leg"></div>
       <div class="fa-cblock" data-first="1">
     <div class="fa-carousel" tabindex="0" role="region" aria-label="Carrusel: ▾EstadísticasOcultar — usa las flechas para desplazar">
-      <section class="fa-card" id="gj-val">
+      <section class="fa-card" id="gj-min">
+<div class="fa-ttl"><h2>Minutos y +/-</h2></div>
+<div class="fa-leg2"><span><i class="fa-k fa-k-def"></i>Minutos</span><span><i class="fa-k fa-k-of"></i>+/-</span></div>
+<div class="fa-chart fa-c-min dash-skeleton" data-source="jugadoras partidos"></div>
+</section>
+<section class="fa-card" id="gj-val">
         <div class="fa-ttl"><h2>Valoración de ataque y defensa</h2></div>
         <div class="fa-leg2"><span><i class="fa-k fa-k-def"></i>ValD (defensa)</span><span><i class="fa-k fa-k-of"></i>ValO (ataque)</span></div>
         <div class="fa-chart fa-c-val dash-skeleton" data-source="jugadoras partidos"></div>
@@ -2083,6 +2093,7 @@ drawTeamShot('.fa-c-tl', 'tla', 'tli', 'TL', 'Tiros libres');
 drawTeamShot('.fa-c-t2', 't2a', 't2i', 'T2', 'Tiros de 2', 'var(--fa-pink1)', '#0f2547');
 drawTeamShot('.fa-c-t3', 't3a', 't3i', 'T3', 'Tiros de 3', 'var(--fa-pink2)', '#fff');
 drawTeamTS('.fa-c-ts');
+drawTeamPair('.fa-c-min', GJ ? [{ k: 'min', l: 'Minutos', c: 'var(--fa-blue)', meanTot: 2 }, { k: 'mas_menos', l: '+/-', c: 'var(--fa-green)' }] : [{ k: 'minj', l: 'Min/Jugador', c: 'var(--fa-blue)', meanTot: 1, tk: 'min' }, { k: 'dif', l: '+/-', c: 'var(--fa-green)', tk: 'mas_menos' }], '');
 drawTeamPair('.fa-c-val', [{ k: 'vald', l: 'ValD (defensa)', c: 'var(--fa-blue)' }, { k: 'valo', l: 'ValO (ataque)', c: 'var(--fa-green)' }], '');
 drawTeamPair('.fa-c-reb', [{ k: 'reb_def', l: 'Defensivos', c: 'var(--fa-blue)' }, { k: 'reb_of', l: 'Ofensivos', c: 'var(--fa-green)' }], 'Rebotes');
 drawTeamPair('.fa-c-fal', [{ k: 'fc', l: 'Cometidas', c: 'var(--fa-blue)' }, { k: 'fr', l: 'Recibidas', c: 'var(--fa-green)' }], 'Faltas');
@@ -2114,9 +2125,17 @@ const C = gctx();
 if (C.status !== 'ok') { setState(box, C.status === 'loading' ? 'loading' : 'error', 'No se pudo cargar'); return; }
 box.classList.remove('dash-skeleton');
 const eq = C.eq, ids = C.ids;
-const per = new Map([...C.per].map(([k, r]) => [k, withVal(r)]));
+// equipo: Min/Jugador (200 min entre las jugadoras con minutos) y +/- (diferencia de puntos del partido)
+const TX = (() => {
+if (GJ) return null;
+const pa0 = faData('partidos'), jg0 = faData('jugadoras'), pm0 = new Map((pa0.status === 'ok' && Array.isArray(pa0.data) ? pa0.data : []).map((p) => [p.partido_id, p])), cn = new Map();
+(jg0.status === 'ok' ? jg0.data : []).forEach((r) => { if (nz(r.min) > 0) { const k = r.partido_id + '|' + r.equipo; cn.set(k, (cn.get(k) || 0) + 1); } });
+return (r) => { const p = pm0.get(r.partido_id), c = cn.get(r.partido_id + '|' + r.equipo); return { dif: p ? (p.local === r.equipo ? 1 : -1) * (nz(p.pts_local) - nz(p.pts_visitante)) : null, minj: c ? 200 / c : null }; };
+})();
+const withValX = (r) => (TX ? { ...withVal(r), ...TX(r) } : withVal(r));
+const per = new Map([...C.per].map(([k, r]) => [k, withValX(r)]));
 // media del grupo por partido (todos los equipos y partidos jugados del grupo elegido)
-const GRp = { jOf: C.jOf }, grpRows = C.ref.map(withVal);
+const GRp = { jOf: C.jOf }, grpRows = C.ref.map(withValX);
 const avgJ = (k, j) => { const rs = grpRows.filter((r) => GRp.jOf.get(r.partido_id) === j); return rs.length ? d3.mean(rs, (r) => +r[k] || 0) : null; };
 const realGames = C.games;
     if (!realGames.length) { setState(box, 'empty', 'Sin partidos elegidos'); return; }
@@ -2126,7 +2145,8 @@ const avg = Object.fromEntries(KEYS.map((s0) => [s0.k, avgRows.length ? d3.mean(
 // columna «Total»: acumulado de las jornadas elegidas
     const TOT = '__total';
     const totStats = Object.fromEntries(KEYS.map((s0) => [s0.k, sumT(per, realGames, s0.k)]));
-    per.set(TOT, totStats);
+    for (const s0 of KEYS) if (s0.meanTot === 1 || (s0.meanTot === 2 && pmOn())) { const vs = realGames.map((gm) => (per.get(gm.partido_id) || {})[s0.k]).filter((v) => v != null); totStats[s0.k] = vs.length ? d3.mean(vs) : 0; }
+per.set(TOT, totStats);
     const games = [...realGames, { partido_id: TOT, label: totLab(), rival: '', total: true,
       pf: d3.sum(realGames, (g) => g.pf), pc: d3.sum(realGames, (g) => g.pc) }];
     box.replaceChildren();
@@ -2193,12 +2213,13 @@ if (legBox && legBox.querySelector('.fa-avg')) legBox.querySelector('.fa-avg').h
       .attr('width', half).attr('y', 0).attr('height', H).style('fill', 'transparent')
       .on('pointermove pointerdown', function (ev, d) {
         const st = per.get(d.gm.partido_id) || {};
-        let who;
+const tk = d.s0.tk || d.s0.k;
+let who;
         if (d.gm.total) {
-          const agg = d3.rollups(pl.filter((r) => ids.includes(r.partido_id)), (v) => ({ jugadora: v[0].jugadora, dorsal: dorsalOf.get(eq + '|' + v[0].jugadora) ?? v[0].dorsal, [d.s0.k]: d3.sum(v, (r) => +r[d.s0.k] || 0) / totDiv(realGames.length) }), (r) => r.jugadora).map((x2) => x2[1]);
-          who = agg.filter((r) => r[d.s0.k] !== 0);
-        } else who = pl.filter((r) => r.partido_id === d.gm.partido_id && +r[d.s0.k] !== 0);
-        who.sort((p, q) => +q[d.s0.k] - +p[d.s0.k] || p.jugadora.localeCompare(q.jugadora));
+          const agg = d3.rollups(pl.filter((r) => ids.includes(r.partido_id)), (v) => ({ jugadora: v[0].jugadora, dorsal: dorsalOf.get(eq + '|' + v[0].jugadora) ?? v[0].dorsal, [tk]: d3.sum(v, (r) => +r[tk] || 0) / totDiv(realGames.length) }), (r) => r.jugadora).map((x2) => x2[1]);
+who = agg.filter((r) => r[tk] !== 0);
+} else who = pl.filter((r) => r.partido_id === d.gm.partido_id && +r[tk] !== 0);
+who.sort((p, q) => +q[tk] - +p[tk] || p.jugadora.localeCompare(q.jugadora));
         tip.replaceChildren();
         const h = document.createElement('div'); h.className = 'fa-tip-h';
         h.textContent = d.gm.total ? totHead(realGames) : d.gm.label + ' · vs ' + d.gm.rival + ' (' + d.gm.pf + '-' + d.gm.pc + ')'; tip.append(h);
@@ -2215,7 +2236,7 @@ if (!who.length && C.pl.length) { const e = document.createElement('div'); e.cla
           const dn = document.createElement('span'); dn.style.color = 'var(--color-fg-muted)'; dn.style.minWidth = '1.6em'; dn.style.textAlign = 'right';
           dn.textContent = r.dorsal === 'X' ? '' : r.dorsal;
           const n2 = document.createElement('span'); n2.textContent = r.jugadora;
-          const v2 = document.createElement('span'); v2.textContent = fmtN(+r[d.s0.k]);
+          const v2 = document.createElement('span'); v2.textContent = fmtN(+r[tk]);
           l.append(dn, n2, v2); tip.append(l);
         }
         tip.hidden = false;
@@ -2531,7 +2552,7 @@ tip.hidden = false;
 
   // ---- Gráficas por jornada de UNA jugadora: las mismas gráficas del equipo; referencia = otra jugadora o el promedio de las listadas en la tabla de estadísticas
 const GJS = { who: null, ref: '__avg', mode: 'pp' };
-const PM_K = ['pts', 't2a', 't2i', 't3a', 't3i', 'tla', 'tli', 'reb_of', 'reb_def', 'ast', 'per', 'fc', 'fr', 'tap', 'tap_rec', 'rec'];
+const PM_K = ['pts', 't2a', 't2i', 't3a', 't3i', 'tla', 'tli', 'reb_of', 'reb_def', 'ast', 'per', 'fc', 'fr', 'tap', 'tap_rec', 'rec', 'mas_menos'];
 function plPick(whoId, refId, S, redraw) {
 const list = plView.map((r) => ({ key: r.equipo + '|' + r.jugadora, name: r.jugadora, eq: r.equipo }));
 const keys = list.map((l) => l.key);
