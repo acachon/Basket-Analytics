@@ -336,7 +336,7 @@ html.fa-nojs .fa-static{display:block}
 .fa-mt-zl2 th.fa-stick button{text-align:left}
 .fa-mt-zl2 td{white-space:nowrap;cursor:pointer}
 .fa-mt-zl2 td.gs,.fa-mt-zl2 th.gs{border-left:2px solid var(--color-fg-muted)}
-@media (max-width:700px){.fa-mt-zl2 th.fa-stick,.fa-mt-zl2 td:first-child{min-width:0;width:7.4rem;max-width:7.4rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:12px;padding-left:4px;padding-right:4px}.fa-mt-zl2 td:first-child[style*=padding-left]{padding-left:10px!important}}
+@media (max-width:700px){.fa-mt-zl2 th.fa-stick,.fa-mt-zl2 td:first-child{min-width:0;width:7.4rem;max-width:7.4rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:12px;padding-left:4px;padding-right:4px}.fa-mt-zl2 td:first-child[style*=padding-left]{padding-left:10px!important}#mapa-tiro .fa-mtbox{margin-inline:-14px}}
 .fa-mt-zl2 td.ga,.fa-mt-zl2 th.ga{background:var(--color-bg)}
 .fa-mt-zl2 td.gt,.fa-mt-zl2 th.gt{border-left:3px solid var(--color-fg)}
 .fa-mt-zl2 thead th.gh{border-bottom:2px solid var(--color-fg-muted);font-weight:var(--cds-font-weight-medium)}
@@ -3023,7 +3023,8 @@ const partial = selIds.length < teamGames.length;
   }
   const mtUntip = (box) => { const t = box.querySelector(':scope > .fa-tip'); if (t) t.hidden = true; };
   // pista (media pista, canasta arriba). o: {Z, vol, maxA, labels, selected, onClick, tipLines}
-  function mtCourt(box, o) {
+  const MOB = () => window.matchMedia('(max-width:700px)').matches;
+function mtCourt(box, o) {
     box.replaceChildren();
     const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', '-2 -2 454 424').style('display', 'block').style('max-width', o.max || '540px').style('margin', '0 auto');
     const id = 'mt' + Math.random().toString(36).slice(2, 7);
@@ -3060,10 +3061,10 @@ const partial = selIds.length < teamGames.length;
       const lg = svg.append('g').style('pointer-events', 'none').attr('text-anchor', 'middle').attr('fill', 'var(--color-fg)').style('font-variant-numeric', 'tabular-nums');
       Object.entries(MT_LAB).forEach(([k, [lx, ly]]) => {
         const v = o.Z.get(k); if (o.tl || !v || !v.a || (o.active && !o.active.has(k))) return;
-        const sm = k.startsWith('triple_esq'), g = lg.append('g').attr('transform', `translate(${lx},${ly})`);
-        g.append('text').attr('y', -2).style('font-size', sm ? '11px' : '15px').style('font-weight', 600).text(o.vol && o.totA ? mtPct(v.a / o.totA) : mtPct(v.m / v.a));
-        g.append('text').attr('y', sm ? 10 : 13).style('font-size', sm ? '9px' : '12px').text(`${v.m}/${v.a}`);
-        if (o.totA) g.append('text').attr('y', sm ? 20 : 27).style('font-size', sm ? '9px' : '12px').text(`(${o.vol ? mtPct(v.m / v.a) : mtPct(v.a / o.totA)})`);
+        const sm = k.startsWith('triple_esq'), g = lg.append('g').attr('transform', `translate(${lx},${ly})`), f = MOB() ? (sm ? 1.1 : 1.4) : 1;
+g.append('text').attr('y', -2 * f).style('font-size', (sm ? 11 : 15) * f + 'px').style('font-weight', 600).text(o.vol && o.totA ? mtPct(v.a / o.totA) : mtPct(v.m / v.a));
+g.append('text').attr('y', (sm ? 10 : 13) * f).style('font-size', (sm ? 9 : 12) * f + 'px').text(`${v.m}/${v.a}`);
+if (o.totA) g.append('text').attr('y', (sm ? 20 : 27) * f).style('font-size', (sm ? 9 : 12) * f + 'px').text(`(${o.vol ? mtPct(v.m / v.a) : mtPct(v.a / o.totA)})`);
       });
     }
   }
