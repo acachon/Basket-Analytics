@@ -733,7 +733,7 @@ table[data-rdg-off~="4"] [data-rdg="4"]{display:none}
 </div>
       </div>
       <div class="fa-cblock fa-mjcar" id="mt-cblock">
-<div class="fa-row fa-cnav2 fa-nonav"><label class="fa-refsel" title="Equipo o media del grupo con el que se compara el equipo en las gráficas de debajo"><span>Compara</span><select id="mt-cmpsel" aria-label="Compara"></select></label><span class="fa-note" id="mt-cmp-sub" style="margin:0 auto 0 8px"></span><span class="fa-carr-nav"><button type="button" class="fa-carr-btn" data-dir="-1" aria-label="Anterior" disabled="">‹</button><button type="button" class="fa-carr-btn" data-dir="1" aria-label="Siguiente" disabled="">›</button></span></div>
+<div class="fa-row fa-cnav2 fa-nonav"><span style="margin-left:auto"></span><span class="fa-carr-nav"><button type="button" class="fa-carr-btn" data-dir="-1" aria-label="Anterior" disabled="">‹</button><button type="button" class="fa-carr-btn" data-dir="1" aria-label="Siguiente" disabled="">›</button></span></div>
 <div class="fa-carousel" tabindex="0" role="region" aria-label="Carrusel: ▾Mapa de tiroOcultar (2) — usa las flechas para desplazar">
 <section class="fa-card" id="mt-cmp">
 <div class="fa-row" style="flex-wrap:wrap;gap:8px"><div class="fa-ttl"><h2>Comparativa de tiro</h2><button type="button" class="fa-info" aria-expanded="false" aria-controls="fa-note-mtcmp" title="Cómo leer estas gráficas">i</button></div>
@@ -2898,12 +2898,10 @@ function drawMtCmp(D0) {
 const sec = document.getElementById('mt-cblock'); if (!sec) return;
 const b1 = sec.querySelector('.fa-c-mtc1'), b2 = sec.querySelector('.fa-c-mtc2'), b3 = sec.querySelector('.fa-c-mtcevo'), b4 = sec.querySelector('.fa-c-mtczevo');
 const legs = ['mt-cmp-leg', 'mt-cevo-leg', 'mt-czevo-leg'].map((id) => document.getElementById(id));
-const sel = document.getElementById('mt-cmpsel');
+
 // desplegable «Comparar con» (mismo valor que el del encabezado del mapa de tiro)
-const eqs = refTeams().filter((e) => e !== team()).sort(claRank());
-sel.replaceChildren(...[[REF_G, 'Promedio'], ...eqs.map((e) => [e, e])].map(([v, t]) => { const o = document.createElement('option'); o.value = v; o.textContent = t; return o; }));
-refOk('mt'); if (REF.mt === team()) REF.mt = REF_G; sel.value = REF.mt;
-sel.onchange = () => { REF.mt = sel.value; drawMapaTiro(); };
+refOk('mt'); if (REF.mt === team()) REF.mt = REF_G;
+
 sec.querySelectorAll('#mt-cmpmode button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === mtc.cmp)));
 sec.querySelectorAll('#mt-cevok button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === mtc.evo)));
 const R = mtcSeries();
@@ -2911,7 +2909,7 @@ const clear = (st, msg) => { [b1, b2, b3, b4].forEach((b) => setState(b, st, msg
 if (R.status !== 'ok') { clear(R.status === 'loading' ? 'loading' : 'error', 'No se pudo cargar'); return; }
 const leg = (el) => el.replaceChildren(...R.S.map((s) => { const sp = document.createElement('span'); sp.className = 'fa-li'; const sw = document.createElement('span'); sw.className = 'fa-sw'; sw.style.background = s.color; const nm = document.createElement('span'); nm.textContent = s.name; sp.append(sw, nm); return sp; }));
 legs.forEach(leg);
-document.getElementById('mt-cmp-sub').textContent = 'Por partido: ' + R.S[0].name + ' frente a ' + (R.grp ? 'la media de los equipos del grupo' : R.S[1].name);
+
 const nn = (v) => Number(v) || 0;
 const sumR = (rows, ka, ki) => ({ m: d3.sum(rows, (r) => ka ? nn(r[ka]) : nn(r.t2a) + nn(r.t3a)), a: d3.sum(rows, (r) => ki ? nn(r[ki]) : nn(r.t2i) + nn(r.t3i)) });
 // por tipo de tiro (actas)
