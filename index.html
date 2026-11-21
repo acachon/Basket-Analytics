@@ -4316,7 +4316,6 @@ sec.querySelectorAll('.fa-jmode button').forEach((b) => b.addEventListener('clic
 mode = b.dataset.m; sec.querySelectorAll('.fa-jmode button').forEach((x) => x.setAttribute('aria-pressed', String(x === b))); lastSig = ''; go();
 }));
 const tsel = document.getElementById('rd-team'); if (tsel) tsel.addEventListener('change', () => { lastSig = ''; setTimeout(go, 0); });
-fold.addEventListener('click', () => { const f = sec.classList.toggle('fa-folded'); fold.setAttribute('aria-expanded', String(!f)); fold.querySelector('.fa-fold-l').textContent = f ? 'Mostrar' : 'Ocultar'; });
 // sólo se ve en la pestaña Clasificación
 const cl = document.getElementById('clasificacion');
 const sync = () => sec.classList.toggle('rd-off', !!cl && cl.classList.contains('rd-off'));
