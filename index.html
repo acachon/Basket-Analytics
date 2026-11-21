@@ -3659,8 +3659,7 @@ if (showLab && y(0) - y(m) >= 14) cap(g.append('text').attr('x', bx + bw / 2).at
       return { m: sm / dv, a: sa / dv, pm: sm, pa: sa };
     };
     const V = new Map(); D.P.forEach((p) => cols.forEach((c) => V.set(p.name + '|' + c.id, cell(p, c))));
-    leg.replaceChildren(...D.P.map((p) => { const sp = document.createElement('span'); const i = document.createElement('i'); i.className = 'fa-k'; i.style.background = p.color || 'var(--fa-blue)'; sp.append(i, mjLabel(D, p)); return sp; }),
-      (() => { const sp = document.createElement('span'); sp.className = 'fa-mj-hint'; sp.style.color = 'var(--color-fg-muted)'; sp.textContent = 'Barra clara: intentos · oscura: aciertos · línea: % de acierto'; return sp; })());
+    leg.replaceChildren(...D.P.map((p) => { const sp = document.createElement('span'); const i = document.createElement('i'); i.className = 'fa-k'; i.style.background = p.color || 'var(--fa-blue)'; sp.append(i, mjLabel(D, p)); return sp; }));
     box.classList.remove('dash-skeleton'); box.replaceChildren();
     const W = Math.max(280, box.clientWidth || 320), H = 300, top = 18, bottom = 42;
     const yMax = d3.max([...V.values()].filter(Boolean), (v) => v.a) || 1;
