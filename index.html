@@ -80,7 +80,7 @@
 #mt-vw button{padding:4px 7px!important;font-size:12px!important;min-height:30px}
 #mj-njor2{display:none}
 @media (max-width:700px){#mj-njor{display:none}#mj-njor2{display:inline}}
-.fa-fold{cursor:pointer}#graficas-jug>.fa-row>h2{flex:1 0 100%}#graficas-jug>.fa-row>.fa-refsel{margin-left:0}#graficas-jug>.fa-row>#fa-pl-who{margin-left:auto}#fa-pl-who,#fa-pl-who select{color:var(--color-fg)!important}#fa-pl-who select,#fa-ref-pl select{max-width:150px}#graficas-gj>.fa-row>h2{flex:1 0 100%}#graficas-gj>.fa-row>.fa-refsel{margin-left:0}#graficas-gj>.fa-row>#fa-gj-who{margin-left:auto}#fa-gj-who,#fa-gj-who select{color:var(--color-fg)!important}#fa-gj-who select,#fa-ref-gj select{max-width:150px}
+.fa-fold{cursor:pointer}#mapa-jug{display:none!important}#mapa-tiro:not([data-pl="1"]) #fa-mt-who,#mapa-tiro:not([data-pl="1"]) #mt-njor{display:none}#mapa-tiro[data-pl="1"] #mt-who{display:none}#mapa-tiro[data-pl="1"]>.fa-row>#fa-ref-mt{margin-left:0}#mapa-tiro>.fa-row>#fa-mt-who{margin-left:auto}#fa-mt-who,#fa-mt-who select{color:var(--color-fg)!important}#fa-mt-who select{max-width:150px}#mapa-tiro>.fa-row{flex-wrap:wrap;gap:8px}#mapa-tiro>.fa-row>h2{flex:1 0 100%}#graficas-jug>.fa-row>h2{flex:1 0 100%}#graficas-jug>.fa-row>.fa-refsel{margin-left:0}#graficas-jug>.fa-row>#fa-pl-who{margin-left:auto}#fa-pl-who,#fa-pl-who select{color:var(--color-fg)!important}#fa-pl-who select,#fa-ref-pl select{max-width:150px}#graficas-gj>.fa-row>h2{flex:1 0 100%}#graficas-gj>.fa-row>.fa-refsel{margin-left:0}#graficas-gj>.fa-row>#fa-gj-who{margin-left:auto}#fa-gj-who,#fa-gj-who select{color:var(--color-fg)!important}#fa-gj-who select,#fa-ref-gj select{max-width:150px}
 .fa-refsel,.fa-refsel span{color:var(--color-fg-muted)!important;font-weight:400!important}
 #fa-ref-mt>span{color:var(--fa-cmp)!important;font-weight:600!important}
 .fa-refsel select{color:var(--color-fg)!important;font-weight:400!important;background:var(--color-bg)!important;border-radius:var(--cds-radius)!important;min-height:32px;padding:5px 8px!important}
@@ -697,10 +697,10 @@ table[data-rdg-off~="4"] [data-rdg="4"]{display:none}
 </div>
 </div>
 </section>
-<section id="mapa-tiro" class="fa-card fa-foldsec rd-off">
+<section id="mapa-tiro" class="fa-card fa-foldsec rd-off" data-pl="0">
     <div class="fa-row" style="margin-bottom: var(--cds-gap-sm); flex-wrap: wrap; gap: 8px;">
       <h2 style="font-size:var(--cds-font-size-heading);font-weight:var(--cds-font-weight-medium);margin:0"><button type="button" class="fa-fold" aria-expanded="true" aria-controls="fa-mt-body-wrap" title="Plegar / desplegar el mapa de tiro"><span class="fa-chev" aria-hidden="true">▾</span><span class="fa-gtt">Mapa de tiro</span><span class="fa-fold-l">Ocultar</span></button></h2>
-    <label id="fa-ref-mt" class="fa-refsel" title="Qué pintan las líneas discontinuas de referencia: la media de todo el grupo o la de un equipo concreto"><span>Compara</span><select aria-label="Referencia de las líneas de media"><option value="__grp">Promedio</option><option value="Femenino Alcorcón">Femenino Alcorcón</option><option value="Colegio Alameda de Osuna">Colegio Alameda de Osuna</option><option value="Fundal Alcobendas">Fundal Alcobendas</option><option value="Cesur Distrito Olímpico">Cesur Distrito Olímpico</option><option value="Veritas Pozuelo">Veritas Pozuelo</option><option value="C.B. Las Rozas">C.B. Las Rozas</option><option value="Colmenar Viejo A">Colmenar Viejo A</option><option value="Isaac Newton">Isaac Newton</option><option value="Quiero Valcude Alcobendas">Quiero Valcude Alcobendas</option><option value="Ricopia Funbal Alcalá CBJA">Ricopia Funbal Alcalá CBJA</option></select></label></div>
+    <label class="fa-refsel" id="fa-mt-who"><span>Jugadora</span><select aria-label="Jugadora"></select></label><label id="fa-ref-mt" class="fa-refsel" title="Qué pintan las líneas discontinuas de referencia: la media de todo el grupo o la de un equipo concreto"><span>Compara</span><select aria-label="Referencia de las líneas de media"><option value="__grp">Promedio</option><option value="Femenino Alcorcón">Femenino Alcorcón</option><option value="Colegio Alameda de Osuna">Colegio Alameda de Osuna</option><option value="Fundal Alcobendas">Fundal Alcobendas</option><option value="Cesur Distrito Olímpico">Cesur Distrito Olímpico</option><option value="Veritas Pozuelo">Veritas Pozuelo</option><option value="C.B. Las Rozas">C.B. Las Rozas</option><option value="Colmenar Viejo A">Colmenar Viejo A</option><option value="Isaac Newton">Isaac Newton</option><option value="Quiero Valcude Alcobendas">Quiero Valcude Alcobendas</option><option value="Ricopia Funbal Alcalá CBJA">Ricopia Funbal Alcalá CBJA</option></select></label></div>
     <div class="fa-fbody" id="fa-mt-body-wrap">
       <div class="fa-mt-ctl">
         <span class="fa-note" id="mt-games" style="margin:0"></span>
@@ -708,7 +708,7 @@ table[data-rdg-off~="4"] [data-rdg="4"]{display:none}
       <div class="fa-mt-tiles" id="mt-tiles" data-source="tiros" tabindex="0" role="region" aria-label="Carrusel: ▾Mapa de tiroOcultar — usa las flechas para desplazar"></div>
       <div class="fa-mt-grid">
         <section class="fa-card" id="mt-map">
-          <div class="fa-row" style="flex-wrap:wrap;gap:8px"><div class="fa-ttl"><h2 id="mt-map-t">Mapa de tiro</h2><button type="button" class="fa-info" aria-expanded="false" aria-controls="fa-note-mtmap" title="Leyenda y explicación">i</button></div><span class="fa-seg" id="mt-vw" style="margin-left:auto" role="group" aria-label="Mapa del equipo propio o del comparado"><button type="button" data-v="eq" aria-pressed="true">Propio</button><button type="button" data-v="cmp" aria-pressed="false">Comparado</button></span></div><div class="fa-row fa-segrow"><span class="fa-seg" id="mt-mode" role="group" aria-label="Color del mapa"><button type="button" data-v="pct" aria-pressed="true">%Acierto</button><button type="button" data-v="vol" aria-pressed="false">Nº Tiros</button></span><span class="fa-seg" id="mt-who" role="group" aria-label="Tiros de"><button type="button" data-v="eq" aria-pressed="true">Equipo</button><button type="button" data-v="riv" aria-pressed="false" title="Los tiros que le lanzan los rivales">Rivales</button></span></div>
+          <div class="fa-row" style="flex-wrap:wrap;gap:8px"><div class="fa-ttl"><h2 id="mt-map-t">Mapa de tiro</h2><button type="button" class="fa-info" aria-expanded="false" aria-controls="fa-note-mtmap" title="Leyenda y explicación">i</button></div><span class="fa-seg" id="mt-vw" style="margin-left:auto" role="group" aria-label="Mapa del equipo propio o del comparado"><button type="button" data-v="eq" aria-pressed="true">Propio</button><button type="button" data-v="cmp" aria-pressed="false">Comparado</button></span></div><div class="fa-row fa-segrow"><span class="fa-seg" id="mt-mode" role="group" aria-label="Color del mapa"><button type="button" data-v="pct" aria-pressed="true">%Acierto</button><button type="button" data-v="vol" aria-pressed="false">Nº Tiros</button></span><span class="fa-seg" id="mt-who" role="group" aria-label="Tiros de"><button type="button" data-v="eq" aria-pressed="true">Equipo</button><button type="button" data-v="riv" aria-pressed="false" title="Los tiros que le lanzan los rivales">Rivales</button></span><span class="fa-njor" id="mt-njor"></span></div>
           <div class="fa-note" id="fa-note-mtmap" hidden="">
             <div class="fa-mt-scale" id="mt-scale"></div>
             <p class="fa-note" style="text-align:center;margin:8px 0 0">Canasta arriba; izquierda y derecha según quien tira mirando al aro. Tiros de campo (sin libres). El color depende del tipo de zona: rojo bajo el 35% en aro y pintura, el 20% en media distancia y el 15% en triples; verde desde el 60%, 45% y 30% respectivamente. Toca zonas para destacarlas. Solo cuentan los partidos con mapa de tiro subido.</p>
@@ -1261,7 +1261,8 @@ faCalc('clasificacion', {
   const COUNT = new Set(['pts', 'val', 'reb', 'reb_def', 'reb_of', 'ast', 'rec', 'tap', 'fr', 'per', 'fc', 'mas_menos']);
 
   // ---- Estado
-  const team = () => dash.params().equipo || DEFAULT_TEAM;
+  let VT = null; // modo «mapa de tiro de una jugadora»: la jugadora hace de «equipo» (datos virtuales)
+const team = () => (VT ? VT.key : dash.params().equipo || DEFAULT_TEAM);
   function faSetGroup(g) {
     if (!window.FA_GRUPOS[g] || g === window.__faG) return;
     window.__faG = g;
@@ -2244,9 +2245,9 @@ const claRank = () => { const c = faData('clasificacion'); const o = c.status ==
 
 const refTeams = () => { const ep0 = faData('equipos_partido'); return ep0.status === 'ok' ? [...new Set(ep0.data.map((r) => r.equipo))] : []; };
 const refOk = (sec) => { const eqs = refTeams(); if (REF[sec] !== REF_G && eqs.length && !eqs.includes(REF[sec])) REF[sec] = REF_G; };
-const refLab = (sec) => (REF[sec] === REF_G ? 'Media grupo' : refShort(REF[sec]));
-const refWord = (sec) => (REF[sec] === REF_G ? 'grupo' : refShort(REF[sec]));
-const refHead = (sec) => (REF[sec] === REF_G ? 'Grupo: ' : refShort(REF[sec]) + ': ');
+const refLab = (sec) => (REF[sec] === REF_G ? (VT ? 'Promedio' : 'Media grupo') : refShort(REF[sec]));
+const refWord = (sec) => (REF[sec] === REF_G ? (VT ? 'promedio' : 'grupo') : refShort(REF[sec]));
+const refHead = (sec) => (REF[sec] === REF_G ? (VT ? 'Promedio: ' : 'Grupo: ') : refShort(REF[sec]) + ': ');
 const refFilter = (sec, rows) => { refOk(sec); return REF[sec] === REF_G ? rows : rows.filter((r) => r.equipo === REF[sec]); };
 function refSelect(sec, hostSel, redraw) {
 const host = document.querySelector(hostSel); if (!host) return;
@@ -2255,7 +2256,7 @@ let lab = document.getElementById('fa-ref-' + sec);
 if (!lab) { lab = document.createElement('label'); lab.id = 'fa-ref-' + sec; lab.className = 'fa-refsel'; lab.title = 'Qué pintan las líneas discontinuas de referencia: la media de todo el grupo o la de un equipo concreto'; const sp = document.createElement('span');sp.textContent = 'Compara'; const s0 = document.createElement('select'); s0.setAttribute('aria-label', 'Referencia de las líneas de media'); lab.append(sp, s0); const nav = host.querySelector('.fa-carr-nav'); if (nav) host.insertBefore(lab, nav); else host.append(lab); host.style.flexWrap = 'wrap'; host.style.gap = '8px'; }
 refOk(sec);
 const s = lab.querySelector('select'); { const sp0 = lab.querySelector('span'); if (sp0) sp0.textContent = 'Compara'; }
-const eqs = refTeams().sort(claRank());
+const eqs = refTeams().filter((e) => !VT || e !== VT.key).sort(claRank());
 s.replaceChildren(...[[REF_G, 'Promedio'], ...eqs.map((e) => [e, e])].map(([v, t]) => { const o = document.createElement('option'); o.value = v; o.textContent = t; return o; }));
 s.value = REF[sec];
 s.onchange = () => { REF[sec] = s.value; redraw(); };
@@ -2566,7 +2567,7 @@ const plSel = { 'pl-reb': 'reb_def', 'pl-fal': 'fc', 'pl-bal': 'rec', 'pl-ast': 
     drawPlayerCharts();
   }));
   function drawPlayerCharts() {
-drawPlayerMap();
+if (document.getElementById('mapa-tiro').dataset.pl === '1') drawMapaTiro();
 drawPlayerJor();
 const sec = document.getElementById('graficas-jug');
 const jug = faL('jugadoras');
@@ -2991,7 +2992,7 @@ function drawStandings() {
     const eq = team(), ids = gamesSel();
     const hasShots = new Set(td.data.filter((r) => r.equipo === eq).map((r) => r.partido_id));
     const withData = teamGames.filter((g) => ids.includes(g.partido_id) && hasShots.has(g.partido_id));
-    const without = teamGames.filter((g) => ids.includes(g.partido_id) && !hasShots.has(g.partido_id));
+    const without = teamGames.filter((g) => ids.includes(g.partido_id) && !(VT ? VT.teamShots : hasShots).has(g.partido_id));
     const pick = (g) => td.data.filter((r) => r.partido_id === g.partido_id && (mt.who === 'eq' ? r.equipo === eq : r.equipo !== eq));
     return { status: 'ok', withData, without, pick, allShots: hasShots.size };
   }
@@ -3016,7 +3017,7 @@ const units = (rows) => new Set(rows.map((r) => r.partido_id + '|' + r.equipo)).
 return { status: 'ok', S, epRows, tdRows, tdGrp, jOfR, units, jAct: [...jAct].sort((a, b) => a - b), jMap: [...jMap].sort((a, b) => a - b), D, grp };
 }
 const mtcLabel = (D, j) => { const g = teamGames.find((x) => +x.jornada === j); return { label: g ? xLab(g) : 'J' + j, sub: g ? short(g.rival) : '', lug: lugTxt(g) }; };
-function drawMtCmp(D0) {
+function drawMtCmpC(D0) {
 const sec = document.getElementById('mt-cblock'); if (!sec) return;
 const b1 = sec.querySelector('.fa-c-mtc1'), b2 = sec.querySelector('.fa-c-mtc2'), b3 = sec.querySelector('.fa-c-mtcevo'), b4 = sec.querySelector('.fa-c-mtczevo');
 const legs = ['mt-cmp-leg', 'mt-cevo-leg', 'mt-czevo-leg'].map((id) => document.getElementById(id));
@@ -3162,7 +3163,66 @@ g.append('rect').attr('x', x0(c.id) - x0.step() * x0.paddingInner() / 2).attr('w
 document.querySelectorAll('#mt-cmpmode button').forEach((b) => b.addEventListener('click', () => { mtc.cmp = b.dataset.v; mt.mode = b.dataset.v; drawMapaTiro(); }));
 document.querySelectorAll('#mt-cevok button').forEach((b) => b.addEventListener('click', () => { mtc.evo = b.dataset.v; drawMapaTiro(); }));
 document.querySelectorAll('#mt-czevok button').forEach((b) => b.addEventListener('click', () => { const zs = (MTC_ZPRE.find(([k]) => k === b.dataset.v) || [])[2] || MT_ALL; mt.tl = false; mt.zones = zs.length === MT_ALL.length ? new Set() : new Set(zs); drawMapaTiro(); }));
-function drawMapaTiro() {
+// ---- Mapa de tiro de UNA jugadora (misma sección que la del equipo, movida a la pestaña Jugadoras): la jugadora hace de «equipo» y las demás jugadoras de la tabla, de «grupo»
+const MTP = { who: null };
+const _fd0 = window.faData;
+window.faData = (nm) => (VT && VT.docs[nm] ? VT.docs[nm] : _fd0(nm));
+function vtBuild() {
+const jug = faL('jugadoras'), td = faL('tiros'), par = faL('partidos');
+if (jug.status !== 'ok' || td.status !== 'ok' || par.status !== 'ok') return null;
+const list = plView.map((r) => ({ eq: r.equipo, name: r.jugadora, k: r.equipo + '|' + r.jugadora }));
+const lab = document.getElementById('fa-mt-who');
+if (!list.length) { if (lab) lab.querySelector('select').replaceChildren(); return null; }
+const kOf = (l) => (liga ? l.name + ' · ' + short(l.eq) : l.name), keys = new Map(list.map((l) => [l.k, kOf(l)])), sels = selected();
+if (!keys.has(MTP.who)) MTP.who = (list.find((l) => sels.includes(l.name) && (liga || l.eq === team())) || list[0]).k;
+if (lab) { const s = lab.querySelector('select'); s.replaceChildren(...list.map((l) => { const o = document.createElement('option'); o.value = l.k; o.textContent = kOf(l); return o; })); s.value = MTP.who; s.onchange = () => { MTP.who = s.value; drawMapaTiro(); }; }
+const subj = list.find((l) => l.k === MTP.who);
+const mapR = (rows) => rows.filter((r) => keys.has(r.equipo + '|' + r.jugadora)).map((r) => ({ ...r, equipo: keys.get(r.equipo + '|' + r.jugadora) }));
+const eq = subj.eq;
+const games = par.data.filter((p) => p.local === eq || p.visitante === eq).map((p, i) => {
+const home = p.local === eq, pf = Number(home ? p.pts_local : p.pts_visitante), pc = Number(home ? p.pts_visitante : p.pts_local), j = p.jornada == null ? null : Number(p.jornada);
+return { partido_id: p.partido_id, jornada: j, rival: home ? p.visitante : p.local, lugar: home ? 'casa' : 'fuera', pf, pc, ganado: pf > pc, _i: i };
+}).sort((x, y) => (x.jornada ?? 1000 + x._i) - (y.jornada ?? 1000 + y._i)).map((g, i) => ({ ...g, x: i, label: g.jornada != null ? 'J' + g.jornada : 'P' + (i + 1) }));
+return { key: keys.get(subj.k), eq, name: subj.name, games, teamShots: new Set(td.data.filter((r) => r.equipo === eq).map((r) => r.partido_id)), docs: { tiros: { status: 'ok', data: mapR(td.data) }, equipos_partido: { status: 'ok', data: mapR(jug.data) }, partidos: par } };
+}
+function mtNoPlayer() {
+['.fa-c-mt', '.fa-c-mtevo', '.fa-c-mtzj', '.fa-c-mtc1', '.fa-c-mtc2', '.fa-c-mtcevo', '.fa-c-mtczevo'].forEach((s) => { const b = document.querySelector('#mapa-tiro ' + s); if (b) setState(b, 'empty', 'Sin jugadoras en la tabla de estadísticas'); });
+['mt-tiles', 'mt-zl', 'mt-pre', 'mt-jpre'].forEach((id) => { const e = document.getElementById(id); if (e) e.replaceChildren(); });
+}
+function inVT(fn) {
+const sec = document.getElementById('mapa-tiro');
+if (VT || !sec || sec.dataset.pl !== '1') return fn();
+const v = vtBuild(); if (!v) { mtNoPlayer(); return undefined; }
+const tg = teamGames; VT = v; teamGames = v.games;
+try { return fn(); } finally { VT = null; teamGames = tg; }
+}
+function drawMapaTiro() { return inVT(() => { if (VT) mt.who = 'eq'; return drawMapaTiroC(); }); }
+function drawMapaTable(D) { return inVT(() => drawMapaTableC(D)); }
+function drawMapaEvo(D) { return inVT(() => drawMapaEvoC(D)); }
+function drawMapaZJ(D) { return inVT(() => drawMapaZJC(D)); }
+function drawMtCmp(D0) { return inVT(() => drawMtCmpC(D0)); }
+// estado propio de cada pestaña (equipo / jugadora) y colocación de la sección
+const MT_SAVED = {}; let mtSide = 'eq';
+function mtSwap(to) {
+if (to === mtSide) return;
+MT_SAVED[mtSide] = { mt: { ...mt, zones: new Set(mt.zones), sort: { ...mt.sort } }, mtc: { ...mtc }, ref: REF.mt };
+const s = MT_SAVED[to] || { mt: { zj: null, vw: 'eq', who: 'eq', mode: 'pct', evo: 'game', tview: 'jor', tl: false, zones: new Set(), sort: { k: 'idx', dir: 1 } }, mtc: { cmp: 'pct', evo: 'tc' }, ref: REF_G };
+Object.keys(mt).forEach((k) => delete mt[k]); Object.assign(mt, s.mt); Object.assign(mtc, s.mtc); REF.mt = s.ref; mtSide = to;
+}
+function mtPlace() {
+const sec = document.getElementById('mapa-tiro'); if (!sec) return;
+if (!document.getElementById('fa-mt-who')) {
+const row = sec.querySelector(':scope > .fa-row'), lab = document.createElement('label'); lab.className = 'fa-refsel'; lab.id = 'fa-mt-who';
+const sp = document.createElement('span'); sp.textContent = 'Jugadora'; const s = document.createElement('select'); s.setAttribute('aria-label', 'Jugadora'); lab.append(sp, s); row.append(lab);
+}
+{ const wl = document.getElementById('fa-mt-who'), rl = document.getElementById('fa-ref-mt'); if (wl && rl && rl.parentNode === wl.parentNode && wl.nextElementSibling !== rl) wl.parentNode.insertBefore(wl, rl); }
+const pl = rdTab === 'jugadoras';
+if (pl) { const an = document.getElementById('mapa-jug'); if (an && sec.nextElementSibling !== an) an.parentNode.insertBefore(sec, an); }
+else { const an = document.getElementById('graficas-cmp'); if (an && an.nextElementSibling !== sec) an.after(sec); }
+sec.dataset.pl = pl ? '1' : '0';
+mtSwap(pl ? 'pl' : 'eq');
+}
+function drawMapaTiroC() {
 refSelect('mt', '#mapa-tiro > .fa-row', drawMapaTiro);
     const sec = document.getElementById('mapa-tiro');
     if (!sec) return;
@@ -3187,22 +3247,25 @@ sec.querySelectorAll('#mt-vw button').forEach((b) => b.setAttribute('aria-presse
 document.getElementById('mt-map-sub').textContent = '';
 
     if (!D.withData.length) {
-      const msg = D.allShots ? 'Ninguno de los partidos elegidos tiene mapa de tiro subido.' : 'Este equipo todavía no tiene mapa de tiro subido.';
+      const msg = D.allShots ? 'Ninguno de los partidos elegidos tiene mapa de tiro subido.' : (VT ? 'Esta jugadora todavía no tiene mapa de tiro subido.' : 'Este equipo todavía no tiene mapa de tiro subido.');
       clearAll('empty', msg); drawMtCmp(); return;
     }
-    const rows = D.withData.flatMap((g) => D.pick(g));
-    const Z = mtAgg(rows);
+    const zjOk = mt.zj != null && D.withData.some((g) => +g.jornada === +mt.zj);
+const gW = zjOk ? D.withData.filter((g) => +g.jornada === +mt.zj) : D.withData;
+{ const k = zjOk ? 1 : new Set(D.withData.map((g) => +g.jornada)).size, nj = document.getElementById('mt-njor'); if (nj) nj.textContent = k ? k + (k === 1 ? ' Jornada' : ' Jornadas') : ''; }
+const rows = gW.flatMap((g) => D.pick(g));
+const Z = mtAgg(rows);
     const maxA = d3.max([...Z.values()], (v) => v.a) || 1;
     const totA = d3.sum([...Z.values()], (v) => v.a);
     // --- mapa (propio o del equipo / media del grupo elegido en «Compara»)
 let Zm = Z, maxAm = maxA, totAm = totA;
 if (mt.vw === 'cmp') {
-const tdc = faData('tiros'), selJc = new Set(D.withData.map((g) => +g.jornada));
+const tdc = faData('tiros'), selJc = new Set(gW.map((g) => +g.jornada));
 const base = (tdc.status === 'ok' ? tdc.data : []).filter((r) => selJc.has(+r.jornada));
 let rc;
 if (REF.mt === REF_G) rc = base; else { const ids = new Set(base.filter((r) => r.equipo === REF.mt).map((r) => r.partido_id)); rc = base.filter((r) => ids.has(r.partido_id) && (rivals ? r.equipo !== REF.mt : r.equipo === REF.mt)); }
 Zm = mtAgg(rc);
-if (REF.mt === REF_G) { const un = new Set(rc.map((r) => r.partido_id + '|' + r.equipo)).size || 1, f = D.withData.length / un; Zm = new Map([...Zm].map(([k, v]) => [k, { ...v, m: Math.round(v.m * f), a: Math.round(v.a * f) }])); }
+if (REF.mt === REF_G) { const un = new Set(rc.map((r) => r.partido_id + '|' + r.equipo)).size || 1, f = gW.length / un; Zm = new Map([...Zm].map(([k, v]) => [k, { ...v, m: Math.round(v.m * f), a: Math.round(v.a * f) }])); }
 maxAm = d3.max([...Zm.values()], (v) => v.a) || 1; totAm = d3.sum([...Zm.values()], (v) => v.a);
 }
 mapBox.classList.remove('dash-skeleton');
@@ -3219,7 +3282,7 @@ mapBox.classList.remove('dash-skeleton');
     const sum = (f) => { let m = 0, a = 0; for (const [k, v] of Z) if (f(k, v) && (!mt.zones.size || mt.zones.has(k))) { m += v.m; a += v.a; } return { m, a }; };
     const T = sum(() => true), T2 = sum((k, v) => v.tipo === 2), T3 = sum((k, v) => v.tipo === 3), AR = sum((k) => k === 'aro');
 // referencia (media del grupo o el equipo elegido en «Comparar con»): mismas jornadas y mismas zonas
-const selJr = new Set(D.withData.map((g) => +g.jornada)), tdR = faData('tiros');
+const selJr = new Set(gW.map((g) => +g.jornada)), tdR = faData('tiros');
 const ZR = mtAgg(refFilter('mt', tdR.status === 'ok' ? tdR.data : []).filter((r) => selJr.has(+r.jornada)));
 const totAR = d3.sum([...ZR.values()], (v) => v.a);
 const sumR = (f) => { let m = 0, a = 0; for (const [k, v] of ZR) if (f(k, v) && (!mt.zones.size || mt.zones.has(k))) { m += v.m; a += v.a; } return { m, a, totA: totAR }; };
@@ -3258,12 +3321,12 @@ const R = mtcSeries(); if (R.status !== 'ok' || !R.tdRows[0].length) return null
 const mk = (id, name, rows) => ({ id, g: { label: name + ' · por partido', cmp: true }, Z: mtAgg(rows), dv: R.units(rows) || 1 });
 const cols = [mk('eq', R.S[0].name, R.tdRows[0])];
 if (!R.grp) cols.push(mk('cmp', R.S[1].name, R.tdRows[1]));
-cols.push(mk('grp', 'Media grupo', R.tdGrp));
+cols.push(mk('grp', VT ? 'Promedio' : 'Media grupo', R.tdGrp));
 return cols;
 }
 document.querySelectorAll('#mt-tview button').forEach((b) => b.addEventListener('click', () => { mt.tview = b.dataset.v; drawMapaTiro(); }));
 document.querySelectorAll('#mt-vw button').forEach((b) => b.addEventListener('click', () => { mt.vw = b.dataset.v; drawMapaTiro(); }));
-function drawMapaTable(D) {
+function drawMapaTableC(D) {
 const zl = document.getElementById('mt-zl');
 zl.replaceChildren();
 const cmpCols = mt.tview === 'cmp' ? mtCmpCols(D) : null;
@@ -3412,7 +3475,7 @@ mtTip(box, ev, lines);
 };
 svg.append('rect').attr('x', left).attr('y', 0).attr('width', W - right - left).attr('height', H).style('fill', 'transparent').on('pointermove', show).on('pointerdown', show).on('pointerleave', () => mtUntip(box));
 }
-function drawMapaZJ(D) {
+function drawMapaZJC(D) {
 const box = document.querySelector('.fa-c-mtzj'), preBox = document.getElementById('mt-jpre');
 if (!box) return;
 const rivals = mt.who === 'riv', games = D.withData;
@@ -3451,7 +3514,7 @@ const n = J == null ? jorns.length : 1, pp = mj.agg === 'pp' && n > 1;
 drawZoneBars(box, { by, dv: pp ? n : 1, totLab: pp ? 'Media' : 'Total', totSub: pp ? (single ? 'por partido' : 'por jornada') : J != null ? 'J' + J : n + (single ? ' partido' : ' jornada') + (n > 1 ? 's' : ''), sel: mj.tl ? null : mj.zones, multi: PL.length > 1 });
 }
 
-  function drawMapaEvo(D) {
+  function drawMapaEvoC(D) {
     const box = document.querySelector('.fa-c-mtevo'), preBox = document.getElementById('mt-pre');
     const rivals = mt.who === 'riv';
     const TL = mt.tl, ids = gamesSel();
@@ -3586,8 +3649,8 @@ g.append('path').datum(line).attr('d', d3.line().x(cx).y((c) => yp(P(c)))).style
       if (c.pi != null) add('% de intentos', mtPct(c.pi));
 const gq = c.total ? gAllP : gPctJ(c.g.jornada);
 const avT = c.total ? gAvgA : avgAJ(c.g.jornada);
-if (showGAvg && avT != null) add((REF.mt === REF_G ? 'Media del grupo' : refShort(REF.mt)) + ' (intentos)', fmtN(Math.round(avT * 10) / 10));
-if (gq != null) add('% de acierto ' + (REF.mt === REF_G ? 'del grupo' : 'de ' + refShort(REF.mt)) + (c.total ? ' (todas las jornadas)' : ''), mtPct(gq));
+if (showGAvg && avT != null) add((REF.mt === REF_G ? (VT ? 'Promedio' : 'Media del grupo') : refShort(REF.mt)) + ' (intentos)', fmtN(Math.round(avT * 10) / 10));
+if (gq != null) add('% de acierto ' + (REF.mt === REF_G ? (VT ? 'del promedio' : 'del grupo') : 'de ' + refShort(REF.mt)) + (c.total ? ' (todas las jornadas)' : ''), mtPct(gq));
       if (c.by && zs.length > 1) { for (const z of zs) { const v = c.by.get(z); if (v && v.a) add(MT_ZN[z], v.m + '/' + v.a + ' · ' + mtPct(v.m / v.a)); } }
       tip.hidden = false;
       const bw2 = box.clientWidth, tw = tip.offsetWidth, cx0 = cx(c) / scale;
@@ -4125,12 +4188,14 @@ carDots(gb);
     dash.setParams({ equipo: v, partidos: null, jugadoras: (topPlayers[v] || []).slice(0, 3), vista: 'tot' });
   });
   // --- Rediseño: pestañas (solo se dibuja la vista abierta)
-  const RD_TABS = { equipo: ['graficas-equipo', 'graficas-cmp', 'mapa-tiro'], jugadoras: ['temporada', 'graficas-gj', 'graficas-jug', 'mapa-jug'], clasificacion: ['clasificacion'] };
+  const RD_TABS = { equipo: ['graficas-equipo', 'graficas-cmp', 'mapa-tiro'], jugadoras: ['temporada', 'graficas-gj', 'graficas-jug'], clasificacion: ['clasificacion'] };
   const RD_HASH = { equipo: 'equipo', jugadoras: 'jugadoras', clasificacion: 'clasificacion' };
   let rdTab = RD_HASH[(location.hash || '').slice(1)] || 'clasificacion';
   function rdOff(el) { if (typeof el === 'string') el = document.getElementById(el); return !!(el && el.closest('.rd-off')); }
   function rdApplyTab() {
-    Object.entries(RD_TABS).forEach(([t, list]) => list.forEach((id) => { const el = document.getElementById(id); if (el) el.classList.toggle('rd-off', t !== rdTab); }));
+mtPlace();
+Object.entries(RD_TABS).forEach(([t, list]) => list.forEach((id) => { const el = document.getElementById(id); if (el) el.classList.toggle('rd-off', t !== rdTab); }));
+{ const m = document.getElementById('mapa-tiro'); if (m) m.classList.toggle('rd-off', rdTab !== 'equipo' && rdTab !== 'jugadoras'); }
     document.querySelectorAll('.rd-tabs a').forEach((a) => { if (a.dataset.tab === rdTab) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
   }
   rdApplyTab();
