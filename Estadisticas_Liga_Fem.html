@@ -3039,7 +3039,7 @@ g.append('rect').attr('x', x0(c.id) - x0.step() * x0.paddingInner() / 2).attr('w
 .on('pointerleave', () => mtUntip(box));
 }
 }
-document.querySelectorAll('#mt-cmpmode button').forEach((b) => b.addEventListener('click', () => { mtc.cmp = b.dataset.v; drawMapaTiro(); }));
+document.querySelectorAll('#mt-cmpmode button').forEach((b) => b.addEventListener('click', () => { mtc.cmp = b.dataset.v; mt.mode = b.dataset.v; drawMapaTiro(); }));
 document.querySelectorAll('#mt-cevok button').forEach((b) => b.addEventListener('click', () => { mtc.evo = b.dataset.v; drawMapaTiro(); }));
 document.querySelectorAll('#mt-czevok button').forEach((b) => b.addEventListener('click', () => { const zs = (MTC_ZPRE.find(([k]) => k === b.dataset.v) || [])[2] || MT_ALL; mt.tl = false; mt.zones = zs.length === MT_ALL.length ? new Set() : new Set(zs); drawMapaTiro(); }));
 function drawMapaTiro() {
@@ -3477,7 +3477,7 @@ if (gq != null) add('% de acierto ' + (REF.mt === REF_G ? 'del grupo' : 'de ' + 
   }
   document.querySelectorAll('#ge-eqmode button').forEach((b) => b.addEventListener('click', () => { const t = document.querySelector('.fa-seg-eq button[data-mode="' + b.dataset.mode + '"]'); if (t) t.click(); }));
 document.querySelectorAll('#mt-eqmode button').forEach((b) => b.addEventListener('click', () => { const t = document.querySelector('.fa-seg-eq button[data-mode="' + b.dataset.mode + '"]'); if (t) t.click(); }));
-  [['mt-who', 'who'], ['mt-mode', 'mode'], ['mt-evomode', 'evo']].forEach(([id, k]) => document.querySelectorAll('#' + id + ' button').forEach((b) => b.addEventListener('click', () => { mt[k] = b.dataset.v; drawMapaTiro(); })));
+  [['mt-who', 'who'], ['mt-mode', 'mode'], ['mt-evomode', 'evo']].forEach(([id, k]) => document.querySelectorAll('#' + id + ' button').forEach((b) => b.addEventListener('click', () => { mt[k] = b.dataset.v; if (k === 'mode') mtc.cmp = b.dataset.v; drawMapaTiro(); })));
 
   // ---- Mapa de tiro de jugadoras (mapa de la jugadora elegida, comparativas y tabla por zonas con una columna por jugadora)
   const mj = { zj: null, who: null, mode: 'pct', cmp: 'pct', agg: 'tot', evo: 'tc', tl: false, zones: new Set(), sort: { k: 'idx', dir: 1 } };
@@ -3929,8 +3929,8 @@ else if (c.total) h.textContent = 'Seleccionadas (' + D.P.length + ')';
       zs.forEach(({ z }) => mk(MT_ZN[z], [z], '', () => mjToggle(z), mj.zones.has(z), false));
     }
   }
-  document.querySelectorAll('#mj-mode button').forEach((b) => b.addEventListener('click', () => { mj.mode = b.dataset.v; drawPlayerMap(); }));
-  document.querySelectorAll('#mj-cmpmode button').forEach((b) => b.addEventListener('click', () => { mj.cmp = b.dataset.v; drawPlayerMap(); }));
+  document.querySelectorAll('#mj-mode button').forEach((b) => b.addEventListener('click', () => { mj.mode = b.dataset.v; mj.cmp = b.dataset.v; drawPlayerMap(); }));
+  document.querySelectorAll('#mj-cmpmode button').forEach((b) => b.addEventListener('click', () => { mj.cmp = b.dataset.v; mj.mode = b.dataset.v; drawPlayerMap(); }));
   document.querySelectorAll('#mj-agg button').forEach((b) => b.addEventListener('click', () => { mj.agg = b.dataset.mode; drawPlayerMap(); }));
   let mjRW = 0;
   window.addEventListener('resize', () => { const w = document.querySelector('.fa-c-mj1'); if (w && Math.abs(w.clientWidth - mjRW) > 4) { mjRW = w.clientWidth; drawPlayerMap(); } });
