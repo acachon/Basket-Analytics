@@ -76,6 +76,10 @@
 .fa-mt-ctl,#mt-games,#mj-games,#mt-map-sub,#mj-map-sub{display:none!important}
 .fa-segrow{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;margin:0 0 8px}
 
+.fa-foldsec.fa-card .fa-card{background:var(--color-bg);box-shadow:none}
+.fa-foldsec.fa-card>.fa-row{padding-top:0}
+.fa-foldsec.fa-card.fa-folded>.fa-row{margin-bottom:0}
+
 .rd-band .fa-eyebrow{color:var(--rd-bink)!important;font-size:22px!important;font-weight:700!important;letter-spacing:0!important;text-transform:none!important}
 @media (max-width:620px){.rd-band .fa-eyebrow{font-size:18px!important}}
 #fa-upd,.rd-upd{display:none!important}
@@ -556,7 +560,7 @@ table[data-rdg-off~="4"] [data-rdg="4"]{display:none}
 
 
 
-  <section id="graficas-equipo" class="fa-foldsec rd-off">
+  <section id="graficas-equipo" class="fa-card fa-foldsec rd-off">
     <div class="fa-row" style="margin-bottom: var(--cds-gap-sm); flex-wrap: wrap; gap: 8px;">
       <h2 style="font-size:var(--cds-font-size-heading);font-weight:var(--cds-font-weight-medium);margin:0"><button type="button" class="fa-fold" aria-expanded="true" aria-controls="fa-eq-body-wrap" title="Plegar / desplegar gráficas"><span class="fa-chev" aria-hidden="true">▾</span><span class="fa-gtt">Estadísticas</span><span class="fa-fold-l">Ocultar</span></button></h2><span class="fa-seg" id="ge-eqmode" role="group" aria-label="Cómo ver las estadísticas"><button type="button" data-mode="tot" aria-pressed="false">Totales</button><button type="button" data-mode="pp" aria-pressed="true">Por partido</button></span>
       <label id="fa-ref-eq" class="fa-refsel" title="Qué pintan las líneas discontinuas de referencia: la media de todo el grupo o la de un equipo concreto"><span>Comparar con</span><select aria-label="Referencia de las líneas de media"><option value="__grp">Media grupo</option><option value="C.B. Las Rozas">C.B. Las Rozas</option><option value="Cesur Distrito Olímpico">Cesur Distrito Olímpico</option><option value="Colegio Alameda de Osuna">Colegio Alameda de Osuna</option><option value="Colmenar Viejo A">Colmenar Viejo A</option><option value="Femenino Alcorcón">Femenino Alcorcón</option><option value="Fundal Alcobendas">Fundal Alcobendas</option><option value="Isaac Newton">Isaac Newton</option><option value="Quiero Valcude Alcobendas">Quiero Valcude Alcobendas</option><option value="Ricopia Funbal Alcalá CBJA">Ricopia Funbal Alcalá CBJA</option><option value="Veritas Pozuelo">Veritas Pozuelo</option></select></label><span class="fa-carr-nav fa-nonav"><button type="button" class="fa-carr-btn" data-dir="-1" aria-label="Anterior" disabled="">‹</button><button type="button" class="fa-carr-btn" data-dir="1" aria-label="Siguiente" disabled="">›</button></span>
@@ -619,7 +623,7 @@ table[data-rdg-off~="4"] [data-rdg="4"]{display:none}
     </div>
   </section>
 
-  <section id="graficas-cmp" class="fa-foldsec rd-off">
+  <section id="graficas-cmp" class="fa-card fa-foldsec rd-off">
 <div class="fa-row" style="margin-bottom: var(--cds-gap-sm); flex-wrap: wrap; gap: 8px;">
 <h2 style="font-size:var(--cds-font-size-heading);font-weight:var(--cds-font-weight-medium);margin:0"><button type="button" class="fa-fold" aria-expanded="true" aria-controls="fa-ct-body-wrap" title="Plegar / desplegar gráficas"><span class="fa-chev" aria-hidden="true">▾</span><span class="fa-gtt">Comparativa equipos</span><span class="fa-fold-l">Ocultar</span></button></h2><span class="fa-seg" id="ct-eqmode" role="group" aria-label="Cómo ver la comparativa"><button type="button" data-mode="tot" aria-pressed="false">Totales</button><button type="button" data-mode="pp" aria-pressed="true">Por partido</button></span>
 <label id="fa-ref-ct" class="fa-refsel" title="Qué pintan las líneas discontinuas de referencia: la media de todo el grupo o la de un equipo concreto"><span>Comparar con</span><select aria-label="Referencia de las líneas de media"><option value="__grp">Media grupo</option><option value="C.B. Las Rozas">C.B. Las Rozas</option><option value="Cesur Distrito Olímpico">Cesur Distrito Olímpico</option><option value="Colegio Alameda de Osuna">Colegio Alameda de Osuna</option><option value="Colmenar Viejo A">Colmenar Viejo A</option><option value="Femenino Alcorcón">Femenino Alcorcón</option><option value="Fundal Alcobendas">Fundal Alcobendas</option><option value="Isaac Newton">Isaac Newton</option><option value="Quiero Valcude Alcobendas">Quiero Valcude Alcobendas</option><option value="Ricopia Funbal Alcalá CBJA">Ricopia Funbal Alcalá CBJA</option><option value="Veritas Pozuelo">Veritas Pozuelo</option></select></label><span class="fa-carr-nav fa-nonav"><button type="button" class="fa-carr-btn" data-dir="-1" aria-label="Anterior" disabled="">‹</button><button type="button" class="fa-carr-btn" data-dir="1" aria-label="Siguiente" disabled="">›</button></span>
@@ -682,9 +686,9 @@ table[data-rdg-off~="4"] [data-rdg="4"]{display:none}
 </div>
 </div>
 </section>
-<section id="mapa-tiro" class="fa-foldsec rd-off">
+<section id="mapa-tiro" class="fa-card fa-foldsec rd-off">
     <div class="fa-row" style="margin-bottom: var(--cds-gap-sm); flex-wrap: wrap; gap: 8px;">
-      <h2 style="font-size:var(--cds-font-size-heading);font-weight:var(--cds-font-weight-medium);margin:0"><button type="button" class="fa-fold" aria-expanded="true" aria-controls="fa-mt-body-wrap" title="Plegar / desplegar el mapa de tiro"><span class="fa-chev" aria-hidden="true">▾</span><span class="fa-gtt">Mapa de tiro</span><span class="fa-fold-l">Ocultar</span></button></h2><span class="fa-njor" id="mt-njor"></span>
+      <h2 style="font-size:var(--cds-font-size-heading);font-weight:var(--cds-font-weight-medium);margin:0"><button type="button" class="fa-fold" aria-expanded="true" aria-controls="fa-mt-body-wrap" title="Plegar / desplegar el mapa de tiro"><span class="fa-chev" aria-hidden="true">▾</span><span class="fa-gtt">Mapa de tiro</span><span class="fa-fold-l">Ocultar</span></button></h2>
     <label id="fa-ref-mt" class="fa-refsel" title="Qué pintan las líneas discontinuas de referencia: la media de todo el grupo o la de un equipo concreto"><span>Comparar con</span><select aria-label="Referencia de las líneas de media"><option value="__grp">Media grupo</option><option value="C.B. Las Rozas">C.B. Las Rozas</option><option value="Cesur Distrito Olímpico">Cesur Distrito Olímpico</option><option value="Colegio Alameda de Osuna">Colegio Alameda de Osuna</option><option value="Colmenar Viejo A">Colmenar Viejo A</option><option value="Femenino Alcorcón">Femenino Alcorcón</option><option value="Fundal Alcobendas">Fundal Alcobendas</option><option value="Isaac Newton">Isaac Newton</option><option value="Quiero Valcude Alcobendas">Quiero Valcude Alcobendas</option><option value="Ricopia Funbal Alcalá CBJA">Ricopia Funbal Alcalá CBJA</option><option value="Veritas Pozuelo">Veritas Pozuelo</option></select></label></div>
     <div class="fa-fbody" id="fa-mt-body-wrap">
       <div class="fa-mt-ctl">
@@ -693,7 +697,7 @@ table[data-rdg-off~="4"] [data-rdg="4"]{display:none}
       <div class="fa-mt-tiles" id="mt-tiles" data-source="tiros" tabindex="0" role="region" aria-label="Carrusel: ▾Mapa de tiroOcultar — usa las flechas para desplazar"></div>
       <div class="fa-mt-grid">
         <section class="fa-card" id="mt-map">
-          <div class="fa-row" style="flex-wrap:wrap;gap:8px"><div class="fa-ttl"><h2 id="mt-map-t">Mapa de tiro</h2><button type="button" class="fa-info" aria-expanded="false" aria-controls="fa-note-mtmap" title="Leyenda y explicación">i</button></div></div><div class="fa-row fa-segrow"><span class="fa-seg" id="mt-mode" role="group" aria-label="Color del mapa"><button type="button" data-v="pct" aria-pressed="true">%Acierto</button><button type="button" data-v="vol" aria-pressed="false">Nº Tiros</button></span><span class="fa-seg" id="mt-who" role="group" aria-label="Tiros de"><button type="button" data-v="eq" aria-pressed="true">Equipo</button><button type="button" data-v="riv" aria-pressed="false" title="Los tiros que le lanzan los rivales">Rivales</button></span></div>
+          <div class="fa-row" style="flex-wrap:wrap;gap:8px"><div class="fa-ttl"><h2 id="mt-map-t">Mapa de tiro</h2><button type="button" class="fa-info" aria-expanded="false" aria-controls="fa-note-mtmap" title="Leyenda y explicación">i</button></div><span class="fa-njor" id="mt-njor"></span></div><div class="fa-row fa-segrow"><span class="fa-seg" id="mt-mode" role="group" aria-label="Color del mapa"><button type="button" data-v="pct" aria-pressed="true">%Acierto</button><button type="button" data-v="vol" aria-pressed="false">Nº Tiros</button></span><span class="fa-seg" id="mt-who" role="group" aria-label="Tiros de"><button type="button" data-v="eq" aria-pressed="true">Equipo</button><button type="button" data-v="riv" aria-pressed="false" title="Los tiros que le lanzan los rivales">Rivales</button></span></div>
           <div class="fa-note" id="fa-note-mtmap" hidden="">
             <div class="fa-mt-scale" id="mt-scale"></div>
             <p class="fa-note" style="text-align:center;margin:8px 0 0">Canasta arriba; izquierda y derecha según quien tira mirando al aro. Tiros de campo (sin libres). El color depende del tipo de zona: rojo bajo el 35% en aro y pintura, el 20% en media distancia y el 15% en triples; verde desde el 60%, 45% y 30% respectivamente. Toca zonas para destacarlas. Solo cuentan los partidos con mapa de tiro subido.</p>
@@ -782,7 +786,7 @@ table[data-rdg-off~="4"] [data-rdg="4"]{display:none}
   </section>
 
 
-  <section id="graficas-jug" class="fa-foldsec rd-off">
+  <section id="graficas-jug" class="fa-card fa-foldsec rd-off">
     <div class="fa-row" style="margin-bottom:var(--cds-gap-sm)">
       <h2 style="font-size:var(--cds-font-size-heading);font-weight:var(--cds-font-weight-medium);margin:0"><button type="button" class="fa-fold" aria-expanded="true" aria-controls="fa-jug-body-wrap" title="Plegar / desplegar gráficas"><span class="fa-chev" aria-hidden="true">▾</span><span class="fa-gtt">Comparativa jugadoras</span><span class="fa-fold-l">Ocultar</span></button></h2>
       <span class="fa-carr-nav fa-nonav"><button type="button" class="fa-carr-btn" data-dir="-1" aria-label="Anterior" disabled="">‹</button><button type="button" class="fa-carr-btn" data-dir="1" aria-label="Siguiente" disabled="">›</button></span>
@@ -848,9 +852,9 @@ table[data-rdg-off~="4"] [data-rdg="4"]{display:none}
 
 
   <!-- Sección antigua (selector de estadística + 2 gráficas de líneas): retirada de la vista; su contenido ya está en las gráficas de equipo y de jugadoras seleccionadas. Se mantiene oculta porque el resumen y los análisis comparten su código. -->
-  <section id="mapa-jug" class="fa-foldsec rd-off">
+  <section id="mapa-jug" class="fa-card fa-foldsec rd-off">
     <div class="fa-row" style="margin-bottom:var(--cds-gap-sm)">
-      <h2 style="font-size:var(--cds-font-size-heading);font-weight:var(--cds-font-weight-medium);margin:0"><button type="button" class="fa-fold" aria-expanded="true" aria-controls="fa-mj-body-wrap" title="Plegar / desplegar el mapa de tiro de jugadoras"><span class="fa-chev" aria-hidden="true">▾</span><span class="fa-gtt">Mapa de tiro</span><span class="fa-fold-l">Ocultar</span></button></h2><span class="fa-njor" id="mj-njor"></span>
+      <h2 style="font-size:var(--cds-font-size-heading);font-weight:var(--cds-font-weight-medium);margin:0"><button type="button" class="fa-fold" aria-expanded="true" aria-controls="fa-mj-body-wrap" title="Plegar / desplegar el mapa de tiro de jugadoras"><span class="fa-chev" aria-hidden="true">▾</span><span class="fa-gtt">Mapa de tiro</span><span class="fa-fold-l">Ocultar</span></button></h2>
     </div>
     <div class="fa-fbody" id="fa-mj-body-wrap">
       <div class="fa-mt-ctl">
@@ -859,7 +863,7 @@ table[data-rdg-off~="4"] [data-rdg="4"]{display:none}
       <div class="fa-mt-tiles" id="mj-tiles" data-source="tiros jugadoras" tabindex="0" role="region" aria-label="Carrusel: ▾Mapa de tiroOcultar — usa las flechas para desplazar"></div>
       <div class="fa-mt-grid">
         <section class="fa-card" id="mj-map">
-          <div class="fa-row" style="flex-wrap:wrap;gap:8px"><div class="fa-ttl"><h2 id="mj-map-t">Mapa de tiro</h2><button type="button" class="fa-info" aria-expanded="false" aria-controls="fa-note-mjmap" title="Leyenda y explicación">i</button></div></div><div class="fa-row fa-segrow"><span class="fa-seg" id="mj-mode" role="group" aria-label="Color del mapa"><button type="button" data-v="pct" aria-pressed="true">%Acierto</button><button type="button" data-v="vol" aria-pressed="false">Nº Tiros</button></span></div>
+          <div class="fa-row" style="flex-wrap:wrap;gap:8px"><div class="fa-ttl"><h2 id="mj-map-t">Mapa de tiro</h2><button type="button" class="fa-info" aria-expanded="false" aria-controls="fa-note-mjmap" title="Leyenda y explicación">i</button></div><span class="fa-njor" id="mj-njor"></span></div><div class="fa-row fa-segrow"><span class="fa-seg" id="mj-mode" role="group" aria-label="Color del mapa"><button type="button" data-v="pct" aria-pressed="true">%Acierto</button><button type="button" data-v="vol" aria-pressed="false">Nº Tiros</button></span></div>
           <p class="fa-note" id="fa-note-mjmap" hidden="">Elige arriba la jugadora (o «Todas» para sumar las seleccionadas). Mismos colores que el mapa del equipo: rojo bajo el 35% en aro y pintura, el 20% en media distancia y el 15% en triples; verde desde el 60%, el 45% y el 30%. Toca zonas del mapa o filas de la tabla para destacarlas; las tarjetas cuentan solo las zonas elegidas. Solo partidos con mapa de tiro subido.</p>
           <div class="fa-chips fa-mj-pick" id="mj-pick" role="group" aria-label="Jugadora del mapa de tiro"></div>
           <p class="fa-note" id="mj-map-sub" style="margin-top:0"></p>
