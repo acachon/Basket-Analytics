@@ -3178,12 +3178,14 @@ if (!keys.has(MTP.who)) MTP.who = (list.find((l) => sels.includes(l.name) && (li
 if (lab) { const s = lab.querySelector('select'); s.replaceChildren(...list.map((l) => { const o = document.createElement('option'); o.value = l.k; o.textContent = kOf(l); return o; })); s.value = MTP.who; s.onchange = () => { MTP.who = s.value; drawMapaTiro(); }; }
 const subj = list.find((l) => l.k === MTP.who);
 const mapR = (rows) => rows.filter((r) => keys.has(r.equipo + '|' + r.jugadora)).map((r) => ({ ...r, equipo: keys.get(r.equipo + '|' + r.jugadora) }));
+const byDorsal = new Map(jug.data.map((r) => [r.partido_id + '|' + r.equipo + '|' + String(r.dorsal), r.jugadora]));
+const tdR = td.data.map((r) => ({ ...r, jugadora: byDorsal.get(r.partido_id + '|' + r.equipo + '|' + String(r.dorsal)) })).filter((r) => r.jugadora && keys.has(r.equipo + '|' + r.jugadora)).map((r) => ({ ...r, equipo: keys.get(r.equipo + '|' + r.jugadora) }));
 const eq = subj.eq;
 const games = par.data.filter((p) => p.local === eq || p.visitante === eq).map((p, i) => {
 const home = p.local === eq, pf = Number(home ? p.pts_local : p.pts_visitante), pc = Number(home ? p.pts_visitante : p.pts_local), j = p.jornada == null ? null : Number(p.jornada);
 return { partido_id: p.partido_id, jornada: j, rival: home ? p.visitante : p.local, lugar: home ? 'casa' : 'fuera', pf, pc, ganado: pf > pc, _i: i };
 }).sort((x, y) => (x.jornada ?? 1000 + x._i) - (y.jornada ?? 1000 + y._i)).map((g, i) => ({ ...g, x: i, label: g.jornada != null ? 'J' + g.jornada : 'P' + (i + 1) }));
-return { key: keys.get(subj.k), eq, name: subj.name, games, teamShots: new Set(td.data.filter((r) => r.equipo === eq).map((r) => r.partido_id)), docs: { tiros: { status: 'ok', data: mapR(td.data) }, equipos_partido: { status: 'ok', data: mapR(jug.data) }, partidos: par } };
+return { key: keys.get(subj.k), eq, name: subj.name, games, teamShots: new Set(td.data.filter((r) => r.equipo === eq).map((r) => r.partido_id)), docs: { tiros: { status: 'ok', data: tdR }, equipos_partido: { status: 'ok', data: mapR(jug.data) }, partidos: par } };
 }
 function mtNoPlayer() {
 ['.fa-c-mt', '.fa-c-mtevo', '.fa-c-mtzj', '.fa-c-mtc1', '.fa-c-mtc2', '.fa-c-mtcevo', '.fa-c-mtczevo'].forEach((s) => { const b = document.querySelector('#mapa-tiro ' + s); if (b) setState(b, 'empty', 'Sin jugadoras en la tabla de estadísticas'); });
@@ -3481,7 +3483,7 @@ if (!box) return;
 const rivals = mt.who === 'riv', games = D.withData;
 const jorns = [...new Set(games.map((g) => +g.jornada))].sort((a, b) => a - b);
 if (mt.zj != null && !jorns.includes(mt.zj)) mt.zj = null;
-jornPre(preBox, jorns, mt.zj, (j) => { mt.zj = j; drawMapaZJ(D); });
+jornPre(preBox, jorns, mt.zj, (j) => { mt.zj = j; drawMapaTiro(); });
 const J = mt.zj, gs = J == null ? games : games.filter((g) => +g.jornada === J);
 document.getElementById('mt-zj-t').textContent = 'Tiros por zona · ' + (J == null ? 'todas las jornadas' : 'J' + J + (gs[0] && gs[0].rival ? ' vs ' + short(gs[0].rival) : '')) + (rivals ? ' (rivales)' : '');
 if (!gs.length) { setState(box, 'empty', 'Ninguno de los partidos elegidos tiene mapa de tiro subido'); return; }
