@@ -3200,7 +3200,7 @@ const p = per[ci]; V.set(s.id + '|' + c.id, p.u ? { m: p.m / p.u, a: p.a / p.u, 
 });
 });
 box.classList.remove('dash-skeleton'); box.replaceChildren();
-const W = Math.max(280, box.clientWidth || 320), H = 300, top = 18, bottom = 42;
+const W = Math.max(280, box.clientWidth || 320), H = Math.round(Math.min(430, Math.max(300, W * 1.5))), top = 18, bottom = 42;
 const yMax = d3.max([...V.values()].filter(Boolean), (v) => v.a) || 1;
 const y = d3.scaleLinear([0, yMax], [H - bottom, top]).nice();
 const yp = d3.scaleLinear([0, 1], [H - bottom, top]);
@@ -3942,7 +3942,7 @@ if (showLab && y(0) - y(m) >= 14) cap(g.append('text').attr('x', bx + bw / 2).at
     const V = new Map(); D.P.forEach((p) => cols.forEach((c) => V.set(p.name + '|' + c.id, cell(p, c))));
     leg.replaceChildren(...D.P.map((p) => { const sp = document.createElement('span'); const i = document.createElement('i'); i.className = 'fa-k'; i.style.background = p.color || 'var(--fa-blue)'; sp.append(i, mjLabel(D, p)); return sp; }));
     box.classList.remove('dash-skeleton'); box.replaceChildren();
-    const W = Math.max(280, box.clientWidth || 320), H = 300, top = 18, bottom = 42;
+    const W = Math.max(280, box.clientWidth || 320), H = Math.round(Math.min(430, Math.max(300, W * 1.5))), top = 18, bottom = 42;
     const yMax = d3.max([...V.values()].filter(Boolean), (v) => v.a) || 1;
     const y = d3.scaleLinear([0, yMax], [H - bottom, top]).nice();
     const yp = d3.scaleLinear([0, 1], [H - bottom, top]);
