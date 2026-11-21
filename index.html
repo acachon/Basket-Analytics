@@ -1221,7 +1221,8 @@ faCalc('clasificacion', {
     g.append('rect').attr('x', x0).attr('y', top - 6).attr('width', Math.min(W - 2, x(TOT) + x.bandwidth() + pad) - x0).attr('height', H - bottom + 30 - (top - 6)).attr('rx', 6)
       .style('fill', 'var(--fa-shade)');
   };
-  const xLab = (g) => (g.total || g.ganado == null ? g.label : g.label + (g.ganado ? ' (V)' : ' (D)'));
+  const lugTxt = (g) => (g && g.lugar === 'casa' ? 'casa' : g && g.lugar === 'fuera' ? 'fuera' : '');
+const xLab = (g) => (g.total || g.ganado == null ? g.label : g.label + (g.ganado ? ' (V)' : ' (D)'));
   let teamGames = [];      // partidos del equipo, ordenados: {partido_id, jornada, rival, lugar, pf, pc, ganado, x, label}
   const allIds = () => teamGames.map((g) => g.partido_id);
   const gamesSel = () => {
@@ -1791,7 +1792,7 @@ th.setAttribute('aria-sort', k === sortK ? (sortDir > 0 ? 'ascending' : 'descend
       .text((d) => fmtTick(m, d));
     const xl = g.selectAll('g.xl').data(games).join('g').attr('transform', (d) => `translate(${x(d.partido_id)},${H - bottom + 18})`);
     xl.append('text').attr('text-anchor', 'middle').style('font-size', 'var(--cds-font-size-caption)').style('fill', 'var(--color-fg)').text((d) => xLab(d));
-    if (showRival) xl.append('text').attr('text-anchor', 'middle').attr('dy', '1.3em').style('font-size', 'var(--cds-font-size-caption)').style('fill', 'var(--color-fg-muted)').text((d) => short(d.rival));
+    if (showRival) xl.append('text').attr('text-anchor', 'middle').attr('dy', '1.3em').style('font-size', 'var(--cds-font-size-caption)').style('fill', 'var(--color-fg-muted)').text((d) => lugTxt(d));
 
     const series = selected().map((name) => ({
       name, color: colorOf(name),
@@ -1950,7 +1951,7 @@ const cx = (gm) => x(gm.partido_id) + x.bandwidth() / 2;
 for (const gm of games) {
 const lb = g.append('g').attr('transform', `translate(${cx(gm)},${H - bottom + 18})`);
 cap(lb.append('text').attr('text-anchor', 'middle')).style('fill', 'var(--color-fg)').style('font-weight', gm.total ? 'var(--cds-font-weight-medium)' : null).text(xLab(gm));
-const sub = gm.total ? totSub : (gm.rival ? rivLab(gm.rival, x.step()) : '');
+const sub = gm.total ? totSub : (gm.rival ? lugTxt(gm) : '');
 if (sub) cap(lb.append('text').attr('text-anchor', 'middle').attr('dy', '1.3em')).style('fill', 'var(--color-fg-muted)').text(sub);
 }
 g.append('line').attr('x1', left).attr('x2', W - right).attr('y1', y(0)).attr('y2', y(0)).style('stroke', 'var(--cds-chart-axis)').style('stroke-width', 1);
@@ -2063,7 +2064,7 @@ const y = d3.scaleLinear([minV, maxV], [H - bottom, top]).nice();
       lab.append('text').attr('text-anchor', 'middle').style('font-size', 'var(--cds-font-size-caption)').style('fill', 'var(--color-fg)').text(xLab(gm));
       if (gm.total) lab.select('text').style('font-weight', 'var(--cds-font-weight-medium)');
       if (true) lab.append('text').attr('text-anchor', 'middle').attr('dy', '1.3em').style('font-size', 'var(--cds-font-size-caption)').style('fill', 'var(--color-fg-muted)')
-        .text(gm.total ? totSub(realGames.length) : rivLab(gm.rival, x.step()));
+        .text(gm.total ? totSub(realGames.length) : lugTxt(gm));
     }
     g.append('line').attr('x1', left).attr('x2', W - right).attr('y1', y(0)).attr('y2', y(0)).style('stroke', 'var(--cds-chart-axis)').style('stroke-width', 1);
     const sepX = x(TOT) - x.step() * x.paddingInner() / 2;
@@ -2229,7 +2230,7 @@ per.set(TOT, Object.fromEntries(['tla', 'tli', 't2a', 't2i', 't3a', 't3i'].map((
       const lb = g.append('g').attr('transform', `translate(${cx(gm)},${H - bottom + 18})`);
       cap(lb.append('text').attr('text-anchor', 'middle')).style('fill', 'var(--color-fg)').style('font-weight', gm.total ? 'var(--cds-font-weight-medium)' : null).text(xLab(gm));
       if (true) cap(lb.append('text').attr('text-anchor', 'middle').attr('dy', '1.3em')).style('fill', 'var(--color-fg-muted)')
-        .text(gm.total ? totSub(realGames.length) : rivLab(gm.rival, x.step()));
+        .text(gm.total ? totSub(realGames.length) : lugTxt(gm));
     }
     g.append('line').attr('x1', left).attr('x2', W - right).attr('y1', y(0)).attr('y2', y(0)).style('stroke', 'var(--cds-chart-axis)').style('stroke-width', 1);
     const sepX = x(TOT) - x.step() * x.paddingInner() / 2;
@@ -2368,7 +2369,7 @@ const K = ['pts', 'tla', 'tli', 't2a', 't2i', 't3a', 't3i'];
       const lb = g.append('g').attr('transform', `translate(${cx(gm)},${H - bottom + 18})`);
       cap(lb.append('text').attr('text-anchor', 'middle')).style('fill', 'var(--color-fg)').style('font-weight', gm.total ? 'var(--cds-font-weight-medium)' : null).text(xLab(gm));
       if (true) cap(lb.append('text').attr('text-anchor', 'middle').attr('dy', '1.3em')).style('fill', 'var(--color-fg-muted)')
-        .text(gm.total ? totSub(realGames.length) : rivLab(gm.rival, x.step()));
+        .text(gm.total ? totSub(realGames.length) : lugTxt(gm));
     }
     g.append('line').attr('x1', left).attr('x2', W - right).attr('y1', y(0)).attr('y2', y(0)).style('stroke', 'var(--cds-chart-axis)').style('stroke-width', 1);
     const sepX = x(TOT) - x.step() * x.paddingInner() / 2;
@@ -2538,7 +2539,7 @@ const jug = faL('jugadoras');
     for (const gm of games) {
       const lb = g.append('g').attr('transform', `translate(${cx(gm)},${H - bottom + 18})`);
       cap(lb.append('text').attr('text-anchor', 'middle')).style('fill', 'var(--color-fg)').style('font-weight', gm.total ? 'var(--cds-font-weight-medium)' : null).text(xLab(gm));
-      const sub = gm.total ? totSubL : (gm.rival ? rivLab(gm.rival, x.step()) : '');
+      const sub = gm.total ? totSubL : (gm.rival ? lugTxt(gm) : '');
       if (sub) cap(lb.append('text').attr('text-anchor', 'middle').attr('dy', '1.3em')).style('fill', 'var(--color-fg-muted)').text(sub);
     }
     g.append('line').attr('x1', left).attr('x2', W - right).attr('y1', y(0)).attr('y2', y(0)).style('stroke', 'var(--cds-chart-axis)').style('stroke-width', 1);
@@ -2892,7 +2893,7 @@ const tdGrp = td.data.filter((r) => jMap.has(jOfR(r)));
 const units = (rows) => new Set(rows.map((r) => r.partido_id + '|' + r.equipo)).size;
 return { status: 'ok', S, epRows, tdRows, tdGrp, jOfR, units, jAct: [...jAct].sort((a, b) => a - b), jMap: [...jMap].sort((a, b) => a - b), D, grp };
 }
-const mtcLabel = (D, j) => { const g = teamGames.find((x) => +x.jornada === j); return { label: g ? xLab(g) : 'J' + j, sub: g ? short(g.rival) : '' }; };
+const mtcLabel = (D, j) => { const g = teamGames.find((x) => +x.jornada === j); return { label: g ? xLab(g) : 'J' + j, sub: g ? short(g.rival) : '', lug: lugTxt(g) }; };
 function drawMtCmp(D0) {
 const sec = document.getElementById('mt-cblock'); if (!sec) return;
 const b1 = sec.querySelector('.fa-c-mtc1'), b2 = sec.querySelector('.fa-c-mtc2'), b3 = sec.querySelector('.fa-c-mtcevo'), b4 = sec.querySelector('.fa-c-mtczevo');
@@ -3019,7 +3020,7 @@ if (bw >= 12) cap(g.append('text').attr('x', x + bw / 2).attr('y', y(v.a) - 3).a
 }
 const lb = g.append('g').attr('transform', `translate(${x0(c.id) + x0.bandwidth() / 2},${H - bottom + 17})`);
 cap(lb.append('text').attr('text-anchor', 'middle')).style('fill', 'var(--color-fg)').style('font-weight', c.total ? 'var(--cds-font-weight-medium)' : null).text(c.label);
-if (c.sub) cap(lb.append('text').attr('text-anchor', 'middle').attr('dy', '1.3em')).style('fill', 'var(--color-fg-muted)').text(c.total ? c.sub : rivLab(c.sub, x0.step() - 8));
+if (c.sub) cap(lb.append('text').attr('text-anchor', 'middle').attr('dy', '1.3em')).style('fill', 'var(--color-fg-muted)').text(c.total ? c.sub : (c.lug || ''));
 }
 g.append('line').attr('x1', left).attr('x2', W - right).attr('y1', y(0)).attr('y2', y(0)).style('stroke', 'var(--cds-chart-axis)').style('stroke-width', 1);
 const sepX = x0(TOT) - x0.step() * x0.paddingInner() / 2;
@@ -3403,7 +3404,7 @@ const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `
       labs.push({ x: cx(c), y: iy, t: fmtN(c.a) });
       const lb = g.append('g').attr('transform', `translate(${cx(c)},${H - bottom + 18})`);
       cap(lb.append('text').attr('text-anchor', 'middle')).style('fill', 'var(--color-fg)').style('font-weight', c.total ? 'var(--cds-font-weight-medium)' : null).text(c.total ? c.g.label : xLab(c.g));
-      cap(lb.append('text').attr('text-anchor', 'middle').attr('dy', '1.3em')).style('fill', 'var(--color-fg-muted)').text(c.total ? totSub(per.length) : rivLab(c.g.rival, x.step()));
+      cap(lb.append('text').attr('text-anchor', 'middle').attr('dy', '1.3em')).style('fill', 'var(--color-fg-muted)').text(c.total ? totSub(per.length) : lugTxt(c.g));
     }
     g.append('line').attr('x1', left).attr('x2', W - right).attr('y1', y(0)).attr('y2', y(0)).style('stroke', 'var(--cds-chart-axis)').style('stroke-width', 1);
     if (showTot) {
@@ -3637,7 +3638,7 @@ if (showLab && y(0) - y(m) >= 14) cap(g.append('text').attr('x', bx + bw / 2).at
     // rival bajo la jornada si todas son del equipo elegido
     const single = D.P.every((p) => p.equipo === team());
     const TOT = '__tot', pp = mj.agg === 'pp';
-    const cols = [...jorns.map((j) => { const g = single ? teamGames.find((x) => x.jornada === j) : null; return { id: 'J' + j, j, label: g ? xLab(g) : 'J' + j, sub: g ? short(g.rival) : '' }; }),
+    const cols = [...jorns.map((j) => { const g = single ? teamGames.find((x) => x.jornada === j) : null; return { id: 'J' + j, j, label: g ? xLab(g) : 'J' + j, sub: g ? short(g.rival) : '', lug: lugTxt(g) }; }),
       { id: TOT, total: true, label: pp ? 'Media' : 'Total', sub: pp ? 'por partido' : jorns.length + ' jornada' + (jorns.length > 1 ? 's' : '') }];
     const cell = (p, c) => {
       const all = G.get(p.name), rs = c.total ? all : all.filter((r) => r.jornada === c.j);
@@ -3679,7 +3680,7 @@ if (bw >= 12) cap(g.append('text').attr('x', x + bw / 2).attr('y', y(v.a) - 3).a
       }
       const lb = g.append('g').attr('transform', `translate(${x0(c.id) + x0.bandwidth() / 2},${H - bottom + 17})`);
       cap(lb.append('text').attr('text-anchor', 'middle')).style('fill', 'var(--color-fg)').style('font-weight', c.total ? 'var(--cds-font-weight-medium)' : null).text(c.label);
-      if (c.sub) cap(lb.append('text').attr('text-anchor', 'middle').attr('dy', '1.3em')).style('fill', 'var(--color-fg-muted)').text(c.total ? (x0.step() < 80 && !pp ? jorns.length + ' j.' : c.sub) : rivLab(c.sub, x0.step() - 8));
+      if (c.sub) cap(lb.append('text').attr('text-anchor', 'middle').attr('dy', '1.3em')).style('fill', 'var(--color-fg-muted)').text(c.total ? (x0.step() < 80 && !pp ? jorns.length + ' j.' : c.sub) : (c.lug || ''));
     }
     g.append('line').attr('x1', left).attr('x2', W - right).attr('y1', y(0)).attr('y2', y(0)).style('stroke', 'var(--cds-chart-axis)').style('stroke-width', 1);
     const sepX = x0(TOT) - x0.step() * x0.paddingInner() / 2;
@@ -3750,7 +3751,7 @@ const showI = !TL && !allZ;
 if (legI) legI.parentNode.style.display = showI ? '' : 'none';
 const pp = mj.agg === 'pp';
 const cols = jorns.map((j) => { const c = byJ.get(j); const g = single ? teamGames.find((x) => x.jornada === j) : null;
-return { id: 'J' + j, g, j, label: g ? xLab(g) : 'J' + j, sub: g ? short(g.rival) : '', m: c.m, a: c.a, pi: showI && c.allA ? c.a / c.allA : null, by: c.by, pl: c.pl }; });
+return { id: 'J' + j, g, j, label: g ? xLab(g) : 'J' + j, sub: g ? short(g.rival) : '', lug: lugTxt(g), m: c.m, a: c.a, pi: showI && c.allA ? c.a / c.allA : null, by: c.by, pl: c.pl }; });
 const sM = d3.sum(cols, (c) => c.m), sA = d3.sum(cols, (c) => c.a), sAll = d3.sum(jorns, (j) => byJ.get(j).allA), dv = pp ? cols.length : 1;
 const TOT = '__total';
 const tot = { id: TOT, total: true, label: pp ? 'Media' : 'Total', sub: pp ? (single ? 'por partido' : 'por jornada') : cols.length + (single ? ' partido' : ' jornada') + (cols.length > 1 ? 's' : ''), m: sM / dv, a: sA / dv, pctM: sM, pctA: sA, pi: showI && sAll ? sA / sAll : null, by: null };
@@ -3788,7 +3789,7 @@ if (p != null && Math.abs(yp(p) - (iy - 4)) < 13) iy = (!aIn && lightH >= 28) ? 
 labs.push({ x: cx(c), y: iy, t: fmtN(c.a) });
 const lb = g.append('g').attr('transform', `translate(${cx(c)},${H - bottom + 18})`);
 cap(lb.append('text').attr('text-anchor', 'middle')).style('fill', 'var(--color-fg)').style('font-weight', c.total ? 'var(--cds-font-weight-medium)' : null).text(c.label);
-cap(lb.append('text').attr('text-anchor', 'middle').attr('dy', '1.3em')).style('fill', 'var(--color-fg-muted)').text(c.total ? c.sub : rivLab(c.sub, x.step()));
+cap(lb.append('text').attr('text-anchor', 'middle').attr('dy', '1.3em')).style('fill', 'var(--color-fg-muted)').text(c.total ? c.sub : (c.lug || ''));
 }
 g.append('line').attr('x1', left).attr('x2', W - right).attr('y1', y(0)).attr('y2', y(0)).style('stroke', 'var(--cds-chart-axis)').style('stroke-width', 1);
 const sepX = x(TOT) - x.step() * x.paddingInner() / 2;
