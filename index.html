@@ -466,7 +466,7 @@ table[data-rdg-off~="4"] [data-rdg="4"]{display:none}
 
   <section class="fa-card fa-foldsec fa-tfold" id="clasificacion">
     <div class="fa-row">
-      <div class="fa-ttl"><h2><button type="button" class="fa-fold" aria-expanded="true" aria-controls="fa-cla-body" title="Plegar / desplegar la tabla"><span class="fa-chev" aria-hidden="true">▾</span><span class="fa-gtt" id="fa-cla-t">Grupo Par</span><span class="fa-fold-l">Ocultar</span></button></h2><button type="button" class="fa-info" aria-expanded="false" aria-controls="fa-note-cla" title="Cómo usar esta tabla">i</button><button type="button" class="fa-info fa-an" aria-expanded="false" aria-controls="fa-an-cla" title="Análisis del equipo"><svg viewBox="0 0 16 16" width="11" height="11" aria-hidden="true"><path d="M2 12l4-4 3 3 5-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></button></div>
+      <div class="fa-ttl"><h2><button type="button" class="fa-fold" aria-expanded="true" aria-controls="fa-cla-body" title="Plegar / desplegar la tabla"><span class="fa-chev" aria-hidden="true">▾</span><span class="fa-gtt" id="fa-cla-t">Clasificación</span><span class="fa-fold-l">Ocultar</span></button></h2><button type="button" class="fa-info" aria-expanded="false" aria-controls="fa-note-cla" title="Cómo usar esta tabla">i</button><button type="button" class="fa-info fa-an" aria-expanded="false" aria-controls="fa-an-cla" title="Análisis del equipo"><svg viewBox="0 0 16 16" width="11" height="11" aria-hidden="true"><path d="M2 12l4-4 3 3 5-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></button></div>
       <span class="fa-seg fa-seg-eq" role="group" aria-label="Cómo ver las estadísticas de equipo">
         <button type="button" data-mode="tot" aria-pressed="false">Totales</button>
         <button type="button" data-mode="pp" aria-pressed="true">Por partido</button>
@@ -2640,7 +2640,7 @@ function drawStandings() {
       if (!totRow) return null;
       const tr = document.createElement('tr'); tr.className = 'fa-total';
       tr.append(document.createElement('td'));
-      const t1 = document.createElement('td'); t1.textContent = 'Total liga (' + raws.length + ' equipos)'; tr.append(t1);
+      const t1 = document.createElement('td'); t1.textContent = (window.FA_GRUPOS[window.__faG] || 'Total liga') + ' (' + raws.length + ' equipos)'; tr.append(t1);
       for (const c of cellsOf(totRow)) { const td = document.createElement('td'); td.textContent = String(c); tr.append(td); }
       return tr;
     })();
@@ -3960,7 +3960,7 @@ table.setAttribute('data-rdg-off', names.map((nm, i) => String(i + 1)).filter((k
     const m = MET[dash.params().metrica] || MET.pts;
     const gName = window.FA_GRUPOS[window.__faG];
     document.getElementById('fa-gname').textContent = gName;
-    const claT = document.getElementById('fa-cla-t'); if (claT) claT.textContent = gName;
+    const claT = document.getElementById('fa-cla-t'); if (claT) claT.textContent = 'Clasificación';
     document.querySelectorAll('#rd-grp button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.g === window.__faG)));
     const grpEmpty = par.status === 'ok' && Array.isArray(par.data) && !par.data.length;
     document.querySelector('.fa').classList.toggle('fa-gempty', grpEmpty);
