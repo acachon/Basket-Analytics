@@ -78,6 +78,8 @@
 
 .fa-fold .fa-fold-l{display:none!important}
 #mt-vw button{padding:4px 7px!important;font-size:12px!important;min-height:30px}
+#mj-njor2{display:none}
+@media (max-width:700px){#mj-njor{display:none}#mj-njor2{display:inline}}
 .fa-fold{cursor:pointer}
 .fa-refsel,.fa-refsel span{color:var(--color-fg-muted)!important;font-weight:400!important}
 #fa-ref-mt>span{color:var(--fa-cmp)!important;font-weight:600!important}
@@ -872,7 +874,7 @@ table[data-rdg-off~="4"] [data-rdg="4"]{display:none}
       <div class="fa-mt-tiles" id="mj-tiles" data-source="tiros jugadoras" tabindex="0" role="region" aria-label="Carrusel: ▾Mapa de tiroOcultar — usa las flechas para desplazar"></div>
       <div class="fa-mt-grid">
         <section class="fa-card" id="mj-map">
-          <div class="fa-row" style="flex-wrap:wrap;gap:8px"><div class="fa-ttl"><h2 id="mj-map-t">Mapa de tiro</h2><button type="button" class="fa-info" aria-expanded="false" aria-controls="fa-note-mjmap" title="Leyenda y explicación">i</button></div><span class="fa-njor" id="mj-njor"></span></div><div class="fa-row fa-segrow"><span class="fa-seg" id="mj-mode" role="group" aria-label="Color del mapa"><button type="button" data-v="pct" aria-pressed="true">%Acierto</button><button type="button" data-v="vol" aria-pressed="false">Nº Tiros</button></span></div>
+          <div class="fa-row" style="flex-wrap:wrap;gap:8px"><div class="fa-ttl"><h2 id="mj-map-t">Mapa de tiro</h2><button type="button" class="fa-info" aria-expanded="false" aria-controls="fa-note-mjmap" title="Leyenda y explicación">i</button></div><span class="fa-njor" id="mj-njor"></span></div><div class="fa-row fa-segrow"><span class="fa-seg" id="mj-mode" role="group" aria-label="Color del mapa"><button type="button" data-v="pct" aria-pressed="true">%Acierto</button><button type="button" data-v="vol" aria-pressed="false">Nº Tiros</button></span><span class="fa-njor" id="mj-njor2"></span></div>
           <p class="fa-note" id="fa-note-mjmap" hidden="">Elige arriba la jugadora (o «Todas» para sumar las seleccionadas). Mismos colores que el mapa del equipo: rojo bajo el 35% en aro y pintura, el 20% en media distancia y el 15% en triples; verde desde el 60%, el 45% y el 30%. Toca zonas del mapa o filas de la tabla para destacarlas; las tarjetas cuentan solo las zonas elegidas. Solo partidos con mapa de tiro subido.</p>
           <div class="fa-chips fa-mj-pick" id="mj-pick" role="group" aria-label="Jugadora del mapa de tiro"></div>
           <p class="fa-note" id="mj-map-sub" style="margin-top:0"></p>
@@ -3541,7 +3543,7 @@ const Z = mtAgg(rows), totA = d3.sum([...Z.values()], (v) => v.a), maxA = d3.max
     document.getElementById('mj-map-t').textContent = 'Mapa de tiro de ' + (cur ? cur.name : 'las seleccionadas');
     const gamesTxt = cur ? cur.pgMap + ' partido' + (cur.pgMap === 1 ? '' : 's') + ' con mapa de tiro' : 'Suma de ' + D.P.length + ' jugadoras';
 document.getElementById('mj-map-sub').textContent = '';
-{ const nj = document.getElementById('mj-njor'); if (nj) { const k = new Set(D.P.flatMap((p) => p.rows).map((r) => r.jornada)).size; nj.textContent = k ? k + (k === 1 ? ' Jornada' : ' Jornadas') : ''; } }
+{ const k = zjOk ? 1 : new Set(rows0.map((r) => r.jornada)).size, tx = k ? k + (k === 1 ? ' Jornada' : ' Jornadas') : ''; ['mj-njor', 'mj-njor2'].forEach((id) => { const nj = document.getElementById(id); if (nj) nj.textContent = tx; }); }
     // tarjetas (dentro de las zonas elegidas)
     const sum = (Zm, f) => { let m = 0, a = 0; for (const [k, v] of Zm) if (f(k) && (!mj.zones.size || mj.zones.has(k))) { m += v.m; a += v.a; } return { m, a }; };
     const tile = (l, w) => {
