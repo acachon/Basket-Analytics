@@ -77,6 +77,7 @@
 .fa-segrow{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;margin:0 0 8px}
 
 .fa-fold .fa-fold-l{display:none!important}
+#mt-vw button{padding:4px 7px!important;font-size:12px!important;min-height:30px}
 .fa-fold{cursor:pointer}
 .fa-refsel,.fa-refsel span{color:var(--color-fg-muted)!important;font-weight:400!important}
 #fa-ref-mt>span{color:var(--fa-cmp)!important;font-weight:600!important}
@@ -705,7 +706,7 @@ table[data-rdg-off~="4"] [data-rdg="4"]{display:none}
       <div class="fa-mt-tiles" id="mt-tiles" data-source="tiros" tabindex="0" role="region" aria-label="Carrusel: ▾Mapa de tiroOcultar — usa las flechas para desplazar"></div>
       <div class="fa-mt-grid">
         <section class="fa-card" id="mt-map">
-          <div class="fa-row" style="flex-wrap:wrap;gap:8px"><div class="fa-ttl"><h2 id="mt-map-t">Mapa de tiro</h2><button type="button" class="fa-info" aria-expanded="false" aria-controls="fa-note-mtmap" title="Leyenda y explicación">i</button></div><span class="fa-njor" id="mt-njor"></span></div><div class="fa-row fa-segrow"><span class="fa-seg" id="mt-mode" role="group" aria-label="Color del mapa"><button type="button" data-v="pct" aria-pressed="true">%Acierto</button><button type="button" data-v="vol" aria-pressed="false">Nº Tiros</button></span><span class="fa-seg" id="mt-who" role="group" aria-label="Tiros de"><button type="button" data-v="eq" aria-pressed="true">Equipo</button><button type="button" data-v="riv" aria-pressed="false" title="Los tiros que le lanzan los rivales">Rivales</button></span></div>
+          <div class="fa-row" style="flex-wrap:wrap;gap:8px"><div class="fa-ttl"><h2 id="mt-map-t">Mapa de tiro</h2><button type="button" class="fa-info" aria-expanded="false" aria-controls="fa-note-mtmap" title="Leyenda y explicación">i</button></div><span class="fa-seg" id="mt-vw" style="margin-left:auto" role="group" aria-label="Mapa del equipo propio o del comparado"><button type="button" data-v="eq" aria-pressed="true">Propio</button><button type="button" data-v="cmp" aria-pressed="false">Comparado</button></span></div><div class="fa-row fa-segrow"><span class="fa-seg" id="mt-mode" role="group" aria-label="Color del mapa"><button type="button" data-v="pct" aria-pressed="true">%Acierto</button><button type="button" data-v="vol" aria-pressed="false">Nº Tiros</button></span><span class="fa-seg" id="mt-who" role="group" aria-label="Tiros de"><button type="button" data-v="eq" aria-pressed="true">Equipo</button><button type="button" data-v="riv" aria-pressed="false" title="Los tiros que le lanzan los rivales">Rivales</button></span></div>
           <div class="fa-note" id="fa-note-mtmap" hidden="">
             <div class="fa-mt-scale" id="mt-scale"></div>
             <p class="fa-note" style="text-align:center;margin:8px 0 0">Canasta arriba; izquierda y derecha según quien tira mirando al aro. Tiros de campo (sin libres). El color depende del tipo de zona: rojo bajo el 35% en aro y pintura, el 20% en media distancia y el 15% en triples; verde desde el 60%, 45% y 30% respectivamente. Toca zonas para destacarlas. Solo cuentan los partidos con mapa de tiro subido.</p>
@@ -1222,7 +1223,7 @@ faCalc('clasificacion', {
     g.append('rect').attr('x', x0).attr('y', top - 6).attr('width', Math.min(W - 2, x(TOT) + x.bandwidth() + pad) - x0).attr('height', H - bottom + 30 - (top - 6)).attr('rx', 6)
       .style('fill', 'var(--fa-shade)');
   };
-  const lugTxt = (g) => (g && g.lugar === 'casa' ? 'casa' : g && g.lugar === 'fuera' ? 'fuera' : '');
+  const lugTxt = () => '';
 const xLab = (g) => (g.total || g.ganado == null ? g.label : g.label + (g.ganado ? ' (V)' : ' (D)'));
   let teamGames = [];      // partidos del equipo, ordenados: {partido_id, jornada, rival, lugar, pf, pc, ganado, x, label}
   const allIds = () => teamGames.map((g) => g.partido_id);
@@ -2779,7 +2780,7 @@ function drawStandings() {
   const MT_ALL = Object.keys(MT_ZN);
   const MT_GRP = (z) => (z === 'aro' || z === 'pintura' ? 'Aro y pintura' : z.startsWith('media') ? 'Media distancia' : 'Triples');
   const MT_PRE = [['Todas', MT_ALL], ['Aro y pintura', MT_ALL.filter((z) => MT_GRP(z) === 'Aro y pintura')], ['Media distancia', MT_ALL.filter((z) => MT_GRP(z) === 'Media distancia')], ['Triples', MT_ALL.filter((z) => MT_GRP(z) === 'Triples')]];
-  const mt = { zj: null, who: 'eq', mode: 'pct', evo: 'game', tview: 'jor', tl: false, zones: new Set(), sort: { k: 'idx', dir: 1 } };  // zones vacío = todas
+  const mt = { zj: null, vw: 'eq', who: 'eq', mode: 'pct', evo: 'game', tview: 'jor', tl: false, zones: new Set(), sort: { k: 'idx', dir: 1 } };  // zones vacío = todas
   const mtC = [225, 47];
   const mtP = (a) => [mtC[0] + 1000 * Math.cos(a * Math.PI / 180), mtC[1] + 1000 * Math.sin(a * Math.PI / 180)];
   const mtWedge = (a0, a1) => 'M' + [mtC, mtP(a0), mtP((a0 + a1) / 2), mtP(a1)].map((p) => p.join(',')).join('L') + 'Z';
@@ -3049,6 +3050,7 @@ refSelect('mt', '#mapa-tiro > .fa-row', drawMapaTiro);
     if (sec.classList.contains('fa-folded') || rdOff(sec)) return;
     sec.querySelectorAll('#mt-eqmode button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.mode === eqMode)));
     sec.querySelectorAll('#mt-who button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === mt.who)));
+sec.querySelectorAll('#mt-vw button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === mt.vw)));
     sec.querySelectorAll('#mt-mode button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === mt.mode)));
     sec.querySelectorAll('#mt-evomode button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === mt.evo)));
     const mapBox = sec.querySelector('.fa-c-mt'), evoBox = sec.querySelector('.fa-c-mtevo');
@@ -3061,9 +3063,9 @@ refSelect('mt', '#mapa-tiro > .fa-row', drawMapaTiro);
     gl.textContent = D.withData.length
       ? 'Partidos con mapa de tiro: ' + names + (D.without.length ? ' · sin mapa de tiro subido: ' + D.without.map((g) => g.label).join(', ') : '')
       : '';
-    document.getElementById('mt-map-t').textContent = rivals ? 'Mapa de tiro de los rivales' : 'Mapa de tiro';
+    document.getElementById('mt-map-t').textContent = (rivals ? 'Tiros rivales' : 'Mapa de tiro') ;
 document.getElementById('mt-map-sub').textContent = '';
-{ const nj = document.getElementById('mt-njor'); if (nj) nj.textContent = D.withData.length ? D.withData.length + (D.withData.length === 1 ? ' Jornada' : ' Jornadas') : ''; }
+
     if (!D.withData.length) {
       const msg = D.allShots ? 'Ninguno de los partidos elegidos tiene mapa de tiro subido.' : 'Este equipo todavía no tiene mapa de tiro subido.';
       clearAll('empty', msg); drawMtCmp(); return;
@@ -3072,10 +3074,20 @@ document.getElementById('mt-map-sub').textContent = '';
     const Z = mtAgg(rows);
     const maxA = d3.max([...Z.values()], (v) => v.a) || 1;
     const totA = d3.sum([...Z.values()], (v) => v.a);
-    // --- mapa
-    mapBox.classList.remove('dash-skeleton');
+    // --- mapa (propio o del equipo / media del grupo elegido en «Compara»)
+let Zm = Z, maxAm = maxA, totAm = totA;
+if (mt.vw === 'cmp') {
+const tdc = faData('tiros'), selJc = new Set(D.withData.map((g) => +g.jornada));
+const base = (tdc.status === 'ok' ? tdc.data : []).filter((r) => selJc.has(+r.jornada));
+let rc;
+if (REF.mt === REF_G) rc = base; else { const ids = new Set(base.filter((r) => r.equipo === REF.mt).map((r) => r.partido_id)); rc = base.filter((r) => ids.has(r.partido_id) && (rivals ? r.equipo !== REF.mt : r.equipo === REF.mt)); }
+Zm = mtAgg(rc);
+if (REF.mt === REF_G) { const un = new Set(rc.map((r) => r.partido_id + '|' + r.equipo)).size || 1, f = D.withData.length / un; Zm = new Map([...Zm].map(([k, v]) => [k, { ...v, m: Math.round(v.m * f), a: Math.round(v.a * f) }])); }
+maxAm = d3.max([...Zm.values()], (v) => v.a) || 1; totAm = d3.sum([...Zm.values()], (v) => v.a);
+}
+mapBox.classList.remove('dash-skeleton');
     const vol = mt.mode === 'vol';
-    mtCourt(mapBox, { max: '620px', tl: mt.tl, Z, vol, maxA, totA, labels: true, active: mt.zones.size ? mt.zones : null, onClick: mtToggle, tipLines: (k, v) => [[MT_ZN[k], 'fa-tip-h'], ...(v && v.a ? [['Aciertos/intentos', null, v.m + '/' + v.a], ['% de acierto', null, mtPct(v.m / v.a)], ['Del total de intentos', null, mtPct(v.a / totA)]] : [['Sin tiros', null, null]]), ...(v && v.a ? mtPlayers(rows, k) : []), [mt.zones.has(k) ? 'Clic: quitar de la selección' : 'Clic: destacar esta zona', 'fa-tip-h', null]] });
+    mtCourt(mapBox, { max: '620px', tl: mt.tl, Z: Zm, vol, maxA: maxAm, totA: totAm, labels: true, active: mt.zones.size ? mt.zones : null, onClick: mtToggle, tipLines: (k, v) => [[MT_ZN[k], 'fa-tip-h'], ...(v && v.a ? [['Aciertos/intentos', null, v.m + '/' + v.a], ['% de acierto', null, mtPct(v.m / v.a)], ['Del total de intentos', null, mtPct(v.a / totAm)]] : [['Sin tiros', null, null]]), ...(v && v.a && mt.vw !== 'cmp' ? mtPlayers(rows, k) : []), [mt.zones.has(k) ? 'Clic: quitar de la selección' : 'Clic: destacar esta zona', 'fa-tip-h', null]] });
     const sc = document.getElementById('mt-scale'); sc.replaceChildren();
     const item = (name, lo, hi, bg) => { const w = document.createElement('span'); w.className = 'it'; const i = document.createElement('i'); i.style.background = bg; w.append(name ? document.createTextNode(name + ' ') : '', document.createTextNode(lo), i, document.createTextNode(hi)); sc.append(w); };
     if (vol) item('', 'Menos tiros ', ' Más tiros', 'linear-gradient(90deg, color-mix(in srgb, var(--fa-blue) 10%, transparent), color-mix(in srgb, var(--fa-blue) 85%, transparent))');
@@ -3130,6 +3142,7 @@ cols.push(mk('grp', 'Media grupo', R.tdGrp));
 return cols;
 }
 document.querySelectorAll('#mt-tview button').forEach((b) => b.addEventListener('click', () => { mt.tview = b.dataset.v; drawMapaTiro(); }));
+document.querySelectorAll('#mt-vw button').forEach((b) => b.addEventListener('click', () => { mt.vw = b.dataset.v; drawMapaTiro(); }));
 function drawMapaTable(D) {
 const zl = document.getElementById('mt-zl');
 zl.replaceChildren();
