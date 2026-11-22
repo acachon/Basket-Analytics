@@ -254,12 +254,12 @@ html.fa-nojs .fa-static{display:block}
 .fa-carr-nav.fa-nonav{visibility:hidden}
 .fa-carr-btn{font:inherit;font-size:18px;line-height:1;width:30px;height:30px;border-radius:50%;border:1px solid var(--color-border-line);background:var(--color-panel);color:var(--color-fg);cursor:pointer}
 .fa-carr-btn:disabled{opacity:.35;cursor:default}
-#dash-root{--fa-blue:#3f4249;--fa-green:#E0661A;--fa-cmp:#2FAE62;--fa-shade:rgba(0,0,0,.045);--fa-lgray:#cfcdc6;--fa-pink1:#8FB2E4;--fa-pink2:#1D4F91}
-@media (prefers-color-scheme: dark){#dash-root{--fa-blue:#e8e8e8;--fa-green:#F2924E;--fa-cmp:#6BD79A;--fa-shade:rgba(255,255,255,.06);--fa-lgray:#5f5f5f;--fa-pink1:#5D86C4;--fa-pink2:#A9C6F0}}
+#dash-root{--fa-blue:#3f4249;--fa-green:#E0661A;--fa-cmp:#2FAE62;--fa-shade:rgba(0,0,0,.045);--fa-lgray:#cfcdc6;--fa-pink1:#8FB2E4;--fa-pink2:#1D4F91;--fa-g3:#8c8a83;--fa-g2:#cfcdc6}
+@media (prefers-color-scheme: dark){#dash-root{--fa-blue:#e8e8e8;--fa-green:#F2924E;--fa-cmp:#6BD79A;--fa-shade:rgba(255,255,255,.06);--fa-lgray:#5f5f5f;--fa-pink1:#5D86C4;--fa-pink2:#A9C6F0;--fa-g3:#8a8a8a;--fa-g2:#565656}}
 .fa-leg2{display:flex;gap:14px;font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);margin:2px 0 var(--cds-gap-sm)}
 .fa-leg2 span{display:inline-flex;align-items:center;gap:6px}
 .fa-k{display:inline-block;width:10px;height:10px;border-radius:2px}
-.fa-k-def{background:var(--fa-blue)}.fa-k-mis{background:var(--fa-lgray)}.fa-k-p2{background:var(--fa-pink1)}.fa-k-p3{background:var(--fa-pink2)}.fa-kl{display:inline-block;width:16px;height:0;border-top:2px solid var(--fa-green);vertical-align:middle;margin-right:5px;position:relative}.fa-kl::after{content:"";position:absolute;left:5px;top:-4px;width:6px;height:6px;border-radius:50%;background:var(--fa-green)}.fa-k-of{background:var(--fa-green)}
+.fa-k-def{background:var(--fa-blue)}.fa-k-mis{background:var(--fa-lgray)}.fa-k-p2{background:var(--fa-pink1)}.fa-k-p3{background:var(--fa-pink2)}.fa-kl{display:inline-block;width:16px;height:0;border-top:2px solid var(--fa-green);vertical-align:middle;margin-right:5px;position:relative}.fa-kl::after{content:"";position:absolute;left:5px;top:-4px;width:6px;height:6px;border-radius:50%;background:var(--fa-green)}.fa-k-of{background:var(--fa-green)}.fa-k-g3{background:var(--fa-g3)}.fa-k-g2{background:var(--fa-g2)}
 .fa-table thead tr.fa-hr1 th{height:24px}
 .fa-table thead tr.fa-hr2 th{top:24px}
 .fa-table thead th.fa-gh{text-align:center;font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--color-fg-muted);padding:4px 6px;border-left:2px solid var(--color-border-line);border-bottom:1px solid var(--color-border-line)}
@@ -647,6 +647,11 @@ table[data-rdg-off~="4"] [data-rdg="4"]{display:none}
         <div class="fa-leg2"><span><i class="fa-k fa-k-p3"></i>T3</span><span><i class="fa-k fa-k-p2"></i>T2</span><span><i class="fa-k fa-k-def"></i>TL</span><span><i class="fa-kl"></i>%TS</span></div>
         <div class="fa-chart fa-c-ts dash-skeleton" data-source="equipos_partido jugadoras"></div>
       </section>
+      <section class="fa-card" id="eq-efg">
+        <div class="fa-ttl"><h2>Tiros de campo y %eFG</h2></div>
+        <div class="fa-leg2"><span><i class="fa-k fa-k-p3"></i>T3 aciertos</span><span><i class="fa-k fa-k-p2"></i>T2 aciertos</span><span><i class="fa-k fa-k-g3"></i>T3 fallos</span><span><i class="fa-k fa-k-g2"></i>T2 fallos</span><span><i class="fa-kl"></i>%eFG</span></div>
+        <div class="fa-chart fa-c-efg dash-skeleton" data-source="equipos_partido jugadoras"></div>
+      </section>
       <section class="fa-card" id="eq-t2">
         <div class="fa-ttl"><h2>Tiros de 2</h2></div>
         <div class="fa-leg2"><span><i class="fa-k fa-k-p2"></i>Aciertos</span><span><i class="fa-k fa-k-mis"></i>Fallos</span><span><i class="fa-kl"></i>%T2</span></div>
@@ -879,6 +884,11 @@ table[data-rdg-off~="4"] [data-rdg="4"]{display:none}
         <div class="fa-ttl"><h2>Puntos y %TS (T1,2,3)</h2></div>
         <div class="fa-leg2"><span><i class="fa-k fa-k-p3"></i>T3</span><span><i class="fa-k fa-k-p2"></i>T2</span><span><i class="fa-k fa-k-def"></i>TL</span><span><i class="fa-kl"></i>%TS</span></div>
         <div class="fa-chart fa-c-ts dash-skeleton" data-source="jugadoras partidos"></div>
+      </section>
+      <section class="fa-card" id="gj-efg">
+        <div class="fa-ttl"><h2>Tiros de campo y %eFG</h2></div>
+        <div class="fa-leg2"><span><i class="fa-k fa-k-p3"></i>T3 aciertos</span><span><i class="fa-k fa-k-p2"></i>T2 aciertos</span><span><i class="fa-k fa-k-g3"></i>T3 fallos</span><span><i class="fa-k fa-k-g2"></i>T2 fallos</span><span><i class="fa-kl"></i>%eFG</span></div>
+        <div class="fa-chart fa-c-efg dash-skeleton" data-source="jugadoras partidos"></div>
       </section>
       <section class="fa-card" id="gj-t2">
         <div class="fa-ttl"><h2>Tiros de 2</h2></div>
@@ -2026,6 +2036,7 @@ drawTeamShot('.fa-c-tl', 'tla', 'tli', 'TL', 'Tiros libres');
 drawTeamShot('.fa-c-t2', 't2a', 't2i', 'T2', 'Tiros de 2', 'var(--fa-pink1)', '#0f2547');
 drawTeamShot('.fa-c-t3', 't3a', 't3i', 'T3', 'Tiros de 3', 'var(--fa-pink2)', '#fff');
 drawTeamTS('.fa-c-ts');
+drawTeamEFG('.fa-c-efg');
 drawTeamPair('.fa-c-min', GJ ? [{ k: 'min', l: 'Minutos', c: 'var(--fa-blue)', meanTot: 2 }, { k: 'mas_menos', l: '+/-', c: 'var(--fa-green)' }] : [{ k: 'minj', l: 'Min/Jugador', c: 'var(--fa-blue)', meanTot: 1, tk: 'min' }, { k: 'dif', l: '+/-', c: 'var(--fa-green)', tk: 'mas_menos' }], '');
 drawTeamPair('.fa-c-val', [{ k: 'vald', l: 'ValD (defensa)', c: 'var(--fa-blue)' }, { k: 'valo', l: 'ValO (ataque)', c: 'var(--fa-green)' }], '');
 drawTeamPair('.fa-c-reb', [{ k: 'reb_def', l: 'Defensivos', c: 'var(--fa-blue)' }, { k: 'reb_of', l: 'Ofensivos', c: 'var(--fa-green)' }], 'Rebotes');
@@ -2359,6 +2370,129 @@ if (!who.length && C.pl.length) { const e = document.createElement('div'); e.cla
   }
 
   // Columnas apiladas con los aciertos de TL (abajo), T2 y T3 por jornada + línea con el %TS
+function drawTeamEFG(sel) {
+const box = gjq(sel);
+if (!box) return;
+const C = gctx();
+if (C.status !== 'ok') { setState(box, C.status === 'loading' ? 'loading' : 'error', 'No se pudo cargar'); return; }
+box.classList.remove('dash-skeleton');
+const per = new Map(C.per);
+const realGames = C.games;
+if (!realGames.length) { setState(box, 'empty', 'Sin partidos elegidos'); return; }
+const GR = { jOf: C.jOf }, gRef = C.ref;
+const selJ = new Set(realGames.map((g2) => +g2.jornada));
+const inJ = (j) => gRef.filter((r) => GR.jOf.get(r.partido_id) === +j);
+const gSel = gRef.filter((r) => selJ.has(GR.jOf.get(r.partido_id)));
+const tciR = (r) => (+r.t2i || 0) + (+r.t3i || 0);
+const avgTCJ = (j) => { const rs = inJ(j); return rs.length ? d3.mean(rs, tciR) : null; };
+const avgTC = gSel.length ? d3.mean(gSel, tciR) : null;
+const showAvg = eqMode === 'pp' && avgTC != null;
+const efgOf = (rs) => { const d = d3.sum(rs, tciR); return d ? (d3.sum(rs, (r) => +r.t2a || 0) + 1.5 * d3.sum(rs, (r) => +r.t3a || 0)) / d : null; };
+const gEFG = (j) => efgOf(inJ(j));
+const gAll = efgOf(gSel);
+const TOT = '__total';
+const K = ['t2a', 't2i', 't3a', 't3i'];
+per.set(TOT, Object.fromEntries(K.map((k) => [k, sumT(per, realGames, k)])));
+const games = [...realGames, { partido_id: TOT, label: totLab(), rival: '', total: true }];
+const V = (gm, k) => (per.get(gm.partido_id) || {})[k] || 0;
+const TC = (gm) => V(gm, 't2i') + V(gm, 't3i');
+const EF = (gm) => { const d = TC(gm); return d ? (V(gm, 't2a') + 1.5 * V(gm, 't3a')) / d : null; };
+const SEG = [
+{ l: 'T3 aciertos', c: 'var(--fa-pink2)', t: '#fff', f: (gm) => V(gm, 't3a') },
+{ l: 'T2 aciertos', c: 'var(--fa-pink1)', t: '#0f2547', f: (gm) => V(gm, 't2a') },
+{ l: 'T3 fallos', c: 'var(--fa-g3)', t: '#fff', f: (gm) => Math.max(0, V(gm, 't3i') - V(gm, 't3a')) },
+{ l: 'T2 fallos', c: 'var(--fa-g2)', t: '#2a2a2a', f: (gm) => Math.max(0, V(gm, 't2i') - V(gm, 't2a')) },
+];
+box.replaceChildren();
+const W = Math.max(260, box.clientWidth || 320), H = 260, top = 18, bottom = 44, right = 30;
+const yMax = Math.max(d3.max(games, TC) || 1, showAvg ? Math.max(avgTC, ...realGames.map((gm) => avgTCJ(gm.jornada) || 0)) : 0);
+const y = d3.scaleLinear([0, yMax], [H - bottom, top]).nice();
+const pVals = [...games.map(EF), ...realGames.map((gm) => gEFG(gm.jornada)), gAll].filter((v) => v != null);
+const pMax = Math.max(1, d3.max(pVals) || 1);
+const yp = d3.scaleLinear([0, pMax], [H - bottom, top]);
+const ticks = y.ticks(5);
+const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`);
+const meas = svg.append('g').style('font-size', 'var(--cds-font-size-caption)');
+let mw = 0; ticks.forEach((t) => { mw = Math.max(mw, meas.append('text').text(fmtN(t)).node().getComputedTextLength()); }); meas.remove();
+const left = Math.ceil(mw) + 10;
+const x = d3.scaleBand(games.map((g) => g.partido_id), [left, W - right]).paddingInner(0.3).paddingOuter(0.15);
+const g = svg.append('g');
+shadeTotal(g, x, TOT, W, right, H, top, bottom);
+const cap = (s2) => s2.style('font-size', 'var(--cds-font-size-caption)');
+g.selectAll('line.gr').data(ticks).join('line').attr('x1', left).attr('x2', W - right).attr('y1', (d) => y(d)).attr('y2', (d) => y(d))
+.style('stroke', 'var(--cds-chart-grid)').style('stroke-width', 1);
+cap(g.selectAll('text.yt').data(ticks).join('text').attr('x', left - 8).attr('y', (d) => y(d)).attr('dy', '0.32em').attr('text-anchor', 'end'))
+.style('fill', 'var(--color-fg-muted)').text((d) => fmtN(d));
+const bw = Math.min(40, x.bandwidth() * 0.6);
+const cx = (gm) => x(gm.partido_id) + x.bandwidth() / 2;
+for (const gm of games) {
+let acc = 0;
+if (gm.total || per.has(gm.partido_id)) {
+for (const s0 of SEG) {
+const v = s0.f(gm), y1 = y(acc + v), y0 = y(acc), h = y0 - y1;
+if (v > 0) g.append('rect').attr('x', cx(gm) - bw / 2).attr('width', bw).attr('y', y1).attr('height', Math.max(0, h)).style('fill', s0.c);
+if (h >= 14) cap(g.append('text').attr('x', cx(gm)).attr('y', (y0 + y1) / 2).attr('dy', '0.35em').attr('text-anchor', 'middle')).style('fill', s0.t).style('font-weight', 'var(--cds-font-weight-medium)').text(fmtN(v));
+acc += v;
+}
+cap(g.append('text').attr('x', cx(gm)).attr('y', y(acc) - 4).attr('text-anchor', 'middle')).style('fill', 'var(--color-fg)')
+.style('paint-order', 'stroke').style('stroke', 'var(--color-panel, #fff)').style('stroke-width', 3).text(fmtN(acc));
+}
+const lb = g.append('g').attr('transform', `translate(${cx(gm)},${H - bottom + 18})`);
+cap(lb.append('text').attr('text-anchor', 'middle')).style('fill', 'var(--color-fg)').style('font-weight', gm.total ? 'var(--cds-font-weight-medium)' : null).text(xLab(gm));
+cap(lb.append('text').attr('text-anchor', 'middle').attr('dy', '1.3em')).style('fill', 'var(--color-fg-muted)').text(gm.total ? totSub(realGames.length) : lugTxt(gm));
+}
+g.append('line').attr('x1', left).attr('x2', W - right).attr('y1', y(0)).attr('y2', y(0)).style('stroke', 'var(--cds-chart-axis)').style('stroke-width', 1);
+const sepX = x(TOT) - x.step() * x.paddingInner() / 2;
+g.append('line').attr('x1', sepX).attr('x2', sepX).attr('y1', top - 6).attr('y2', H - bottom + 30)
+.style('stroke', 'var(--cds-chart-reference)').style('stroke-dasharray', '4 4').style('stroke-width', 1);
+if (showAvg) {
+const aj = realGames.map((gm) => ({ gm, v: avgTCJ(gm.jornada) })).filter((d) => d.v != null);
+g.append('path').datum(aj).attr('d', d3.line().x((d) => cx(d.gm)).y((d) => y(d.v))).style('fill', 'none').style('stroke', 'var(--color-fg-muted)').style('stroke-width', 1.5).style('stroke-dasharray', '6 4').style('pointer-events', 'none');
+aj.forEach((d) => g.append('circle').attr('cx', cx(d.gm)).attr('cy', y(d.v)).attr('r', 2.5).style('fill', 'var(--color-fg-muted)').style('pointer-events', 'none'));
+const tXa = cx({ partido_id: TOT });
+[['var(--color-panel, #fff)', 6, null], ['var(--color-fg-muted)', 3, '4 2']].forEach(([c0, w0, da]) => g.append('line').attr('x1', tXa - bw / 2 - 7).attr('x2', tXa + bw / 2 + 7).attr('y1', y(avgTC)).attr('y2', y(avgTC)).style('stroke', c0).style('stroke-width', w0).style('stroke-dasharray', da).style('pointer-events', 'none'));
+}
+const gpts = realGames.map((gm) => ({ gm, p: gEFG(gm.jornada) })).filter((d) => d.p != null);
+g.append('path').datum(gpts).attr('d', d3.line().x((d) => cx(d.gm)).y((d) => yp(d.p))).style('fill', 'none').style('stroke', 'var(--fa-green)').style('stroke-width', 1.5).style('stroke-dasharray', '6 4').style('pointer-events', 'none');
+gpts.forEach((d) => g.append('circle').attr('cx', cx(d.gm)).attr('cy', yp(d.p)).attr('r', 3).style('fill', 'var(--color-panel, #fff)').style('stroke', 'var(--fa-green)').style('stroke-width', 1.5).style('pointer-events', 'none'));
+refLegend(box, [['fa-ref-a', C.lab + ' (tiros de campo)', showAvg, false], ['fa-ref-p', '%eFG ' + C.word, true, true]]);
+const gTotX = cx({ partido_id: TOT }), gTotW = bw + 14;
+if (gAll != null) g.append('line').attr('x1', gTotX - gTotW / 2).attr('x2', gTotX + gTotW / 2).attr('y1', yp(gAll)).attr('y2', yp(gAll)).style('stroke', 'var(--fa-green)').style('stroke-width', 3).style('stroke-dasharray', '4 2').style('pointer-events', 'none');
+const pts = realGames.filter((gm) => EF(gm) != null);
+g.append('path').datum(pts).attr('d', d3.line().x(cx).y((gm) => yp(EF(gm)))).style('fill', 'none').style('stroke', 'var(--fa-green)').style('stroke-width', 2);
+for (const gm of games) {
+const p = EF(gm); if (p == null) continue;
+g.append('circle').attr('cx', cx(gm)).attr('cy', yp(p)).attr('r', 4).style('fill', 'var(--fa-green)').style('stroke', 'var(--color-panel, #fff)').style('stroke-width', 1.5);
+cap(g.append('text').attr('x', gm.total ? cx(gm) + bw / 2 + 4 : cx(gm) + 7).attr('y', gm.total ? yp(p) + 4 : yp(p) - 7).attr('text-anchor', gm.total ? 'start' : null)).style('fill', 'var(--fa-green)').style('font-weight', 'var(--cds-font-weight-medium)')
+.style('paint-order', 'stroke').style('stroke', 'var(--color-panel, #fff)').style('stroke-width', 3).text(Math.round(p * 100) + '%');
+}
+const tip = document.createElement('div'); tip.className = 'fa-tip'; tip.hidden = true; box.append(tip);
+const pctS = (a, i) => (i ? Math.round((100 * a) / i) + '%' : '–');
+svg.append('g').selectAll('rect').data(games).join('rect')
+.attr('x', (gm) => x(gm.partido_id) - x.step() * x.paddingInner() / 2).attr('width', x.step()).attr('y', 0).attr('height', H).style('fill', 'transparent')
+.on('pointermove pointerdown', function (ev, gm) {
+tip.replaceChildren();
+const h = document.createElement('div'); h.className = 'fa-tip-h';
+h.textContent = gm.total ? totHead(realGames) : gm.label + ' · vs ' + gm.rival + ' (' + gm.pf + '-' + gm.pc + ')'; tip.append(h);
+const add = (a, b, mute) => { const l = document.createElement('div'); l.className = 'fa-tip-l'; if (mute) l.style.color = 'var(--color-fg-muted)'; const s1 = document.createElement('span'); s1.textContent = a; const s2 = document.createElement('span'); s2.textContent = b; l.append(s1, s2); tip.append(l); };
+const m = V(gm, 't2a') + V(gm, 't3a');
+add('Tiros de campo', fmtN(m) + '/' + fmtN(TC(gm)) + ' · ' + pctS(m, TC(gm)));
+add('%eFG', EF(gm) == null ? '–' : Math.round(EF(gm) * 100) + '%');
+add('T2', fmtN(V(gm, 't2a')) + '/' + fmtN(V(gm, 't2i')) + ' · ' + pctS(V(gm, 't2a'), V(gm, 't2i')));
+add('T3', fmtN(V(gm, 't3a')) + '/' + fmtN(V(gm, 't3i')) + ' · ' + pctS(V(gm, 't3a'), V(gm, 't3i')));
+const gq = gm.total ? gAll : gEFG(gm.jornada);
+const avT = gm.total ? avgTC : avgTCJ(gm.jornada);
+const gl = [showAvg && avT != null ? 'media ' + fmtN(Math.round(avT * 10) / 10) + ' tiros de campo' + (gm.total ? ' por partido' : ' en la ' + gm.label) : null, gq != null ? Math.round(gq * 100) + '% eFG ' + (gm.total ? 'en todas las jornadas' : 'en la ' + gm.label) : null].filter(Boolean);
+if (gl.length) add(C.head + gl.join(' · '), '', true);
+tip.hidden = false;
+const scale = W / svg.node().getBoundingClientRect().width;
+const px = cx(gm) / scale, bwid = box.clientWidth, tw = tip.offsetWidth;
+tip.style.left = Math.max(0, Math.min(bwid - tw, px + 24 + tw > bwid ? px - tw - 24 : px + 24)) + 'px';
+tip.style.top = '8px';
+})
+.on('pointerleave', () => { tip.hidden = true; });
+}
+
   function drawTeamTS(sel) {
     const box = gjq(sel);
 const C = gctx();
