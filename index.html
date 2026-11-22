@@ -649,7 +649,7 @@ table[data-rdg-off~="4"] [data-rdg="4"]{display:none}
       </section>
       <section class="fa-card" id="eq-efg">
         <div class="fa-ttl"><h2>Tiros de campo y %eFG</h2></div>
-        <div class="fa-leg2"><span><i class="fa-k fa-k-p3"></i>T3 aciertos</span><span><i class="fa-k fa-k-p2"></i>T2 aciertos</span><span><i class="fa-k fa-k-g3"></i>T3 fallos</span><span><i class="fa-k fa-k-g2"></i>T2 fallos</span><span><i class="fa-kl"></i>%eFG</span></div>
+        <div class="fa-leg2"><span><i class="fa-k fa-k-p3"></i>T3</span><span><i class="fa-k fa-k-p2"></i>T2</span><span><i class="fa-k fa-k-mis"></i>Fallos</span><span><i class="fa-kl"></i>%eFG</span></div>
         <div class="fa-chart fa-c-efg dash-skeleton" data-source="equipos_partido jugadoras"></div>
       </section>
       <section class="fa-card" id="eq-t2">
@@ -887,7 +887,7 @@ table[data-rdg-off~="4"] [data-rdg="4"]{display:none}
       </section>
       <section class="fa-card" id="gj-efg">
         <div class="fa-ttl"><h2>Tiros de campo y %eFG</h2></div>
-        <div class="fa-leg2"><span><i class="fa-k fa-k-p3"></i>T3 aciertos</span><span><i class="fa-k fa-k-p2"></i>T2 aciertos</span><span><i class="fa-k fa-k-g3"></i>T3 fallos</span><span><i class="fa-k fa-k-g2"></i>T2 fallos</span><span><i class="fa-kl"></i>%eFG</span></div>
+        <div class="fa-leg2"><span><i class="fa-k fa-k-p3"></i>T3</span><span><i class="fa-k fa-k-p2"></i>T2</span><span><i class="fa-k fa-k-mis"></i>Fallos</span><span><i class="fa-kl"></i>%eFG</span></div>
         <div class="fa-chart fa-c-efg dash-skeleton" data-source="jugadoras partidos"></div>
       </section>
       <section class="fa-card" id="gj-t2">
@@ -2400,8 +2400,8 @@ const EF = (gm) => { const d = TC(gm); return d ? (V(gm, 't2a') + 1.5 * V(gm, 't
 const SEG = [
 { l: 'T3 aciertos', c: 'var(--fa-pink2)', t: '#fff', f: (gm) => V(gm, 't3a') },
 { l: 'T2 aciertos', c: 'var(--fa-pink1)', t: '#0f2547', f: (gm) => V(gm, 't2a') },
-{ l: 'T3 fallos', c: 'var(--fa-g3)', t: '#fff', f: (gm) => Math.max(0, V(gm, 't3i') - V(gm, 't3a')) },
-{ l: 'T2 fallos', c: 'var(--fa-g2)', t: '#2a2a2a', f: (gm) => Math.max(0, V(gm, 't2i') - V(gm, 't2a')) },
+{ l: 'T3 fallos', c: 'var(--fa-lgray)', t: 'var(--color-fg)', f: (gm) => Math.max(0, V(gm, 't3i') - V(gm, 't3a')) },
+{ l: 'T2 fallos', c: 'var(--fa-lgray)', t: 'var(--color-fg)', f: (gm) => Math.max(0, V(gm, 't2i') - V(gm, 't2a')) },
 ];
 box.replaceChildren();
 const W = Math.max(260, box.clientWidth || 320), H = 260, top = 18, bottom = 44, right = 30;
